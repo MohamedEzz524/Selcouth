@@ -432,6 +432,281 @@
   </head>
 
   <body>
+<!-- ============================================================
+     SITE HEADER — single source, injected on every page by server.js.
+     Namespaced .site-header / .sh-* so it never collides with any page's
+     own styles. Keeps the brand-logo id so the home preloader morph still
+     has its target. Edit here once; it updates everywhere.
+     ============================================================ -->
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 9000;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 22px clamp(20px, 4vw, 56px);
+    pointer-events: none;
+    font-family: "Inter", "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+  .site-header > * {
+    pointer-events: auto;
+  }
+
+  /* ---- left: desktop links + mobile burger ---- */
+  .sh-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sh-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sh-link {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px;
+    background: none;
+    color: #fff;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .sh-link:hover,
+  .sh-link[aria-current="page"] {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+  }
+
+  /* ---- centre logo ---- */
+  .sh-logo {
+    display: block;
+    justify-self: center;
+    line-height: 0;
+  }
+  .sh-logo img {
+    width: 46px;
+    height: auto;
+    display: block;
+  }
+
+  /* ---- right: glassy circular icon buttons ---- */
+  .sh-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+  }
+  .sh-icon {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.05) 60%
+    );
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 8px 24px rgba(0, 0, 0, 0.25);
+    transition:
+      background 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .sh-icon:hover {
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.09) 60%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+  .sh-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ---- burger (mobile only) ---- */
+  .sh-burger {
+    display: none;
+    width: 46px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+  }
+  .sh-burger svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ---- mobile dropdown ---- */
+  .sh-mobile {
+    position: fixed;
+    top: 72px;
+    left: 16px;
+    z-index: 8999;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 172px;
+    padding: 12px;
+    border-radius: 16px;
+    background: rgba(22, 18, 32, 0.6);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0.3s;
+  }
+  .sh-mobile.open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .sh-mobile a {
+    padding: 10px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .sh-mobile a:hover,
+  .sh-mobile a[aria-current="page"] {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  @media (max-width: 767px) {
+    .site-header {
+      padding: 14px 16px;
+    }
+    .sh-nav {
+      display: none;
+    }
+    .sh-burger {
+      display: inline-flex;
+    }
+    .sh-right .sh-label {
+      display: none;
+    }
+  }
+</style>
+
+<header class="site-header" aria-label="Primary">
+  <div class="sh-left">
+    <button
+      class="sh-burger"
+      type="button"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="sh-mobile"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </button>
+    <nav class="sh-nav" aria-label="Primary navigation">
+      <a class="sh-link" href="./">Home</a>
+      <a class="sh-link" href="product.html">Products</a>
+      <a class="sh-link" href="about-us.html">About Us</a>
+    </nav>
+    <div class="sh-mobile" id="sh-mobile">
+      <a href="./">Home</a>
+      <a href="product.html">Products</a>
+      <a href="about-us.html">About Us</a>
+    </div>
+  </div>
+
+  <a class="sh-logo" id="brand-logo" href="./" aria-label="Selcouth home">
+    <img src="images/logo.svg" alt="Selcouth" />
+  </a>
+
+  <div class="sh-right">
+    <button class="sh-icon" type="button" aria-label="Account">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="8" r="3.4" />
+        <path d="M5.5 19.2c1.2-3 3.6-4.6 6.5-4.6s5.3 1.6 6.5 4.6" />
+      </svg>
+    </button>
+    <button class="sh-icon" type="button" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6.5 8.5h11l-.9 10a1.8 1.8 0 0 1-1.8 1.6H9.2a1.8 1.8 0 0 1-1.8-1.6z" />
+        <path d="M9 8.5V7a3 3 0 0 1 6 0v1.5" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<script>
+  (function () {
+    var header = document.currentScript
+      ? document.currentScript.previousElementSibling
+      : null;
+    // Fall back to querying if currentScript chain isn't the header.
+    var burger = document.querySelector(".site-header .sh-burger");
+    var mobile = document.getElementById("sh-mobile");
+
+    if (burger && mobile) {
+      burger.addEventListener("click", function () {
+        var open = mobile.classList.toggle("open");
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      document.addEventListener("click", function (e) {
+        if (!mobile.classList.contains("open")) return;
+        if (!mobile.contains(e.target) && !burger.contains(e.target)) {
+          mobile.classList.remove("open");
+          burger.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+
+    // Active-link highlighting based on current path.
+    var path = location.pathname.replace(/\/+$/, "") || "/";
+    document
+      .querySelectorAll(".site-header .sh-link, .site-header .sh-mobile a")
+      .forEach(function (a) {
+        var href = a.getAttribute("href");
+        if (!href || href === "#") return;
+        var norm = href.replace(/\/+$/, "") || "/";
+        if (norm === path) a.setAttribute("aria-current", "page");
+      });
+  })();
+</script>
+
     <!-- ============================================================
          SECTION 1
          ============================================================ -->
@@ -474,7 +749,7 @@
           Rare materials, patient craft, and a refusal to compromise — this is
           fragrance made to be remembered, not just worn.
         </p>
-        <a class="au-s2__btn" href="/">Explore the collection</a>
+        <a class="au-s2__btn" href="./">Explore the collection</a>
       </div>
     </section>
 
@@ -655,5 +930,174 @@
         io.observe(right);
       })();
     </script>
-  </body>
+  <!-- ============================================================
+     SITE FOOTER — single source, injected near the end of the page by
+     server.js on any page that doesn't already have its own footer.
+     Namespaced .site-foot / .sf-* · white + panel palette only.
+     ============================================================ -->
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+  .site-foot {
+    background: #050505;
+    color: #d9d5df;
+    border-top: 1px solid #17151d; /* shared panel colour */
+    font-family: "Inter", "DM Sans", "Helvetica Neue", Arial, sans-serif;
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem) 2rem;
+  }
+  .sf-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  /* row 1 — logo left */
+  .sf-top {
+    margin-bottom: clamp(2.2rem, 5vw, 3.6rem);
+  }
+  .sf-logo {
+    display: inline-block;
+    line-height: 0;
+  }
+  .sf-logo img {
+    width: 54px;
+    height: auto;
+    display: block;
+  }
+
+  /* row 2 — 4 columns */
+  .sf-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .sf-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .sf-col__label {
+    margin: 0 0 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+  .sf-col a {
+    font-size: 0.92rem;
+    color: rgba(217, 213, 223, 0.68);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+  .sf-col a:hover {
+    color: #ffffff;
+  }
+
+  /* social column: a horizontal row of icons rather than stacked text links */
+  .sf-social {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.1rem;
+    margin-top: 0.15rem;
+  }
+  .sf-social a {
+    display: inline-flex;
+    color: rgba(217, 213, 223, 0.68);
+    transition: color 0.25s ease, transform 0.25s ease;
+  }
+  .sf-social a:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+  .sf-social svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    fill: currentColor;
+  }
+
+  /* row 3 — centred copyright */
+  .sf-copy {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+  }
+  .sf-copy p {
+    margin: 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(217, 213, 223, 0.5);
+  }
+
+  /* mobile — links become 2 columns */
+  @media (max-width: 760px) {
+    .sf-cols {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 2.2rem;
+    }
+  }
+</style>
+
+<footer class="site-foot" aria-label="Site footer">
+  <div class="sf-inner">
+    <!-- row 1: logo -->
+    <div class="sf-top">
+      <a class="sf-logo" href="./" aria-label="Selcouth home">
+        <img src="images/logo.svg" alt="Selcouth" />
+      </a>
+    </div>
+
+    <!-- row 2: 4 columns (3 menu + 1 social) -->
+    <div class="sf-cols">
+      <nav class="sf-col" aria-label="Shop">
+        <h4 class="sf-col__label">Shop</h4>
+        <a href="#">Perfumes</a>
+        <a href="#">Discovery Sets</a>
+        <a href="#">Gifting</a>
+        <a href="#">New Arrivals</a>
+      </nav>
+      <nav class="sf-col" aria-label="Discover">
+        <h4 class="sf-col__label">Discover</h4>
+        <a href="about-us.html">Our Story</a>
+        <a href="#">The Craft</a>
+        <a href="#">Ingredients</a>
+        <a href="#">Journal</a>
+      </nav>
+      <nav class="sf-col" aria-label="Support">
+        <h4 class="sf-col__label">Support</h4>
+        <a href="#">Contact</a>
+        <a href="#">Shipping</a>
+        <a href="#">Returns</a>
+        <a href="#">FAQ</a>
+      </nav>
+      <nav class="sf-col" aria-label="Social">
+        <h4 class="sf-col__label">Follow</h4>
+        <div class="sf-social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/></svg>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- row 3: centred copyright -->
+    <div class="sf-copy">
+      <p>&copy; Selcouth</p>
+    </div>
+  </div>
+</footer>
+
+</body>
 </html>
