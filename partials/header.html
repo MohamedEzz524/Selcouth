@@ -1,0 +1,285 @@
+<!-- ============================================================
+     SITE HEADER — single source, injected on every page by server.js.
+     Namespaced .site-header / .sh-* so it never collides with any page's
+     own styles. Keeps the brand-logo id so the home preloader morph still
+     has its target. Edit here once; it updates everywhere.
+     ============================================================ -->
+<style>
+  @font-face {
+    font-family: "MB PH One";
+    src: url("/fonts/mb-ph-one-regular.ttf") format("truetype");
+    font-weight: 100 500;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "MB PH One";
+    src: url("/fonts/mb-ph-one-bold.ttf") format("truetype");
+    font-weight: 501 900;
+    font-display: swap;
+  }
+
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 9000;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 22px clamp(20px, 4vw, 56px);
+    pointer-events: none;
+    font-family: "MB PH One", "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+  .site-header > * {
+    pointer-events: auto;
+  }
+
+  /* ---- left: desktop links + mobile burger ---- */
+  .sh-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sh-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sh-link {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px;
+    background: none;
+    color: #fff;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .sh-link:hover,
+  .sh-link[aria-current="page"] {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+  }
+
+  /* ---- centre logo ---- */
+  .sh-logo {
+    display: block;
+    justify-self: center;
+    line-height: 0;
+  }
+  .sh-logo img {
+    width: 46px;
+    height: auto;
+    display: block;
+  }
+
+  /* ---- right: glassy circular icon buttons ---- */
+  .sh-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+  }
+  .sh-icon {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.05) 60%
+    );
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 8px 24px rgba(0, 0, 0, 0.25);
+    transition:
+      background 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .sh-icon:hover {
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.09) 60%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+  .sh-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ---- burger (mobile only) ---- */
+  .sh-burger {
+    display: none;
+    width: 46px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+  }
+  .sh-burger svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ---- mobile dropdown ---- */
+  .sh-mobile {
+    position: fixed;
+    top: 72px;
+    left: 16px;
+    z-index: 8999;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 172px;
+    padding: 12px;
+    border-radius: 16px;
+    background: rgba(22, 18, 32, 0.6);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0.3s;
+  }
+  .sh-mobile.open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .sh-mobile a {
+    padding: 10px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .sh-mobile a:hover,
+  .sh-mobile a[aria-current="page"] {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  @media (max-width: 767px) {
+    .site-header {
+      padding: 14px 16px;
+    }
+    .sh-nav {
+      display: none;
+    }
+    .sh-burger {
+      display: inline-flex;
+    }
+    .sh-right .sh-label {
+      display: none;
+    }
+  }
+</style>
+
+<header class="site-header" aria-label="Primary">
+  <div class="sh-left">
+    <button
+      class="sh-burger"
+      type="button"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="sh-mobile"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </button>
+    <nav class="sh-nav" aria-label="Primary navigation">
+      <a class="sh-link" href="/">Home</a>
+      <a class="sh-link" href="#">Products</a>
+      <a class="sh-link" href="/about-us">About Us</a>
+    </nav>
+    <div class="sh-mobile" id="sh-mobile">
+      <a href="/">Home</a>
+      <a href="#">Products</a>
+      <a href="/about-us">About Us</a>
+    </div>
+  </div>
+
+  <a class="sh-logo" id="brand-logo" href="/" aria-label="Selcouth home">
+    <img src="/images/logo.svg" alt="Selcouth" />
+  </a>
+
+  <div class="sh-right">
+    <button class="sh-icon" type="button" aria-label="Account">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="8" r="3.4" />
+        <path d="M5.5 19.2c1.2-3 3.6-4.6 6.5-4.6s5.3 1.6 6.5 4.6" />
+      </svg>
+    </button>
+    <button class="sh-icon" type="button" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6.5 8.5h11l-.9 10a1.8 1.8 0 0 1-1.8 1.6H9.2a1.8 1.8 0 0 1-1.8-1.6z" />
+        <path d="M9 8.5V7a3 3 0 0 1 6 0v1.5" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<script>
+  (function () {
+    var header = document.currentScript
+      ? document.currentScript.previousElementSibling
+      : null;
+    // Fall back to querying if currentScript chain isn't the header.
+    var burger = document.querySelector(".site-header .sh-burger");
+    var mobile = document.getElementById("sh-mobile");
+
+    if (burger && mobile) {
+      burger.addEventListener("click", function () {
+        var open = mobile.classList.toggle("open");
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      document.addEventListener("click", function (e) {
+        if (!mobile.classList.contains("open")) return;
+        if (!mobile.contains(e.target) && !burger.contains(e.target)) {
+          mobile.classList.remove("open");
+          burger.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+
+    // Active-link highlighting based on current path.
+    var path = location.pathname.replace(/\/+$/, "") || "/";
+    document
+      .querySelectorAll(".site-header .sh-link, .site-header .sh-mobile a")
+      .forEach(function (a) {
+        var href = a.getAttribute("href");
+        if (!href || href === "#") return;
+        var norm = href.replace(/\/+$/, "") || "/";
+        if (norm === path) a.setAttribute("aria-current", "page");
+      });
+  })();
+</script>

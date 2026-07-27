@@ -14,6 +14,41 @@ const path = require('path');
 const ROOT = __dirname;
 const PORT = process.env.PORT || 8123;
 
+// Shared site header, injected into every HTML page (React-style global layout).
+// Edit partials/header.html once; every page updates. Re-read per request so
+// edits show up without restarting the server.
+const HEADER_PARTIAL = path.join(ROOT, 'partials', 'header.html');
+function injectSiteHeader(html, file) {
+  if (file === HEADER_PARTIAL) return html;            // never inject into itself
+  if (/<!--\s*no-site-header\s*-->/i.test(html)) return html;   // per-page opt-out
+  let header;
+  try { header = fs.readFileSync(HEADER_PARTIAL, 'utf8'); } catch (_) { return html; }
+  // Insert right after the REAL opening <body> tag — i.e. the first <body>
+  // that appears AFTER </head>. (Some pages mention "<body>" inside a <head>
+  // script/comment; anchoring past </head> avoids injecting into that.)
+  const headEnd = html.search(/<\/head\s*>/i);
+  const bodyRe = /<body\b[^>]*>/ig;
+  bodyRe.lastIndex = headEnd >= 0 ? headEnd : 0;
+  const m = bodyRe.exec(html);
+  if (!m) return html;
+  const at = m.index + m[0].length;
+  return html.slice(0, at) + '\n' + header + html.slice(at);
+}
+
+// Shared site footer, injected before </body> on any page that doesn't already
+// have its own <footer> (so the home page's bespoke footer is left alone).
+const FOOTER_PARTIAL = path.join(ROOT, 'partials', 'footer.html');
+function injectSiteFooter(html, file) {
+  if (file === FOOTER_PARTIAL) return html;
+  if (/<!--\s*no-site-footer\s*-->/i.test(html)) return html;   // per-page opt-out
+  if (/<footer[\s>]/i.test(html)) return html;                  // page already has one
+  let footer;
+  try { footer = fs.readFileSync(FOOTER_PARTIAL, 'utf8'); } catch (_) { return html; }
+  const idx = html.toLowerCase().lastIndexOf('</body>');
+  if (idx === -1) return html + '\n' + footer;
+  return html.slice(0, idx) + footer + '\n' + html.slice(idx);
+}
+
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
@@ -49,6 +84,19 @@ http.createServer((req, res) => {
   }
   const ext = path.extname(file).toLowerCase();
   const type = MIME[ext] || 'application/octet-stream';
+
+  // HTML: read into memory, inject the shared header, serve with a correct
+  // Content-Length. (No Range needed for documents.)
+  if (ext === '.html') {
+    let html = fs.readFileSync(file, 'utf8');
+    html = injectSiteHeader(html, file);
+    html = injectSiteFooter(html, file);
+    const buf = Buffer.from(html, 'utf8');
+    res.writeHead(200, { 'Content-Type': type, 'Content-Length': buf.length });
+    res.end(buf);
+    return;
+  }
+
   const stat = fs.statSync(file);
   const range = req.headers.range;
   if (range && /^bytes=/.test(range)) {                    // video streaming support

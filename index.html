@@ -5419,6 +5419,57 @@
         background: radial-gradient(120% 120% at 30% 20%, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.09) 60%);
       }
 
+      /* second-section carousel: glassy arrow follow-cursor (desktop) */
+      #pf-carousel.pf-cursor-on {
+        cursor: none;
+      }
+      body.pf-cursor-active #cursor-dot,
+      body.pf-cursor-active #cursor-ring {
+        opacity: 0 !important;
+      }
+      #pf-cursor {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 58px;
+        height: 58px;
+        z-index: 13000;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        color: #fff;
+        background: radial-gradient(
+          120% 120% at 30% 20%,
+          rgba(255, 255, 255, 0.18),
+          rgba(255, 255, 255, 0.06) 60%
+        );
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
+        backdrop-filter: blur(12px) saturate(150%);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.3),
+          0 10px 30px rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+      }
+      #pf-cursor.is-on {
+        opacity: 1;
+      }
+      #pf-cursor svg {
+        width: 22px;
+        height: 22px;
+        display: block;
+        transition: transform 0.2s ease;
+      }
+      #pf-cursor[data-side="left"] svg {
+        transform: rotate(180deg);
+      }
+
       /* rings: centre video shows immediately (clip reveal removed) */
       #core-capabilities .center-video-box {
         transition: none !important;
@@ -5537,6 +5588,54 @@
         letter-spacing: 0.18em;
         text-transform: uppercase;
       }
+
+      /* ===========================================================
+         SELCOUTH · mobile "second section"
+         Desktop shows the perfume carousel (#intro-panel) inside the
+         GSAP-pinned, position:absolute .hero-section / #dark-wrapper,
+         which is display:none on mobile. Rather than reflow that pinned
+         machinery, mobile JS relocates #intro-panel into the existing
+         .mobile-cube-section slot (already correctly placed in the mobile
+         flow) and tags it .has-perfume. These rules host it there and hide
+         the old NUDOT "WHO WE ARE" cube content.
+         =========================================================== */
+      @media (max-width: 767px) {
+        .mobile-cube-section.has-perfume {
+          display: block !important;      /* override grid; #intro-panel is absolute */
+          min-height: 100svh;
+          padding: 0 !important;
+          background: #000;
+        }
+        /* hide the old cube's own content, BUT keep .mobile-cube-bg — it carries
+           the section's background video (same role as wavebg on desktop) */
+        .mobile-cube-section.has-perfume
+          > *:not(#intro-panel):not(.mobile-cube-bg) {
+          display: none !important;
+        }
+        /* drop the cube's bottom fade so it doesn't dim the carousel */
+        .mobile-cube-section.has-perfume::after {
+          display: none !important;
+        }
+        .mobile-cube-section.has-perfume .mobile-cube-bg {
+          z-index: 1;
+        }
+        /* the relocated carousel container fills the slot and is revealed
+           (on desktop it starts hidden and its scroll JS fades it in) */
+        .mobile-cube-section.has-perfume > #intro-panel {
+          display: flex !important;
+          position: absolute;
+          inset: 0;
+          opacity: 1 !important;
+          pointer-events: auto !important;
+          z-index: 2;
+        }
+        /* the desktop title/price/CTA offset (up to 260px below centre) is far
+           too large for the smaller mobile bottles — pull it up toward the bottle.
+           Tune the clamp's middle value to move it up/down. */
+        .mobile-cube-section.has-perfume .pf-info {
+          top: calc(50% + clamp(70px, 22vw, 120px));
+        }
+      }
     </style>
   </head>
 
@@ -5581,74 +5680,7 @@
       <div data-barba="container" data-barba-namespace="home">
         <div id="scroll-progress"></div>
         <!-- ── NAV (頂部原始三元素) ── -->
-        <nav id="brand-nav" aria-label="Primary">
-          <div class="bn-left">
-            <button
-              class="bn-btn bn-burger"
-              type="button"
-              aria-label="Menu"
-              aria-expanded="false"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                aria-hidden="true"
-              >
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              </svg>
-            </button>
-            <div class="bn-mobile-menu" id="bn-mobile-menu">
-              <a href="#">Products</a>
-              <a href="#">Learn</a>
-            </div>
-            <div class="bn-menu">
-              <button class="bn-link" type="button">Products</button>
-            </div>
-            <div class="bn-menu">
-              <button class="bn-link" type="button">Learn</button>
-            </div>
-          </div>
-          <a class="bn-logo" id="brand-logo" href="#" aria-label="NUDOT home">
-            <img src="images/logo.svg" alt="NUDOT" />
-          </a>
-          <div class="bn-right">
-            <button class="bn-btn bn-icon" type="button" aria-label="Account">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="8" r="3.4" />
-                <path d="M5.5 19.2c1.2-3 3.6-4.6 6.5-4.6s5.3 1.6 6.5 4.6" />
-              </svg>
-              <span class="bn-label">Account</span>
-            </button>
-            <button class="bn-btn bn-icon" type="button" aria-label="Cart">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6.5 8.5h11l-.9 10a1.8 1.8 0 0 1-1.8 1.6H9.2a1.8 1.8 0 0 1-1.8-1.6z"
-                />
-                <path d="M9 8.5V7a3 3 0 0 1 6 0v1.5" />
-              </svg>
-              <span class="bn-label">Cart</span>
-            </button>
-          </div>
-        </nav>
+        <!-- site header injected globally by server.js -->
 
         <div id="nav">
           <a
@@ -6488,9 +6520,6 @@
                 </div>
               </div>
 
-              <div class="hero-title" id="hero-title">
-                <img src="images/title.png" alt="The New Era of Perfumes — Is Now On!!" decoding="async" />
-              </div>
               <div class="bottom-ui-container">
                 <div class="drag-indicator"></div>
                 <div class="thumbs-container">
@@ -6503,6 +6532,7 @@
                   <div
                     class="slide__img"
                     data-video="images/home/slide1.mp4"
+                    data-mobile-video="images/home/slide1mobile.mp4"
                     data-thumb="images/home/slide1.webp"
                     data-title="Nudot Creative Studio"
                   ></div>
@@ -6514,6 +6544,16 @@
                     data-video="images/home/slide2.mp4"
                     data-thumb="images/home/slide2.webp"
                     data-title="Visual Direction"
+                  ></div>
+                </div>
+
+                <div class="slide">
+                  <div
+                    class="slide__img"
+                    data-video="images/home/slide3.mp4"
+                    data-mobile-video="images/home/slide3mobile.mp4"
+                    data-thumb="images/home/slide3.webp"
+                    data-title="Selcouth"
                   ></div>
                 </div>
 
@@ -7241,7 +7281,10 @@
               data-lazy-video
               data-lazy-on-scroll="true"
             >
-              <source data-src="images/bg.mp4" type="video/mp4" />
+              <!-- Selcouth: same background video as the desktop second section
+                   (dark-wrapper uses images/wavebg.mp4). Kept visible under the
+                   relocated perfume carousel on mobile. -->
+              <source data-src="images/wavebg.mp4" type="video/mp4" />
             </video>
           </div>
           <div class="mcube-title">
@@ -7696,7 +7739,12 @@
           </div>
         </section>
 
-        <footer class="site-footer" id="site-footer">
+        <!-- Old NUDOT footer: retired for the Selcouth rebrand. Kept in the DOM
+             (its footer tag renamed to a div, still display:none via #site-footer)
+             so its unguarded reveal JS keeps finding #site-footer, and so server.js
+             no longer detects a footer element here and injects the shared Selcouth
+             footer (partials/footer.html) instead. -->
+        <div class="site-footer" id="site-footer">
           <div class="footer-top">
             <!-- <div class="footer-brand-title">NUDOT. STUDIO<sup>TM</sup></div> -->
 
@@ -7788,7 +7836,8 @@
               <div>&#169; 2026 NUDOT STUDIO. ALL RIGHTS RESERVED.</div>
             </div>
           </div>
-        </footer>
+        </div>
+        <!-- /old NUDOT footer -->
       </div>
     </div>
 
@@ -13452,6 +13501,23 @@
           );
           if (!cards.length) return;
 
+          // Seamless infinite loop: the card that wraps first↔last must do so
+          // while it is an opacity:0 side buffer (|offset| > 1). With only a
+          // few uniques every card is visible, so the wrap slides across the
+          // screen. Clone the set to add hidden buffers on both sides.
+          // Desktop only — the carousel is display:none on mobile, so cloning
+          // there would just load duplicate images for nothing.
+          var pfDesktop =
+            !window.matchMedia || window.matchMedia("(min-width: 768px)").matches;
+          if (pfDesktop && cards.length > 1 && cards.length < 5) {
+            cards.slice().forEach(function (c) {
+              stage.appendChild(c.cloneNode(true));
+            });
+            cards = Array.prototype.slice.call(
+              stage.querySelectorAll(".pf-card"),
+            );
+          }
+
           var N = cards.length;
           var DUR = 1.8; // slower, Lenis-like ease-out
           var EASE = "expo.out"; // match Lenis default easing
@@ -13526,7 +13592,8 @@
             }, 420);
           }
           cards.forEach(function (card, i) {
-            card.addEventListener("click", function () {
+            card.addEventListener("click", function (e) {
+              e.stopPropagation(); // don't double-fire the zone side-click
               if (Date.now() - (window._pfDragged || 0) < 400) return;
               var o = offsetOf(i);
               if (o !== 0) go(o);
@@ -13559,6 +13626,51 @@
               down = false;
             });
           }
+
+          // Desktop-only glassy arrow cursor over the carousel; click a side
+          // (left/right half) to go prev/next — matching the arrow direction.
+          if (
+            window.matchMedia &&
+            window.matchMedia("(hover: hover) and (pointer: fine)").matches
+          ) {
+            var zone = document.getElementById("pf-carousel");
+            if (zone) {
+              var cur = document.createElement("div");
+              cur.id = "pf-cursor";
+              cur.setAttribute("aria-hidden", "true");
+              cur.innerHTML =
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+              document.body.appendChild(cur);
+              var curSide = "right";
+              var moveCur = function (e) {
+                cur.style.left = e.clientX + "px";
+                cur.style.top = e.clientY + "px";
+                var r = zone.getBoundingClientRect();
+                curSide =
+                  (e.clientX - r.left) / r.width < 0.5 ? "left" : "right";
+                cur.setAttribute("data-side", curSide);
+              };
+              zone.addEventListener("mouseenter", function (e) {
+                cur.classList.add("is-on");
+                zone.classList.add("pf-cursor-on");
+                document.body.classList.add("pf-cursor-active");
+                moveCur(e);
+              });
+              zone.addEventListener("mousemove", moveCur);
+              zone.addEventListener("mouseleave", function () {
+                cur.classList.remove("is-on");
+                zone.classList.remove("pf-cursor-on");
+                document.body.classList.remove("pf-cursor-active");
+              });
+              zone.addEventListener("click", function (e) {
+                // don't hijack clicks on the Shop button / any link
+                if (e.target.closest && e.target.closest("button, a")) return;
+                if (Date.now() - (window._pfDragged || 0) < 400) return;
+                step(curSide === "left" ? -1 : 1);
+              });
+            }
+          }
+
           window.addEventListener("resize", function () {
             layout(false);
           });
@@ -13568,6 +13680,72 @@
           document.addEventListener("DOMContentLoaded", init);
         } else {
           init();
+        }
+      })();
+    </script>
+    <script>
+      /* SELCOUTH · mobile "second section": the perfume carousel lives inside the
+         desktop-only pinned #dark-wrapper (display:none on mobile). On mobile we
+         relocate its positioned container (#intro-panel) into the .mobile-cube-section
+         slot — already correctly placed in the mobile flow — and hide the old cube.
+         Fully reversible so resizing across the breakpoint (e.g. devtools) restores
+         the desktop layout. Carousel positions are relative to #intro-panel, so the
+         move preserves them; a dispatched resize re-runs its layout(). */
+      (function () {
+        var mq = window.matchMedia
+          ? window.matchMedia("(max-width: 767px)")
+          : null;
+        var intro = null,
+          cube = null,
+          homeParent,
+          homeNext,
+          moved = false;
+
+        function refs() {
+          if (!intro) intro = document.getElementById("intro-panel");
+          if (!cube) cube = document.querySelector(".mobile-cube-section");
+          if (intro && homeParent === undefined) {
+            homeParent = intro.parentNode;
+            homeNext = intro.nextSibling;
+          }
+        }
+        function relayout() {
+          requestAnimationFrame(function () {
+            window.dispatchEvent(new Event("resize"));
+          });
+        }
+        function toMobile() {
+          refs();
+          if (!intro || !cube || moved) return;
+          cube.classList.add("has-perfume");
+          cube.appendChild(intro);
+          moved = true;
+          relayout();
+        }
+        function toDesktop() {
+          refs();
+          if (!intro || !moved) return;
+          if (homeParent) homeParent.insertBefore(intro, homeNext || null);
+          if (cube) cube.classList.remove("has-perfume");
+          moved = false;
+          relayout();
+        }
+        function apply() {
+          if (!mq || mq.matches) toMobile();
+          else toDesktop();
+        }
+        function start() {
+          refs();
+          apply();
+          if (mq) {
+            if (mq.addEventListener) mq.addEventListener("change", apply);
+            else if (mq.addListener) mq.addListener(apply);
+          }
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", start);
+        } else {
+          start();
         }
       })();
     </script>
@@ -13590,61 +13768,86 @@
       })();
     </script>
     <script type="module">
-    // real fluid-simulation cursor (webgl-fluid-enhanced, MIT — vendored) in
-    // brand purple/white at medium-low strength
-    import WebGLFluidEnhanced from "./js/fluid.js";
-    (function () {
-      if (
-        window.matchMedia &&
-        (window.matchMedia("(hover: none)").matches ||
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches)
-      )
-        return;
-      var host = document.createElement("div");
-      host.id = "nd-fluid";
-      host.style.cssText =
-        "position:fixed;inset:0;pointer-events:none;z-index:12000;mix-blend-mode:screen;";
-      document.body.appendChild(host);
-      var sim;
-      try {
-        sim = new WebGLFluidEnhanced(host);
-        sim.setConfig({
-          // SmokeyCursor "Subtle Ambient Effect" preset values, brand palette
-          colorPalette: ["#694a96", "#8b68be", "#cfc6e2"],
-          hover: true,
-          bloom: false,
-          sunrays: false,
-          transparent: true,
-          brightness: 0.35,
-          splatRadius: 0.1,
-          splatForce: 3000,
-          densityDissipation: 8,
-          velocityDissipation: 5,
-          colorUpdateSpeed: 5,
-          pressureIterations: 10,
+      // real fluid-simulation cursor (webgl-fluid-enhanced, MIT — vendored) in
+      // brand purple/white at medium-low strength.
+      // Dynamic import so a load/parse failure is catchable.
+      import("./js/fluid.js")
+        .then(function (mod) {
+          var WebGLFluidEnhanced = mod && (mod.default || mod);
+          if (
+            window.matchMedia &&
+            (window.matchMedia("(hover: none)").matches ||
+              window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          ) {
+            console.warn(
+              "[fluid] disabled by guard — hover:none=" +
+                window.matchMedia("(hover: none)").matches +
+                " reduced-motion=" +
+                window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+            );
+            return;
+          }
+          var host = document.createElement("div");
+          host.id = "nd-fluid";
+          document.body.appendChild(host);
+          // webgl-fluid-enhanced FORCES the container to position:relative;
+          // display:flex during construction, which turns this host into a
+          // normal-flow ~100vh block at the end of the page (smoke only worked
+          // down there). Pin it as a fixed viewport overlay with !important so
+          // the library's inline styles can't override it. No mix-blend-mode:
+          // a blend can't composite across the isolate:isolate sections.
+          var pin = document.createElement("style");
+          pin.textContent =
+            "#nd-fluid{position:fixed!important;inset:0!important;" +
+            "width:100vw!important;height:100vh!important;margin:0!important;" +
+            "pointer-events:none!important;z-index:12000!important;}" +
+            "#nd-fluid canvas{width:100%!important;height:100%!important;" +
+            "display:block!important;}";
+          document.head.appendChild(pin);
+          var sim = new WebGLFluidEnhanced(host);
+          sim.setConfig({
+            // White wisp, tuned VERY subtle — dim, small puffs that fade
+            // almost immediately.
+            colorPalette: ["#ffffff"],
+            hover: true,
+            bloom: false,
+            sunrays: false,
+            transparent: true,
+            brightness: 0.1,
+            splatRadius: 0.06,
+            splatForce: 1800,
+            densityDissipation: 5.8,
+            velocityDissipation: 3.2,
+            curl: 2,
+            colorUpdateSpeed: 3,
+            pressureIterations: 10,
+          });
+          sim.start();
+          // Now that the host is pinned to the full viewport, make the sim
+          // re-measure and resize its canvas buffer to match.
+          window.dispatchEvent(new Event("resize"));
+
+          // host is pointer-events:none, so feed the sim from window moves
+          var lx = -1,
+            ly = -1;
+          addEventListener(
+            "pointermove",
+            function (e) {
+              var dx = lx < 0 ? 0 : e.clientX - lx;
+              var dy = ly < 0 ? 0 : e.clientY - ly;
+              lx = e.clientX;
+              ly = e.clientY;
+              if (dx * dx + dy * dy < 4) return;
+              try {
+                sim.splatAtLocation(e.clientX, e.clientY, dx * 8, dy * 8);
+              } catch (err) {}
+            },
+            { passive: true },
+          );
+        })
+        .catch(function (err) {
+          console.warn("[fluid] FAILED to load/init ./js/fluid.js —", err);
         });
-        sim.start();
-      } catch (e) {
-        return;
-      }
-      // host is pointer-events:none, so feed the sim from window moves
-      var lx = -1,
-        ly = -1;
-      addEventListener(
-        "pointermove",
-        function (e) {
-          var dx = lx < 0 ? 0 : e.clientX - lx;
-          var dy = ly < 0 ? 0 : e.clientY - ly;
-          lx = e.clientX;
-          ly = e.clientY;
-          if (dx * dx + dy * dy < 4) return;
-          try {
-            sim.splatAtLocation(e.clientX, e.clientY, dx * 8, dy * 8);
-          } catch (err) {}
-        },
-        { passive: true },
-      );
-    })();
-  </script>
+    </script>
 </body>
 </html>
