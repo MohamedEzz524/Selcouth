@@ -5,18 +5,7 @@
      has its target. Edit here once; it updates everywhere.
      ============================================================ -->
 <style>
-  @font-face {
-    font-family: "MB PH One";
-    src: url("/fonts/mb-ph-one-regular.ttf") format("truetype");
-    font-weight: 100 500;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "MB PH One";
-    src: url("/fonts/mb-ph-one-bold.ttf") format("truetype");
-    font-weight: 501 900;
-    font-display: swap;
-  }
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
   .site-header {
     position: fixed;
@@ -27,7 +16,7 @@
     align-items: center;
     padding: 22px clamp(20px, 4vw, 56px);
     pointer-events: none;
-    font-family: "MB PH One", "DM Sans", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Inter", "DM Sans", "Helvetica Neue", Arial, sans-serif;
   }
   .site-header > * {
     pointer-events: auto;
@@ -218,12 +207,12 @@
     </button>
     <nav class="sh-nav" aria-label="Primary navigation">
       <a class="sh-link" href="/">Home</a>
-      <a class="sh-link" href="#">Products</a>
+      <a class="sh-link" href="/product">Products</a>
       <a class="sh-link" href="/about-us">About Us</a>
     </nav>
     <div class="sh-mobile" id="sh-mobile">
       <a href="/">Home</a>
-      <a href="#">Products</a>
+      <a href="/product">Products</a>
       <a href="/about-us">About Us</a>
     </div>
   </div>

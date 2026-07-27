@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Aurelinth — Selcouth</title>
+    <meta
+      name="description"
+      content="Aurelinth by Selcouth — a ripe, sun-warmed rose wrapped in amber and oud. Extrait de parfum."
+    />
+    <meta name="theme-color" content="#050505" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <style>
+      /* ============================================================
+         SELCOUTH — brand type + colour tokens (self-contained)
+         Headings: MB PH One · Body/UI: Inter (Google Fonts)
+         ============================================================ */
+      @font-face {
+        font-family: "MB PH One";
+        src: url("fonts/mb-ph-one-regular.ttf") format("truetype");
+        font-weight: 100 500;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "MB PH One";
+        src: url("fonts/mb-ph-one-bold.ttf") format("truetype");
+        font-weight: 501 900;
+        font-display: swap;
+      }
+      :root {
+        --sel-bg: #050505;
+        --sel-cream: #efe6d8;
+        --sel-text: #d9d5df;
+        --sel-muted: #9a95a3;
+        --sel-panel: #17151d; /* shared frame/panel colour */
+        --sel-ink: #141019; /* near-black text on white */
+        --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+        --font-display: "MB PH One", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--sel-bg);
+        color: var(--sel-text);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        /* clip (not hidden) so ScrollTrigger's pin doesn't jump */
+        overflow-x: clip;
+      }
+      ::selection {
+        background: #ffffff;
+        color: #050505;
+      }
+
+      /* Lenis smooth scroll */
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      .lenis.lenis-smooth iframe {
+        pointer-events: none;
+      }
+
+      /* ============================================================
+         MAIN-PRODUCT — gallery (left) + details/actions (right)
+         Desktop: 50 / 50, section pins and scrub-reveals the backdrops.
+         Mobile:  single column, backdrops auto-rotate with arrows.
+         ============================================================ */
+      .mp {
+        position: relative;
+        /* full-bleed: no container padding so the gallery meets the edge */
+      }
+      .mp__inner {
+        max-width: 1920px;
+        width: 100%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        align-items: center;
+      }
+
+      /* ---------- GALLERY ---------- */
+      .mp-gallery {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 5; /* mobile shape */
+        border-radius: 0; /* full-bleed on mobile: no rounded corners */
+        overflow: hidden;
+        background: var(--sel-panel);
+        isolation: isolate; /* keep the layer z-stack local */
+      }
+      /* stacked backdrop textures — same box, revealed by clip-path.
+         Each is pinned to the gallery, cover-centred, and never moves,
+         so the clip animation reads as one image wiping over another. */
+      .mp-gallery__layer {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* base state = hidden (revealed from the bottom up).
+           JS overrides clip-path per layer; this is the no-JS fallback. */
+        clip-path: inset(100% 0 0 0);
+        will-change: clip-path;
+      }
+      /* the first (base) layer is always fully shown behind everything */
+      .mp-gallery__layer:first-child {
+        clip-path: inset(0 0 0 0);
+      }
+
+      /* the transparent product cutout floats above every backdrop and
+         stays put while the textures shift behind it */
+      .mp-gallery__product {
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        z-index: 10;
+        max-width: 74%;
+        max-height: 82%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 34px 60px rgba(0, 0, 0, 0.55));
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* dot indicators (bottom) — reflect the active backdrop */
+      .mp-gallery__dots {
+        position: absolute;
+        left: 50%;
+        bottom: 16px;
+        transform: translateX(-50%);
+        z-index: 15;
+        display: flex;
+        gap: 8px;
+      }
+      .mp-gallery__dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+      .mp-gallery__dot.is-active {
+        background: #fff;
+        transform: scale(1.25);
+      }
+
+      /* prev / next arrows — mobile only (desktop reveals on scroll) */
+      .mp-gallery__arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 20;
+        display: none;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        color: #fff;
+        cursor: pointer;
+        background: radial-gradient(
+          120% 120% at 30% 20%,
+          rgba(255, 255, 255, 0.22),
+          rgba(255, 255, 255, 0.06) 60%
+        );
+        backdrop-filter: blur(14px) saturate(160%);
+        -webkit-backdrop-filter: blur(14px) saturate(160%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.22),
+          0 8px 24px rgba(0, 0, 0, 0.3);
+      }
+      .mp-gallery__arrow svg {
+        width: 20px;
+        height: 20px;
+      }
+      .mp-gallery__arrow--prev {
+        left: 12px;
+      }
+      .mp-gallery__arrow--next {
+        right: 12px;
+      }
+
+      /* ---------- DETAILS / ACTIONS ---------- */
+      .mp-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+        padding: 26px 20px 8px; /* details keep side margins; gallery is full-bleed */
+      }
+      .mp-details__eyebrow {
+        margin: 0;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--sel-muted);
+      }
+      .mp-details__name {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        color: var(--sel-cream);
+      }
+      .mp-details__tagline {
+        margin: 0.1rem 0 0;
+        font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+        line-height: 1.3;
+        color: var(--sel-muted);
+      }
+      .mp-details__price {
+        margin: 0.2rem 0 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: #fff;
+      }
+      .mp-details__desc {
+        margin: 0;
+        max-width: 46ch;
+        font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+        line-height: 1.7;
+        color: var(--sel-text);
+      }
+
+      .mp-rule {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 0.4rem 0;
+      }
+
+      /* scent notes */
+      .mp-notes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .mp-notes__k {
+        margin: 0 0 0.3rem;
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sel-muted);
+      }
+      .mp-notes__v {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--sel-cream);
+      }
+
+      /* size selector */
+      .mp-field__label {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sel-muted);
+      }
+      .mp-sizes {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+      }
+      .mp-size {
+        min-width: 88px;
+        padding: 0.7rem 1.1rem;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--sel-text);
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        cursor: pointer;
+        transition: border-color 0.25s ease, background 0.25s ease,
+          color 0.25s ease;
+      }
+      .mp-size:hover {
+        border-color: rgba(255, 255, 255, 0.45);
+      }
+      .mp-size.is-active {
+        background: #fff;
+        border-color: #fff;
+        color: var(--sel-ink);
+      }
+      .mp-size small {
+        display: block;
+        margin-top: 2px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        opacity: 0.65;
+      }
+
+      /* quantity + actions row */
+      .mp-actions {
+        display: flex;
+        gap: 0.8rem;
+        align-items: stretch;
+        flex-wrap: wrap;
+        margin-top: 0.4rem;
+      }
+      /* quantity — custom select (1..10+) that becomes a +/- stepper at 10+ */
+      .mp-qty {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+      }
+      .mp-qty__main {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        height: 54px;
+        padding: 0 0.5rem;
+        border: none;
+        background: none;
+        color: #fff;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .mp-qty__value {
+        min-width: 30px;
+        text-align: center;
+        font-size: 1rem;
+      }
+      .mp-qty__chevron {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.25s ease;
+      }
+      .mp-qty__main[aria-expanded="true"] .mp-qty__chevron {
+        transform: rotate(180deg);
+      }
+      /* stepper buttons — always occupy their slot; only visibility toggles,
+         so the field width never jumps between select and stepper modes */
+      .mp-qty__btn {
+        display: inline-flex;
+        visibility: hidden;
+        width: 46px;
+        height: 54px;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+      .mp-qty__btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .mp-qty__btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .mp-qty__minus {
+        border-radius: 999px 0 0 999px;
+      }
+      .mp-qty__plus {
+        border-radius: 0 999px 999px 0;
+      }
+      /* stepper mode: reveal +/- and hide the chevron — both keep their space */
+      .mp-qty[data-mode="stepper"] .mp-qty__btn {
+        visibility: visible;
+      }
+      .mp-qty[data-mode="stepper"] .mp-qty__chevron {
+        visibility: hidden;
+      }
+      .mp-qty[data-mode="stepper"] .mp-qty__main {
+        pointer-events: none;
+        cursor: default;
+      }
+      /* dropdown list */
+      .mp-qty__list {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        min-width: 100%;
+        margin: 0;
+        padding: 6px;
+        list-style: none;
+        background: var(--sel-panel);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+        z-index: 40;
+        max-height: 260px;
+        overflow-y: auto;
+      }
+      .mp-qty__list[hidden] {
+        display: none;
+      }
+      .mp-qty__opt {
+        display: block;
+        width: 100%;
+        min-width: 84px;
+        text-align: left;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 8px;
+        background: none;
+        color: var(--sel-text);
+        font: inherit;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+      .mp-qty__opt:hover,
+      .mp-qty__opt[aria-selected="true"] {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+      }
+
+      /* primary add-to-cart (solid white) */
+      .mp-add {
+        flex: 1;
+        min-width: 200px;
+        height: 54px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        border: none;
+        border-radius: 999px;
+        background: #fff;
+        color: var(--sel-ink);
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 0.78rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease,
+          background 0.25s ease;
+      }
+      .mp-add:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(255, 255, 255, 0.14);
+      }
+      .mp-add.is-added {
+        background: var(--sel-cream);
+      }
+
+      .mp-reassure {
+        margin: 0.3rem 0 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        color: var(--sel-muted);
+      }
+
+      /* row 1 — title group (tighter internal spacing) */
+      .mp-head {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      /* row 2 — hero ingredient feature */
+      .mp-feature {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.045);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.9rem;
+        color: var(--sel-cream);
+      }
+      .mp-feature__icon {
+        flex: 0 0 auto;
+        width: 20px;
+        height: 20px;
+        color: #fff;
+      }
+
+      /* row 3 — variants (size) with thumbnails */
+      .mp-variants__label {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+        margin-bottom: 0.7rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sel-muted);
+      }
+      .mp-variants__label small {
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: var(--sel-cream);
+      }
+      .mp-variants__opts {
+        display: flex;
+        gap: 0.7rem;
+        flex-wrap: wrap;
+      }
+      .mp-variant {
+        display: flex;
+        flex-direction: column; /* image above label */
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.7rem 0.9rem 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 12px;
+        background: transparent;
+        color: var(--sel-text);
+        font: inherit;
+        cursor: pointer;
+        transition: border-color 0.25s ease, background 0.25s ease;
+      }
+      .mp-variant:hover {
+        border-color: rgba(255, 255, 255, 0.45);
+      }
+      .mp-variant.is-active {
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .mp-variant__thumb {
+        width: 72px;
+        height: 72px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--sel-panel);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .mp-variant__thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .mp-variant__name {
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: #fff;
+      }
+
+      /* price shown inside the add-to-cart button */
+      .mp-add__price {
+        opacity: 0.72;
+      }
+
+      /* row 5 — gift with purchase */
+      .mp-gift {
+        padding: 1rem 1.1rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.045);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .mp-gift__head {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.6rem;
+        font-weight: 700;
+        color: var(--sel-cream);
+      }
+      .mp-gift__head svg {
+        flex: 0 0 auto;
+        width: 20px;
+        height: 20px;
+        color: #fff;
+      }
+      .mp-gift__list {
+        margin: 0;
+        padding-left: 1.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        font-size: 0.88rem;
+        color: var(--sel-text);
+      }
+
+      /* row 6 — pickup availability */
+      .mp-pickup {
+        display: flex;
+        gap: 0.7rem;
+        align-items: flex-start;
+      }
+      .mp-pickup__icon {
+        flex: 0 0 auto;
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        color: #fff;
+      }
+      .mp-pickup__body p {
+        margin: 0 0 0.25rem;
+      }
+      .mp-pickup__text {
+        font-size: 0.9rem;
+        color: var(--sel-cream);
+      }
+      .mp-pickup__timing {
+        font-size: 0.8rem;
+        color: var(--sel-muted);
+      }
+      .mp-pickup__link {
+        margin-top: 0.2rem;
+        padding: 0;
+        border: none;
+        background: none;
+        color: var(--sel-text);
+        font: inherit;
+        font-size: 0.82rem;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        cursor: pointer;
+      }
+      .mp-pickup__link:hover {
+        color: #fff;
+      }
+
+      /* row 7 — tabs */
+      .mp-tabs__nav {
+        display: flex;
+        gap: 1.6rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .mp-tab-link {
+        position: relative;
+        padding: 0.7rem 0;
+        border: none;
+        background: none;
+        color: var(--sel-muted);
+        font: inherit;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: color 0.25s ease;
+      }
+      .mp-tab-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        width: 0;
+        height: 1px;
+        background: #fff;
+        transition: width 0.3s ease;
+      }
+      .mp-tab-link.is-active {
+        color: #fff;
+      }
+      .mp-tab-link.is-active::after {
+        width: 100%;
+      }
+      .mp-tabs__panels {
+        padding-top: 1rem;
+      }
+      .mp-tab {
+        display: none;
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: var(--sel-text);
+      }
+      .mp-tab.is-active {
+        display: block;
+      }
+      .mp-tab p {
+        margin: 0 0 0.7rem;
+      }
+      .mp-tab__note,
+      .mp-tab__meta {
+        font-size: 0.78rem;
+        color: var(--sel-muted);
+        letter-spacing: 0.04em;
+      }
+
+      /* row 8 — stat bars */
+      .mp-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      .mp-stat__k {
+        margin: 0 0 0.6rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--sel-cream);
+      }
+      .mp-stat__bar {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 0.5rem;
+      }
+      .mp-stat__bar span {
+        flex: 1;
+        height: 4px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .mp-stat__bar span.is-active {
+        background: #fff;
+      }
+      .mp-stat__scale {
+        display: flex;
+        justify-content: space-between;
+      }
+      .mp-stat__scale small {
+        font-size: 0.72rem;
+        color: var(--sel-muted);
+      }
+
+      /* ============================================================
+         DESKTOP — 50/50 · gallery sticks full-height while the details
+         column scrolls beside it; the backdrop reveal scrubs on scroll.
+         ============================================================ */
+      @media (min-width: 768px) {
+        .mp {
+          min-height: 100vh;
+          padding: 0; /* gallery bleeds to the left / top / bottom */
+        }
+        .mp__inner {
+          grid-template-columns: 1fr 1fr;
+          align-items: start; /* gallery sticks; details define the height */
+          gap: 0;
+        }
+        .mp-gallery {
+          position: sticky;
+          top: 0;
+          height: 100vh;
+          max-height: none;
+          aspect-ratio: auto; /* full-height left panel */
+          border-radius: 0;
+          margin: 0;
+        }
+        .mp-details {
+          padding: clamp(96px, 12vh, 140px) clamp(32px, 5vw, 96px)
+            clamp(48px, 8vh, 96px) clamp(28px, 3vw, 56px);
+        }
+      }
+
+      /* ============================================================
+         MOBILE — arrows visible, gallery a touch shorter
+         ============================================================ */
+      @media (max-width: 767px) {
+        .mp-gallery {
+          aspect-ratio: 4 / 5;
+        }
+        .mp-gallery__arrow {
+          display: inline-flex;
+        }
+        .mp-details__name {
+          font-size: clamp(2.6rem, 12vw, 3.4rem);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .mp-gallery__layer {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ============================================================
+         MAIN-PRODUCT
+         ============================================================ -->
+    <section class="mp" aria-label="Aurelinth — product">
+      <div class="mp__inner">
+        <!-- ---------- GALLERY ---------- -->
+        <div class="mp-gallery" aria-label="Product gallery">
+          <div
+            class="mp-gallery__layer"
+            style="z-index: 1; background-image: url('images/product/gallery-1.webp')"
+            role="img"
+            aria-label="Aurelinth among fresh roses"
+          ></div>
+          <div
+            class="mp-gallery__layer"
+            style="z-index: 2; background-image: url('images/product/gallery-2.webp')"
+            role="img"
+            aria-label="Aurelinth macro texture"
+          ></div>
+          <div
+            class="mp-gallery__layer"
+            style="z-index: 3; background-image: url('images/product/gallery-3.webp')"
+            role="img"
+            aria-label="Aurelinth bottle blueprint"
+          ></div>
+          <div
+            class="mp-gallery__layer"
+            style="z-index: 4; background-image: url('images/product/gallery-4.webp')"
+            role="img"
+            aria-label="Aurelinth ingredient study"
+          ></div>
+
+          <img
+            class="mp-gallery__product"
+            src="images/perfumes/p1.webp"
+            alt="Aurelinth extrait de parfum bottle"
+          />
+
+          <button
+            class="mp-gallery__arrow mp-gallery__arrow--prev"
+            type="button"
+            aria-label="Previous image"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+          </button>
+          <button
+            class="mp-gallery__arrow mp-gallery__arrow--next"
+            type="button"
+            aria-label="Next image"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          <div class="mp-gallery__dots" aria-hidden="true">
+            <span class="mp-gallery__dot is-active"></span>
+            <span class="mp-gallery__dot"></span>
+            <span class="mp-gallery__dot"></span>
+            <span class="mp-gallery__dot"></span>
+          </div>
+        </div>
+
+        <!-- ---------- DETAILS / ACTIONS ---------- -->
+        <div class="mp-details">
+          <!-- row 1 · title -->
+          <div class="mp-head">
+            <p class="mp-details__eyebrow">Extrait de Parfum · Selcouth</p>
+            <h1 class="mp-details__name">Aurelinth</h1>
+            <p class="mp-details__tagline">a ripe rose, caught in amber</p>
+            <p class="mp-details__price" id="mp-price">$185</p>
+          </div>
+
+          <!-- row 2 · hero ingredient -->
+          <div class="mp-feature">
+            <svg class="mp-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4 4L19 7" /></svg>
+            <span>Hero Ingredient: Turkish Rose Absolute · Isparta</span>
+          </div>
+
+          <!-- row 3 · variant (size) with thumbnails -->
+          <div class="mp-variants">
+            <div class="mp-variants__label">
+              <span>Size</span><small id="mp-size-label">50 ML</small>
+            </div>
+            <div class="mp-variants__opts" role="group" aria-label="Size">
+              <button class="mp-variant is-active" type="button" data-price="185" data-size="50 ML">
+                <span class="mp-variant__thumb"><img src="images/perfumes/p1.webp" alt="" /></span>
+                <span class="mp-variant__name">50 ML</span>
+              </button>
+              <button class="mp-variant" type="button" data-price="265" data-size="100 ML">
+                <span class="mp-variant__thumb"><img src="images/perfumes/p1.webp" alt="" /></span>
+                <span class="mp-variant__name">100 ML</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- row 4 · quantity + add to cart -->
+          <div class="mp-actions">
+            <div class="mp-qty" data-qty data-mode="select" aria-label="Quantity">
+              <button type="button" class="mp-qty__btn mp-qty__minus" data-qty-minus aria-label="Decrease quantity">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12" /></svg>
+              </button>
+              <button type="button" class="mp-qty__main" data-qty-toggle aria-haspopup="listbox" aria-expanded="false">
+                <span class="mp-qty__value" data-qty-value>1</span>
+                <svg class="mp-qty__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+              </button>
+              <button type="button" class="mp-qty__btn mp-qty__plus" data-qty-plus aria-label="Increase quantity">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 12h6m6 0h-6m0 0V6m0 6v6" /></svg>
+              </button>
+              <ul class="mp-qty__list" data-qty-list role="listbox" data-lenis-prevent hidden>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="1" role="option">1</button></li>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="2" role="option">2</button></li>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="3" role="option">3</button></li>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="4" role="option">4</button></li>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="5" role="option">5</button></li>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="6" role="option">6</button></li>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="7" role="option">7</button></li>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="8" role="option">8</button></li>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="9" role="option">9</button></li>
+                <li><button type="button" class="mp-qty__opt" data-qty-opt="10" role="option">10 +</button></li>
+              </ul>
+            </div>
+
+            <button class="mp-add" type="button" id="mp-add">
+              <span class="mp-add__txt">Add to Cart</span>
+              <span class="mp-add__price" id="mp-add-price">$185</span>
+            </button>
+          </div>
+
+          <!-- row 5 · gift with purchase -->
+          <div class="mp-gift">
+            <div class="mp-gift__head">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v9.4a.6.6 0 0 1-.6.6H4.6a.6.6 0 0 1-.6-.6V12m17.4-5H2.6a.6.6 0 0 0-.6.6v3.8a.6.6 0 0 0 .6.6h18.8a.6.6 0 0 0 .6-.6V7.6a.6.6 0 0 0-.6-.6zM12 22V7m0 0H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zm0 0h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" /></svg>
+              <span>Complimentary With Purchase</span>
+            </div>
+            <ul class="mp-gift__list">
+              <li>3× Discovery Vials → Velvet Pouch</li>
+              <li>Any 50 ML → Travel Atomizer</li>
+              <li>Any 100 ML → 10 ML Travel Size</li>
+            </ul>
+          </div>
+
+          <!-- row 6 · pickup availability -->
+          <div class="mp-pickup">
+            <svg class="mp-pickup__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4 4L19 7" /></svg>
+            <div class="mp-pickup__body">
+              <p class="mp-pickup__text">Pickup available at <strong>Selcouth Atelier</strong></p>
+              <p class="mp-pickup__timing">Usually ready in 24 hours</p>
+              <button class="mp-pickup__link" type="button">Check availability at other stores</button>
+            </div>
+          </div>
+
+          <div class="mp-rule"></div>
+
+          <!-- row 7 · tabs -->
+          <div class="mp-tabs">
+            <div class="mp-tabs__nav" role="tablist">
+              <button class="mp-tab-link is-active" type="button" data-tab="0" role="tab" aria-selected="true">Description</button>
+              <button class="mp-tab-link" type="button" data-tab="1" role="tab" aria-selected="false">Notes</button>
+              <button class="mp-tab-link" type="button" data-tab="2" role="tab" aria-selected="false">Ingredients</button>
+            </div>
+            <div class="mp-tabs__panels">
+              <div class="mp-tab is-active" data-panel="0" role="tabpanel">
+                <p><strong>Fragrance profile:</strong> <em>Warm Amber Rose</em></p>
+                <p>
+                  Sun-warmed Turkish rose folded into black amber and a whisper
+                  of oud — opulent at first breath, then slow and skin-close for
+                  hours. An extrait-grade composition built to be remembered,
+                  not just worn.
+                </p>
+                <p class="mp-tab__note">
+                  *Slight colour variation may occur from the use of natural
+                  materials — a mark of the craft, not a defect.
+                </p>
+              </div>
+              <div class="mp-tab" data-panel="1" role="tabpanel">
+                <p>Top / Bergamot, Pink Pepper, Saffron</p>
+                <p>Heart / Turkish Rose, Peony, Jasmine</p>
+                <p>Base / Black Amber, Oud, White Musk</p>
+                <p class="mp-tab__meta">UNISEX · EXTRAIT · SMALL BATCH</p>
+              </div>
+              <div class="mp-tab" data-panel="2" role="tabpanel">
+                <p>
+                  ALCOHOL DENAT., PARFUM (FRAGRANCE), AQUA (WATER), ROSA
+                  DAMASCENA FLOWER OIL, BENZYL SALICYLATE, CITRONELLOL, GERANIOL,
+                  LINALOOL, EUGENOL, FARNESOL, LIMONENE, BENZYL BENZOATE.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mp-rule"></div>
+
+          <!-- row 8 · stat bars -->
+          <div class="mp-stats">
+            <div class="mp-stat">
+              <p class="mp-stat__k">Projection / Sillage</p>
+              <div class="mp-stat__bar" aria-hidden="true">
+                <span></span><span></span><span class="is-active"></span><span></span><span></span>
+              </div>
+              <div class="mp-stat__scale">
+                <small>Soft</small><small>Moderate</small><small>Strong</small>
+              </div>
+            </div>
+            <div class="mp-stat">
+              <p class="mp-stat__k">Longevity</p>
+              <div class="mp-stat__bar" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span class="is-active"></span>
+              </div>
+              <div class="mp-stat__scale">
+                <small>1 Hour</small><small>4 Hours</small><small>8 Hours</small>
+              </div>
+            </div>
+          </div>
+
+          <p class="mp-reassure">
+            Free shipping over $150 · Extrait concentration · Ships in 1–2 days
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script src="vendor/lenis.min.js"></script>
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis smooth scroll, driven by GSAP's ticker (same setup as about-us) -->
+    <script>
+      (function () {
+        "use strict";
+        if (!window.gsap) return;
+        if (window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce && window.Lenis) {
+          var lenis = new Lenis({
+            duration: 1.1,
+            easing: function (t) {
+              return Math.min(1, 1.001 - Math.pow(2, -10 * t));
+            },
+            smoothWheel: true,
+            touchMultiplier: 1.2,
+          });
+          if (window.ScrollTrigger) lenis.on("scroll", ScrollTrigger.update);
+          gsap.ticker.add(function (time) {
+            lenis.raf(time * 1000);
+          });
+          gsap.ticker.lagSmoothing(0);
+          window.__lenis = lenis;
+        }
+      })();
+    </script>
+
+    <!-- Gallery: pinned clip-reveal on desktop · auto-rotate carousel on mobile -->
+    <script>
+      (function () {
+        "use strict";
+        var section = document.querySelector(".mp");
+        if (!section) return;
+        var layers = Array.prototype.slice.call(
+          section.querySelectorAll(".mp-gallery__layer")
+        );
+        var dots = Array.prototype.slice.call(
+          section.querySelectorAll(".mp-gallery__dot")
+        );
+        if (layers.length < 2) return;
+
+        var REVEALS = layers.length - 1; // layer 0 is the always-on base
+        var reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        var hasGsap = !!window.gsap;
+        var hasST = !!window.ScrollTrigger;
+
+        // Apply a continuous progress value p in [0 .. REVEALS].
+        // Each non-base layer i reveals (rises up) as p passes (i-1)->i.
+        var state = { p: 0 };
+        function applyProgress(p) {
+          for (var i = 0; i < layers.length; i++) {
+            if (i === 0) {
+              layers[i].style.clipPath = "inset(0 0 0 0)";
+              continue;
+            }
+            var r = Math.min(1, Math.max(0, p - (i - 1)));
+            layers[i].style.clipPath = "inset(" + (1 - r) * 100 + "% 0 0 0)";
+          }
+          // active dot = the top-most fully/most-revealed layer
+          var act = Math.round(Math.min(REVEALS, Math.max(0, p)));
+          for (var d = 0; d < dots.length; d++) {
+            dots[d].classList.toggle("is-active", d === act);
+          }
+        }
+
+        var desktopMQ = window.matchMedia("(min-width: 768px)");
+        var st = null;
+        var autoTimer = null;
+        var active = 0;
+        var dir = 1;
+        var userStopped = false;
+
+        function teardown() {
+          if (st) {
+            st.kill();
+            st = null;
+          }
+          if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+          }
+          if (hasGsap) gsap.killTweensOf(state);
+        }
+
+        /* ---------- desktop: pin + scrub reveal ---------- */
+        function setupDesktop() {
+          // undo anything the mobile carousel set inline
+          for (var i = 0; i < layers.length; i++) {
+            layers[i].style.opacity = "";
+            layers[i].style.transition = "";
+            layers[i].style.zIndex = i + 1; // restore base stack order
+          }
+          if (!hasGsap || !hasST || reduce) {
+            applyProgress(reduce ? REVEALS : 0);
+            return;
+          }
+          applyProgress(0);
+          // No pin: the gallery is held by CSS position:sticky. This just
+          // scrubs the backdrop reveal across the section's scroll length.
+          st = ScrollTrigger.create({
+            trigger: section,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+            invalidateOnRefresh: true,
+            onUpdate: function (self) {
+              applyProgress(self.progress * REVEALS);
+            },
+            onRefresh: function (self) {
+              applyProgress(self.progress * REVEALS);
+            },
+          });
+        }
+
+        /* ---------- mobile: per-slide clip-path WIPE + arrows ----------
+           Same wipe as desktop, self-contained per step (incoming backdrop
+           lifts on top and wipes up over the current one — nothing
+           accumulates, so looping/reversing never "unwinds").
+           Clicks are QUEUED, not applied instantly: pressing an arrow while
+           a wipe is running just adds a step that plays when the current one
+           finishes, so mashing plays each wipe in order with no snap/jump. */
+        var busy = false;
+        var queued = 0;
+
+        function renderWipe(cur, old, done) {
+          // z-order (all below the bottle at z:10): incoming on top, the
+          // outgoing fully shown just beneath, the rest at base.
+          for (var i = 0; i < layers.length; i++) {
+            layers[i].style.zIndex = i === cur ? 8 : i === old ? 7 : 1;
+          }
+          layers[old].style.clipPath = "inset(0 0 0 0)"; // stays put behind
+          layers[cur].style.clipPath = "inset(100% 0 0 0)"; // hidden → wipe up
+          for (var d = 0; d < dots.length; d++) {
+            dots[d].classList.toggle("is-active", d === cur);
+          }
+          if (hasGsap && !reduce) {
+            state.r = 0;
+            gsap.to(state, {
+              r: 1,
+              duration: 0.7,
+              ease: "power2.inOut",
+              overwrite: true,
+              onUpdate: function () {
+                layers[cur].style.clipPath =
+                  "inset(" + (1 - state.r) * 100 + "% 0 0 0)";
+              },
+              onComplete: done,
+            });
+          } else {
+            layers[cur].style.clipPath = "inset(0 0 0 0)";
+            done();
+          }
+        }
+
+        // play one queued step, then chain to the next when it settles
+        function pump() {
+          if (busy || queued === 0) return;
+          var dir = queued > 0 ? 1 : -1;
+          queued -= dir;
+          var old = active;
+          active = (active + dir + layers.length) % layers.length;
+          busy = true;
+          renderWipe(active, old, function () {
+            busy = false;
+            pump();
+          });
+        }
+
+        function requestStep(dir) {
+          queued += dir;
+          var cap = layers.length - 1; // bound the backlog (no runaway loops)
+          if (queued > cap) queued = cap;
+          if (queued < -cap) queued = -cap;
+          pump();
+        }
+
+        function stopAuto() {
+          userStopped = true;
+          if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+          }
+        }
+        function setupMobile() {
+          active = 0;
+          busy = false;
+          queued = 0;
+          userStopped = false;
+          // base state: layer 0 shown on top, the rest hidden below it
+          for (var i = 0; i < layers.length; i++) {
+            layers[i].style.opacity = "";
+            layers[i].style.transition = ""; // gsap drives the wipe
+            layers[i].style.zIndex = i === 0 ? 8 : 1;
+            layers[i].style.clipPath =
+              i === 0 ? "inset(0 0 0 0)" : "inset(100% 0 0 0)";
+          }
+          for (var d = 0; d < dots.length; d++) {
+            dots[d].classList.toggle("is-active", d === 0);
+          }
+
+          var prev = section.querySelector(".mp-gallery__arrow--prev");
+          var next = section.querySelector(".mp-gallery__arrow--next");
+          if (prev)
+            prev.onclick = function () {
+              stopAuto();
+              requestStep(-1);
+            };
+          if (next)
+            next.onclick = function () {
+              stopAuto();
+              requestStep(1);
+            };
+
+          if (reduce) return;
+          autoTimer = setInterval(function () {
+            if (!userStopped) requestStep(1);
+          }, 3600);
+        }
+
+        function apply() {
+          teardown();
+          if (desktopMQ.matches) setupDesktop();
+          else setupMobile();
+          if (hasST) ScrollTrigger.refresh();
+        }
+
+        apply();
+        if (desktopMQ.addEventListener)
+          desktopMQ.addEventListener("change", apply);
+        else if (desktopMQ.addListener) desktopMQ.addListener(apply);
+
+        // Recompute pin distance after late layout shifts settle.
+        if (hasST) {
+          if (document.fonts && document.fonts.ready)
+            document.fonts.ready.then(function () {
+              ScrollTrigger.refresh();
+            });
+          window.addEventListener("load", function () {
+            ScrollTrigger.refresh();
+          });
+        }
+      })();
+    </script>
+
+    <!-- Product actions: variant selector, quantity, cart, wishlist, tabs -->
+    <script>
+      (function () {
+        "use strict";
+        var BASE_PRICE = 185;
+        var priceEl = document.getElementById("mp-price");
+        var addPriceEl = document.getElementById("mp-add-price");
+        var sizeLabel = document.getElementById("mp-size-label");
+        var variants = Array.prototype.slice.call(
+          document.querySelectorAll(".mp-variant")
+        );
+        var qty = 1;
+        var unit = BASE_PRICE;
+
+        function render() {
+          var total = "$" + unit * qty;
+          if (priceEl) priceEl.textContent = total;
+          if (addPriceEl) addPriceEl.textContent = total;
+        }
+
+        variants.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            variants.forEach(function (b) {
+              b.classList.remove("is-active");
+            });
+            btn.classList.add("is-active");
+            unit = parseInt(btn.getAttribute("data-price"), 10) || BASE_PRICE;
+            if (sizeLabel)
+              sizeLabel.textContent = btn.getAttribute("data-size") || "";
+            render();
+          });
+        });
+
+        /* quantity: custom select 1..10+, becomes a +/- stepper at 10+ */
+        var qtyRoot = document.querySelector("[data-qty]");
+        if (qtyRoot) {
+          var valueEl = qtyRoot.querySelector("[data-qty-value]");
+          var list = qtyRoot.querySelector("[data-qty-list]");
+          var toggle = qtyRoot.querySelector("[data-qty-toggle]");
+          var minus = qtyRoot.querySelector("[data-qty-minus]");
+          var plus = qtyRoot.querySelector("[data-qty-plus]");
+          var opts = Array.prototype.slice.call(
+            qtyRoot.querySelectorAll("[data-qty-opt]")
+          );
+          var MAX = 99;
+
+          var setQty = function (n) {
+            qty = n;
+            if (valueEl) valueEl.textContent = qty;
+            // 10+ → stepper mode (reveal +/- , hide the dropdown chevron)
+            qtyRoot.setAttribute("data-mode", qty >= 10 ? "stepper" : "select");
+            opts.forEach(function (o) {
+              o.setAttribute(
+                "aria-selected",
+                parseInt(o.getAttribute("data-qty-opt"), 10) === qty
+                  ? "true"
+                  : "false"
+              );
+            });
+            render();
+          };
+          var openList = function () {
+            if (list) list.hidden = false;
+            if (toggle) toggle.setAttribute("aria-expanded", "true");
+          };
+          var closeList = function () {
+            if (list) list.hidden = true;
+            if (toggle) toggle.setAttribute("aria-expanded", "false");
+          };
+
+          if (toggle)
+            toggle.addEventListener("click", function () {
+              if (qtyRoot.getAttribute("data-mode") === "stepper") return;
+              if (list && list.hidden) openList();
+              else closeList();
+            });
+          opts.forEach(function (o) {
+            o.addEventListener("click", function () {
+              setQty(parseInt(o.getAttribute("data-qty-opt"), 10) || 1);
+              closeList();
+            });
+          });
+          // below 10 the stepper drops back to the select field
+          if (minus)
+            minus.addEventListener("click", function () {
+              setQty(Math.max(1, qty - 1));
+            });
+          if (plus)
+            plus.addEventListener("click", function () {
+              setQty(Math.min(MAX, qty + 1));
+            });
+          document.addEventListener("click", function (e) {
+            if (!qtyRoot.contains(e.target)) closeList();
+          });
+          setQty(1);
+        }
+
+        var add = document.getElementById("mp-add");
+        if (add)
+          add.addEventListener("click", function () {
+            add.classList.add("is-added");
+            var txt = add.querySelector(".mp-add__txt");
+            if (txt) {
+              txt.textContent = "Added ✓";
+              setTimeout(function () {
+                txt.textContent = "Add to Cart";
+                add.classList.remove("is-added");
+              }, 1600);
+            }
+          });
+
+        // tabs: Description / Notes / Ingredients
+        var tabLinks = Array.prototype.slice.call(
+          document.querySelectorAll(".mp-tab-link")
+        );
+        var panels = Array.prototype.slice.call(
+          document.querySelectorAll(".mp-tab")
+        );
+        tabLinks.forEach(function (link) {
+          link.addEventListener("click", function () {
+            var idx = link.getAttribute("data-tab");
+            tabLinks.forEach(function (l) {
+              var on = l === link;
+              l.classList.toggle("is-active", on);
+              l.setAttribute("aria-selected", on ? "true" : "false");
+            });
+            panels.forEach(function (p) {
+              p.classList.toggle(
+                "is-active",
+                p.getAttribute("data-panel") === idx
+              );
+            });
+          });
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>

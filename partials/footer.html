@@ -4,24 +4,13 @@
      Namespaced .site-foot / .sf-* · white + panel palette only.
      ============================================================ -->
 <style>
-  @font-face {
-    font-family: "MB PH One";
-    src: url("/fonts/mb-ph-one-regular.ttf") format("truetype");
-    font-weight: 100 500;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "MB PH One";
-    src: url("/fonts/mb-ph-one-bold.ttf") format("truetype");
-    font-weight: 501 900;
-    font-display: swap;
-  }
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
   .site-foot {
     background: #050505;
     color: #d9d5df;
     border-top: 1px solid #17151d; /* shared panel colour */
-    font-family: "MB PH One", "DM Sans", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Inter", "DM Sans", "Helvetica Neue", Arial, sans-serif;
     padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem) 2rem;
   }
   .sf-inner {

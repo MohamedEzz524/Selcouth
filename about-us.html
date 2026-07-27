@@ -13,10 +13,17 @@
     />
     <meta name="theme-color" content="#050505" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+
     <style>
       /* ============================================================
          SELCOUTH — brand type + colour tokens (self-contained)
-         Body/display: mb-ph-one · Accent script: far-from-homecoming
+         Headings: MB PH One · Body/UI: Inter (Google Fonts)
          ============================================================ */
       @font-face {
         font-family: "MB PH One";
@@ -30,19 +37,6 @@
         font-weight: 501 900;
         font-display: swap;
       }
-      @font-face {
-        font-family: "MB PH Two";
-        src: url("fonts/mb-ph-two-light.ttf") format("truetype");
-        font-weight: 200 400;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: "Far From Homecoming";
-        src: url("fonts/far-from-homecoming.otf") format("opentype");
-        font-weight: 100 900;
-        font-display: swap;
-      }
-
       :root {
         --sel-bg: #050505;
         --sel-cream: #efe6d8;
@@ -52,8 +46,8 @@
         --sel-ink: #141019; /* near-black text on the white card */
         --sel-bar: #ffffff; /* S3 bars — white at descending opacity */
 
-        --font-body: "MB PH One", "Helvetica Neue", Arial, sans-serif;
-        --font-script: "Far From Homecoming", "MB PH One", serif;
+        --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+        --font-display: "MB PH One", "Helvetica Neue", Arial, sans-serif;
       }
 
       * {
@@ -112,6 +106,7 @@
       .au-s1__title,
       .au-s3__title {
         margin: 0;
+        font-family: var(--font-display);
         font-weight: 800;
         font-size: clamp(2.4rem, 1.5rem + 4.4vw, 5.4rem);
         line-height: 1.04;
@@ -281,6 +276,7 @@
       }
       .au-s3__heading {
         margin: 2.5rem 0 0.8rem;
+        font-family: var(--font-display);
         font-weight: 800;
         font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem);
         line-height: 1.1;
