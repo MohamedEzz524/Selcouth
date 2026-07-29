@@ -1,0 +1,1593 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Oakbanum 3 ML Sample — Selcouth</title>
+    <meta
+      name="description"
+      content="Oakbanum by Selcouth — cognac, coffee and oak. Extrait de parfum, 25% concentration."
+    />
+    <meta name="theme-color" content="#050505" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <style>
+      /* ============================================================
+         SELCOUTH — brand type + colour tokens (self-contained)
+         Headings: MB PH One · Body/UI: Inter (Google Fonts)
+         ============================================================ */
+      @font-face {
+        font-family: "MB PH One";
+        src: url("fonts/mb-ph-one-regular.ttf") format("truetype");
+        font-weight: 100 500;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "MB PH One";
+        src: url("fonts/mb-ph-one-bold.ttf") format("truetype");
+        font-weight: 501 900;
+        font-display: swap;
+      }
+      :root {
+        --sel-bg: #050505;
+        --sel-cream: #efe6d8;
+        --sel-text: #d9d5df;
+        --sel-muted: #9a95a3;
+        --sel-panel: #17151d; /* shared frame/panel colour */
+        --sel-ink: #141019; /* near-black text on white */
+        --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+        --font-display: "MB PH One", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--sel-bg);
+        color: var(--sel-text);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        /* clip (not hidden) so ScrollTrigger's pin doesn't jump */
+        overflow-x: clip;
+      }
+      ::selection {
+        background: #ffffff;
+        color: #050505;
+      }
+
+      /* Lenis smooth scroll */
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      .lenis.lenis-smooth iframe {
+        pointer-events: none;
+      }
+
+      /* ============================================================
+         MAIN-PRODUCT — gallery (left) + details/actions (right)
+         Desktop: 50 / 50, section pins and scrub-reveals the backdrops.
+         Mobile:  single column, backdrops auto-rotate with arrows.
+         ============================================================ */
+      .mp {
+        position: relative;
+        /* full-bleed: no container padding so the gallery meets the edge */
+      }
+      .mp__inner {
+        max-width: 1920px;
+        width: 100%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        align-items: center;
+      }
+
+      /* ---------- GALLERY ---------- */
+      .mp-gallery {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 5; /* mobile shape */
+        border-radius: 0; /* full-bleed on mobile: no rounded corners */
+        overflow: hidden;
+        background: var(--sel-panel);
+        isolation: isolate; /* keep the layer z-stack local */
+      }
+      /* stacked backdrop textures — same box, revealed by clip-path.
+         Each is pinned to the gallery, cover-centred, and never moves,
+         so the clip animation reads as one image wiping over another. */
+      .mp-gallery__layer {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* base state = hidden (revealed from the bottom up).
+           JS overrides clip-path per layer; this is the no-JS fallback. */
+        clip-path: inset(100% 0 0 0);
+        will-change: clip-path;
+      }
+      /* the first (base) layer is always fully shown behind everything */
+      .mp-gallery__layer:first-child {
+        clip-path: inset(0 0 0 0);
+      }
+
+      /* the transparent product cutout floats above every backdrop and
+         stays put while the textures shift behind it */
+      .mp-gallery__product {
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        z-index: 10;
+        max-width: 74%;
+        max-height: 82%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 34px 60px rgba(0, 0, 0, 0.55));
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* dot indicators (bottom) — reflect the active backdrop */
+      .mp-gallery__dots {
+        position: absolute;
+        left: 50%;
+        bottom: 16px;
+        transform: translateX(-50%);
+        z-index: 15;
+        display: flex;
+        gap: 8px;
+      }
+      .mp-gallery__dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+      .mp-gallery__dot.is-active {
+        background: #fff;
+        transform: scale(1.25);
+      }
+
+      /* prev / next arrows — mobile only (desktop reveals on scroll) */
+      .mp-gallery__arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 20;
+        display: none;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        color: #fff;
+        cursor: pointer;
+        background: radial-gradient(
+          120% 120% at 30% 20%,
+          rgba(255, 255, 255, 0.22),
+          rgba(255, 255, 255, 0.06) 60%
+        );
+        backdrop-filter: blur(14px) saturate(160%);
+        -webkit-backdrop-filter: blur(14px) saturate(160%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.22),
+          0 8px 24px rgba(0, 0, 0, 0.3);
+      }
+      .mp-gallery__arrow svg {
+        width: 20px;
+        height: 20px;
+      }
+      .mp-gallery__arrow--prev {
+        left: 12px;
+      }
+      .mp-gallery__arrow--next {
+        right: 12px;
+      }
+
+      /* ---------- DETAILS / ACTIONS ---------- */
+      .mp-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+        padding: 26px 20px 8px; /* details keep side margins; gallery is full-bleed */
+      }
+      .mp-details__eyebrow {
+        margin: 0;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--sel-muted);
+      }
+      .mp-details__name {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        color: var(--sel-cream);
+      }
+      /* the 3 ML tag beside a sample's name */
+      .mp-details__name small {
+        font-size: 0.32em;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        vertical-align: middle;
+        margin-left: 0.5em;
+        color: var(--sel-muted);
+      }
+      .mp-details__tagline {
+        margin: 0.1rem 0 0;
+        font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+        line-height: 1.3;
+        color: var(--sel-muted);
+      }
+      .mp-details__price {
+        margin: 0.2rem 0 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: #fff;
+      }
+      .mp-details__desc {
+        margin: 0;
+        max-width: 46ch;
+        font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+        line-height: 1.7;
+        color: var(--sel-text);
+      }
+
+      .mp-rule {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 0.4rem 0;
+      }
+
+      /* scent notes */
+      .mp-notes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .mp-notes__k {
+        margin: 0 0 0.3rem;
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sel-muted);
+      }
+      .mp-notes__v {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--sel-cream);
+      }
+
+      /* size selector */
+      .mp-field__label {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sel-muted);
+      }
+      .mp-sizes {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+      }
+      .mp-size {
+        min-width: 88px;
+        padding: 0.7rem 1.1rem;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--sel-text);
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        cursor: pointer;
+        transition: border-color 0.25s ease, background 0.25s ease,
+          color 0.25s ease;
+      }
+      .mp-size:hover {
+        border-color: rgba(255, 255, 255, 0.45);
+      }
+      .mp-size.is-active {
+        background: #fff;
+        border-color: #fff;
+        color: var(--sel-ink);
+      }
+      .mp-size small {
+        display: block;
+        margin-top: 2px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        opacity: 0.65;
+      }
+
+      /* quantity + actions row */
+      .mp-actions {
+        display: flex;
+        gap: 0.8rem;
+        align-items: stretch;
+        flex-wrap: wrap;
+        margin-top: 0.4rem;
+      }
+      /* quantity — plain −/+ counter */
+      .mp-qty {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+      }
+      .mp-qty__value {
+        min-width: 44px;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+        font-variant-numeric: tabular-nums;
+        user-select: none;
+      }
+      .mp-qty__btn {
+        display: inline-flex;
+        width: 46px;
+        height: 54px;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        color: #fff;
+        cursor: pointer;
+        transition:
+          background 0.2s ease,
+          opacity 0.2s ease;
+      }
+      .mp-qty__btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .mp-qty__btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .mp-qty__btn:disabled {
+        opacity: 0.32;
+        cursor: default;
+        background: none;
+      }
+      .mp-qty__minus {
+        border-radius: 999px 0 0 999px;
+      }
+      .mp-qty__plus {
+        border-radius: 0 999px 999px 0;
+      }
+
+      /* primary add-to-cart (solid white) */
+      .mp-add {
+        flex: 1;
+        min-width: 200px;
+        height: 54px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        border: none;
+        border-radius: 999px;
+        background: #fff;
+        color: var(--sel-ink);
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 0.78rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease,
+          background 0.25s ease;
+      }
+      .mp-add:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(255, 255, 255, 0.14);
+      }
+      .mp-add.is-added {
+        background: var(--sel-cream);
+      }
+
+      .mp-reassure {
+        margin: 0.3rem 0 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        color: var(--sel-muted);
+      }
+
+      /* row 1 — title group (tighter internal spacing) */
+      .mp-head {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      /* row 2 — hero ingredient feature */
+      .mp-feature {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.045);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.9rem;
+        color: var(--sel-cream);
+      }
+      .mp-feature__icon {
+        flex: 0 0 auto;
+        width: 20px;
+        height: 20px;
+        color: #fff;
+      }
+
+
+      /* price shown inside the add-to-cart button */
+      .mp-add__price {
+        opacity: 0.72;
+      }
+
+      /* row 5 — upsell from the sample to the full bottle */
+      .mp-upsell {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.9rem, 2vw, 1.4rem);
+        padding: 1rem 1.1rem;
+        border-radius: 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.07),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        text-decoration: none;
+        color: inherit;
+        transition:
+          border-color 0.35s ease,
+          background 0.35s ease,
+          transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .mp-upsell:hover,
+      .mp-upsell:focus-visible {
+        border-color: rgba(255, 255, 255, 0.32);
+        transform: translateY(-3px);
+      }
+      .mp-upsell:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.6);
+        outline-offset: 3px;
+      }
+      .mp-upsell__thumb {
+        flex: 0 0 auto;
+        width: 74px;
+        height: 74px;
+        object-fit: contain;
+      }
+      .mp-upsell__body {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+      .mp-upsell__k {
+        margin: 0 0 0.25rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--sel-muted);
+      }
+      .mp-upsell__t {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+      }
+      .mp-upsell__d {
+        margin: 0.3rem 0 0;
+        font-size: 0.86rem;
+        color: var(--sel-muted);
+      }
+      .mp-upsell__cta {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
+        backdrop-filter: blur(12px) saturate(150%);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #fff;
+        white-space: nowrap;
+        transition:
+          background 0.3s ease,
+          border-color 0.3s ease;
+      }
+      .mp-upsell:hover .mp-upsell__cta {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.66);
+      }
+      .mp-upsell__cta span {
+        transition: transform 0.3s ease;
+      }
+      .mp-upsell:hover .mp-upsell__cta span {
+        transform: translateX(4px);
+      }
+      @media (max-width: 620px) {
+        .mp-upsell {
+          flex-wrap: wrap;
+        }
+        .mp-upsell__cta {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* row 7 — tabs */
+      .mp-tabs__nav {
+        display: flex;
+        gap: 1.6rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .mp-tab-link {
+        position: relative;
+        padding: 0.7rem 0;
+        border: none;
+        background: none;
+        color: var(--sel-muted);
+        font: inherit;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: color 0.25s ease;
+      }
+      .mp-tab-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        width: 0;
+        height: 1px;
+        background: #fff;
+        transition: width 0.3s ease;
+      }
+      .mp-tab-link.is-active {
+        color: #fff;
+      }
+      .mp-tab-link.is-active::after {
+        width: 100%;
+      }
+      .mp-tabs__panels {
+        padding-top: 1rem;
+      }
+      .mp-tab {
+        display: none;
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: var(--sel-text);
+      }
+      .mp-tab.is-active {
+        display: block;
+      }
+      .mp-tab p {
+        margin: 0 0 0.7rem;
+      }
+      .mp-tab__note,
+      .mp-tab__meta {
+        font-size: 0.78rem;
+        color: var(--sel-muted);
+        letter-spacing: 0.04em;
+      }
+
+      /* row 8 — stat bars */
+      .mp-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      .mp-stat__k {
+        margin: 0 0 0.6rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--sel-cream);
+      }
+      .mp-stat__bar {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 0.5rem;
+      }
+      .mp-stat__bar span {
+        flex: 1;
+        height: 4px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .mp-stat__bar span.is-active {
+        background: #fff;
+      }
+      .mp-stat__scale {
+        display: flex;
+        justify-content: space-between;
+      }
+      .mp-stat__scale small {
+        font-size: 0.72rem;
+        color: var(--sel-muted);
+      }
+
+      /* ============================================================
+         RECOMMENDED — reuses the collection page's .col-* product card
+         verbatim so the two stay identical; only the band around it is
+         local to this page.
+         ============================================================ */
+      .rec {
+        padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem)
+          clamp(4rem, 9vw, 7rem);
+      }
+      .rec__head {
+        max-width: 1440px;
+        margin: 0 auto clamp(2rem, 4vw, 3rem);
+      }
+      .rec__eyebrow {
+        margin: 0 0 0.9rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--sel-muted);
+      }
+      .rec__title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(2rem, 1.3rem + 3vw, 3.6rem);
+        line-height: 1.04;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        color: var(--sel-cream);
+      }
+
+      .col-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1.25rem, 2.5vw, 2.25rem);
+        max-width: 1440px;
+        margin: 0 auto;
+        list-style: none;
+        padding: 0;
+      }
+      @media (max-width: 1024px) {
+        .col-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 620px) {
+        .col-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .col-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.045),
+          rgba(255, 255, 255, 0.015)
+        );
+        text-decoration: none;
+        color: inherit;
+        overflow: hidden;
+        transition:
+          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.4s ease,
+          background 0.4s ease;
+      }
+      .col-card:hover,
+      .col-card:focus-visible {
+        transform: translateY(-6px);
+        border-color: rgba(255, 255, 255, 0.24);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.08),
+          rgba(255, 255, 255, 0.02)
+        );
+      }
+      .col-card:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.6);
+        outline-offset: 3px;
+      }
+      .col-media {
+        position: relative;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+      }
+      .col-media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        /* the art fills its canvas edge to edge, so hold it back a little
+           inside the card frame */
+        transform: scale(0.8);
+        pointer-events: none;
+        user-select: none;
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .col-card:hover .col-media img {
+        transform: scale(0.85);
+      }
+      .col-glow {
+        z-index: 1;
+        mix-blend-mode: screen;
+        opacity: 0.55;
+        transition: opacity 0.5s ease;
+      }
+      .col-card:hover .col-glow {
+        opacity: 1;
+      }
+      .col-bottle {
+        z-index: 2;
+      }
+      .col-body {
+        position: relative;
+        z-index: 3;
+        padding: 0 clamp(1.1rem, 2vw, 1.6rem) clamp(1.4rem, 2.4vw, 1.9rem);
+        text-align: center;
+      }
+      /* Mobile: the bottle art now fills its box edge-to-edge, so the card
+         needs breathing room between the image and the product name. */
+      @media (max-width: 767px) {
+        .col-body {
+          padding-top: clamp(1rem, 4.5vw, 1.6rem);
+        }
+      }
+
+      .col-name {
+        margin: 0;
+        font-family: "forma-djr-mono", ui-monospace, monospace;
+        font-size: 15px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+      .col-desc {
+        margin: 0.7rem 0 0;
+        font-size: 0.95rem;
+        color: var(--sel-muted);
+      }
+      .col-price {
+        margin: 0.9rem 0 0;
+        font-family: "forma-djr-mono", ui-monospace, monospace;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        color: var(--sel-text);
+      }
+      .col-cta {
+        display: inline-block;
+        margin-top: 1.15rem;
+        padding: 11px 22px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
+        backdrop-filter: blur(12px) saturate(150%);
+        font-family: "forma-djr-mono", ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #fff;
+        transition:
+          background 0.3s ease,
+          border-color 0.3s ease;
+      }
+      .col-card:hover .col-cta {
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.65);
+      }
+      /* reveal on scroll */
+      .col-card {
+        opacity: 0;
+        transform: translateY(26px);
+      }
+      .col-grid.is-in .col-card {
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+          opacity 0.7s ease var(--d, 0s),
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
+          border-color 0.4s ease,
+          background 0.4s ease;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .col-card {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .col-card:hover,
+        .col-card:focus-visible {
+          transform: none;
+        }
+      }
+
+      /* ============================================================
+         DESKTOP — 50/50 · gallery sticks full-height while the details
+         column scrolls beside it; the backdrop reveal scrubs on scroll.
+         ============================================================ */
+      @media (min-width: 768px) {
+        .mp {
+          min-height: 100vh;
+          padding: 0; /* gallery bleeds to the left / top / bottom */
+        }
+        .mp__inner {
+          grid-template-columns: 1fr 1fr;
+          align-items: start; /* gallery sticks; details define the height */
+          gap: 0;
+        }
+        .mp-gallery {
+          position: sticky;
+          top: 0;
+          height: 100vh;
+          max-height: none;
+          aspect-ratio: auto; /* full-height left panel */
+          border-radius: 0;
+          margin: 0;
+        }
+        .mp-details {
+          padding: clamp(96px, 12vh, 140px) clamp(32px, 5vw, 96px)
+            clamp(48px, 8vh, 96px) clamp(28px, 3vw, 56px);
+        }
+      }
+
+      /* ============================================================
+         MOBILE — arrows visible, gallery a touch shorter
+         ============================================================ */
+      @media (max-width: 767px) {
+        .mp-gallery {
+          aspect-ratio: 4 / 5;
+        }
+        .mp-gallery__arrow {
+          display: inline-flex;
+        }
+        .mp-details__name {
+          font-size: clamp(2.6rem, 12vw, 3.4rem);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .mp-gallery__layer {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ============================================================
+         MAIN-PRODUCT
+         ============================================================ -->
+    <section class="mp" aria-label="Aurelinth — product">
+      <div class="mp__inner">
+        <!-- ---------- GALLERY ---------- -->
+        <div class="mp-gallery" aria-label="Product gallery">
+          <div
+            class="mp-gallery__layer"
+            style="z-index: 1; background-image: url('images/product/gallery-1.webp')"
+            role="img"
+            aria-label="Aurelinth among fresh roses"
+          ></div>
+          <div
+            class="mp-gallery__layer"
+            style="z-index: 2; background-image: url('images/product/gallery-2.webp')"
+            role="img"
+            aria-label="Aurelinth macro texture"
+          ></div>
+          <div
+            class="mp-gallery__layer"
+            style="z-index: 3; background-image: url('images/product/gallery-3.webp')"
+            role="img"
+            aria-label="Aurelinth bottle blueprint"
+          ></div>
+          <div
+            class="mp-gallery__layer"
+            style="z-index: 4; background-image: url('images/product/gallery-4.webp')"
+            role="img"
+            aria-label="Aurelinth ingredient study"
+          ></div>
+
+          <img
+            class="mp-gallery__product"
+            src="images/perfumes/s2.webp"
+            alt="Aurelinth extrait de parfum bottle"
+          />
+
+          <button
+            class="mp-gallery__arrow mp-gallery__arrow--prev"
+            type="button"
+            aria-label="Previous image"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+          </button>
+          <button
+            class="mp-gallery__arrow mp-gallery__arrow--next"
+            type="button"
+            aria-label="Next image"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          <div class="mp-gallery__dots" aria-hidden="true">
+            <span class="mp-gallery__dot is-active"></span>
+            <span class="mp-gallery__dot"></span>
+            <span class="mp-gallery__dot"></span>
+            <span class="mp-gallery__dot"></span>
+          </div>
+        </div>
+
+        <!-- ---------- DETAILS / ACTIONS ---------- -->
+        <div class="mp-details">
+          <!-- row 1 · title -->
+          <div class="mp-head">
+            <p class="mp-details__eyebrow" data-ar="إكستريه دو بارفان · سِلكوث">Extrait de Parfum · Selcouth</p>
+            <h1 class="mp-details__name" data-ar="أوكبانوم · 3 مل">Oakbanum <small>3 ML</small></h1>
+            <p class="mp-details__tagline" data-ar="كونياك وقهوة وخشب البلوط">cognac, coffee and oak</p>
+            <p class="mp-details__price" id="mp-price">SAR 17</p>
+          </div>
+
+          <!-- row 2 · hero ingredient -->
+          <div class="mp-feature">
+            <svg class="mp-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4 4L19 7" /></svg>
+            <span data-ar="المكوّن الأبرز: الكونياك الروماني · اللبان العُماني">Hero Ingredient: Romanian Cognac · Omani Frankincense</span>
+          </div>
+
+          <!-- row 4 · quantity + add to cart -->
+          <div class="mp-actions">
+            <div class="mp-qty" data-qty aria-label="Quantity">
+              <button type="button" class="mp-qty__btn mp-qty__minus" data-qty-minus aria-label="Decrease quantity">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12" /></svg>
+              </button>
+              <span class="mp-qty__value" data-qty-value role="status" aria-live="polite">1</span>
+              <button type="button" class="mp-qty__btn mp-qty__plus" data-qty-plus aria-label="Increase quantity">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 6v12M6 12h12" /></svg>
+              </button>
+            </div>
+
+            <button class="mp-add" type="button" id="mp-add">
+              <span class="mp-add__txt" data-ar="أضف إلى السلة">Add to Cart</span>
+              <span class="mp-add__price" id="mp-add-price">SAR 17</span>
+            </button>
+          </div>
+
+          <!-- row 5 · upsell to the full bottle -->
+          <a class="mp-upsell" href="/oakbanum">
+            <img class="mp-upsell__thumb" src="images/perfumes/p2.webp" alt="" decoding="async" />
+            <div class="mp-upsell__body">
+              <p class="mp-upsell__k" data-ar="أعجبك؟">Tried it?</p>
+              <p class="mp-upsell__t" data-ar="أوكبانوم · قارورة 50 مل كاملة">Oakbanum · full 50 ML bottle</p>
+              <p class="mp-upsell__d" data-ar="نفس التركيبة بحجم كامل — 268.70 ر.س">
+                The same composition, full size — SAR 268.70
+              </p>
+            </div>
+            <span class="mp-upsell__cta" data-ar="اقتنِ القارورة <span aria-hidden=&quot;true&quot;>←</span>"
+              >Get the bottle <span aria-hidden="true">→</span></span
+            >
+          </a>
+
+          <div class="mp-rule"></div>
+
+          <!-- row 7 · tabs -->
+          <div class="mp-tabs">
+            <div class="mp-tabs__nav" role="tablist">
+              <button class="mp-tab-link is-active" type="button" data-tab="0" role="tab" aria-selected="true" data-ar="الوصف">Description</button>
+              <button class="mp-tab-link" type="button" data-tab="1" role="tab" aria-selected="false" data-ar="النوتات">Notes</button>
+              <button class="mp-tab-link" type="button" data-tab="2" role="tab" aria-selected="false" data-ar="المكوّنات">Ingredients</button>
+            </div>
+            <div class="mp-tabs__panels">
+              <div class="mp-tab is-active" data-panel="0" role="tabpanel">
+                <p data-ar="<strong>عائلة العطر:</strong> <em>حمضي · بوزي · خشبي</em>"><strong>Fragrance family:</strong> <em>Citrus · Boozy · Woody</em></p>
+                <p data-ar="مزيج آسر يفتتح بروائح مشرقة من البرغموت واليوسفي، يبرزه دفء الكونياك الروماني وتوابل الهيل والعمق الراتنجي للإليمي. يكشف القلب عن خشب العنبر والويسكي والقهوة والرم مع ملامح فاكهية من الاوسمانثوس، وتختتم بقاعدة من الباتشولي الترابي وخشب الأرز من تكساس على اللبان الطبيعي وخشب البلوط.">
+                  A captivating blend that opens on bright bergamot and tangerine, lifted by the warmth of Romanian cognac, the spice of cardamom and the resinous depth of elemi. The heart turns rich and seamless &mdash; amberwood, whiskey, coffee and rum, with the fruity edge of osmanthus. It closes on earthy patchouli and Texas cedarwood over natural frankincense and oak.
+                </p>
+                <p class="mp-tab__note" data-ar="المواد الطبيعية 13% · التركيز 25% · الحجم 3 مل">
+                  Naturals 13% · Concentration 25% · 3 ML
+                </p>
+              </div>
+              <div class="mp-tab" data-panel="1" role="tabpanel">
+                <p data-ar="المقدمة / الفلفل الوردي، راتنج الإليمي، اليوسفي، البرغموت، الكونياك، الهيل">Top / Pink pepper, Elemi resin, Tangerine, Bergamot, Cognac, Cardamom</p>
+                <p data-ar="القلب / الأخشاب، القهوة CO2، اوسمانثوس، خشب العنبر، الويسكي، الدافانا، الرم">Heart / Woody notes, Coffee CO2, Osmanthus, Amberwood, Whiskey, Davana, Rum</p>
+                <p data-ar="القاعدة / فانيليا بوربون، خشب الأرز من تكساس، خشب الصندل، الباتشولي، اللبان، العنبر، المسك، العود، خشب البلوط">Base / Bourbon vanilla, Texas cedarwood, Sandalwood, Patchouli, Frankincense, Amber, Musk, Oud, Oak</p>
+                <p class="mp-tab__meta" data-ar="للجنسين · إكستريه · دفعة محدودة">UNISEX · EXTRAIT · SMALL BATCH</p>
+              </div>
+              <div class="mp-tab" data-panel="2" role="tabpanel">
+                <p data-ar="<strong>المواد الخام الرئيسية:</strong> اليوسفي الإيطالي، البرغموت الإيطالي، الكونياك الروماني، الهيل من جواتيمالا، القهوة من السلفادور، فانيليا مدغشقر، رائحة الويسكي، الرم أبسولوت، الباتشولي من إندونيسيا، اللبان العُماني، رائحة العود، خشب البلوط."><strong>Key raw materials:</strong> Italian tangerine, Italian bergamot, Romanian cognac, Guatemalan cardamom, Salvadoran coffee, Madagascan vanilla, Whiskey accord, Rum absolute, Indonesian patchouli, Omani frankincense, Oud accord, Oak.</p>
+                <p class="mp-tab__note" data-ar="*قد يحدث اختلاف طفيف في اللون نتيجة استخدام مواد طبيعية — وهي علامة على الحرفة لا عيب فيها.">
+                  *Slight colour variation may occur from the use of natural
+                  materials — a mark of the craft, not a defect.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mp-rule"></div>
+
+          <!-- row 8 · stat bars -->
+          <div class="mp-stats">
+            <div class="mp-stat">
+              <p class="mp-stat__k" data-ar="الإسقاط / الأثر">Projection / Sillage</p>
+              <div class="mp-stat__bar" aria-hidden="true">
+                <span></span><span></span><span class="is-active"></span><span></span><span></span>
+              </div>
+              <div class="mp-stat__scale">
+                <small data-ar="خفيف">Soft</small><small data-ar="متوسط">Moderate</small><small data-ar="قوي">Strong</small>
+              </div>
+            </div>
+            <div class="mp-stat">
+              <p class="mp-stat__k" data-ar="الثبات">Longevity</p>
+              <div class="mp-stat__bar" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span class="is-active"></span>
+              </div>
+              <div class="mp-stat__scale">
+                <small data-ar="ساعة">1 Hour</small><small data-ar="4 ساعات">4 Hours</small><small data-ar="8 ساعات">8 Hours</small>
+              </div>
+            </div>
+          </div>
+
+          <p class="mp-reassure" data-ar="شحن مجاني فوق 550 ر.س · تركيز إكستريه · يُشحن خلال يوم إلى يومين">
+            Free shipping over SAR 550 · Extrait concentration · Ships in 1–2 days
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         RECOMMENDED — same product card as the collection page
+         ============================================================ -->
+    <section class="rec" aria-label="Recommended for you">
+      <div class="rec__head">
+        <p class="rec__eyebrow" data-ar="مختارة لك">Recommended for you</p>
+        <h2 class="rec__title" data-ar="تتناغم<br />معه">Wears Well<br />Alongside</h2>
+      </div>
+
+      <ul class="col-grid" id="rec-grid">
+        <li>
+          <a class="col-card" href="/aurelinth" style="--d: 0s">
+            <div class="col-media">
+              <img class="col-bottle" src="images/perfumes/p1.webp" alt="Aurelinth" decoding="async" />
+            </div>
+            <div class="col-body">
+              <h3 class="col-name" data-ar="أوريلينث">Aurelinth</h3>
+              <p class="col-desc" data-ar="زيزفون معسول، روم ودخان">honeyed linden, rum and smoke</p>
+              <p class="col-price" data-ar="391.30 ر.س · 50 مل إكستريه">SAR 391.30 · 50ml Extrait</p>
+              <span class="col-cta" data-ar="عرض المنتج">View product</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="col-card" href="/veil-of-orris" style="--d: 0.09s">
+            <div class="col-media">
+              <img class="col-bottle" src="images/perfumes/p3.webp" alt="Veil of Orris" decoding="async" />
+            </div>
+            <div class="col-body">
+              <h3 class="col-name" data-ar="فيل أوف أوريس">Veil of Orris</h3>
+              <p class="col-desc" data-ar="زبدة السوسن تحت البودرة والبرقوق">orris butter beneath powder and plum</p>
+              <p class="col-price" data-ar="346.96 ر.س · 50 مل إكستريه">SAR 346.96 · 50ml Extrait</p>
+              <span class="col-cta" data-ar="عرض المنتج">View product</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <script src="vendor/lenis.min.js"></script>
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis smooth scroll, driven by GSAP's ticker (same setup as about-us) -->
+    <script>
+      (function () {
+        "use strict";
+        if (!window.gsap) return;
+        if (window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce && window.Lenis) {
+          var lenis = new Lenis({
+            duration: 1.1,
+            easing: function (t) {
+              return Math.min(1, 1.001 - Math.pow(2, -10 * t));
+            },
+            smoothWheel: true,
+            touchMultiplier: 1.2,
+          });
+          if (window.ScrollTrigger) lenis.on("scroll", ScrollTrigger.update);
+          gsap.ticker.add(function (time) {
+            lenis.raf(time * 1000);
+          });
+          gsap.ticker.lagSmoothing(0);
+          window.__lenis = lenis;
+        }
+      })();
+    </script>
+
+    <!-- Gallery: pinned clip-reveal on desktop · auto-rotate carousel on mobile -->
+    <script>
+      (function () {
+        "use strict";
+        var section = document.querySelector(".mp");
+        if (!section) return;
+        var layers = Array.prototype.slice.call(
+          section.querySelectorAll(".mp-gallery__layer")
+        );
+        var dots = Array.prototype.slice.call(
+          section.querySelectorAll(".mp-gallery__dot")
+        );
+        if (layers.length < 2) return;
+
+        var REVEALS = layers.length - 1; // layer 0 is the always-on base
+        var reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        var hasGsap = !!window.gsap;
+        var hasST = !!window.ScrollTrigger;
+
+        // Apply a continuous progress value p in [0 .. REVEALS].
+        // Each non-base layer i reveals (rises up) as p passes (i-1)->i.
+        var state = { p: 0 };
+        function applyProgress(p) {
+          for (var i = 0; i < layers.length; i++) {
+            if (i === 0) {
+              layers[i].style.clipPath = "inset(0 0 0 0)";
+              continue;
+            }
+            var r = Math.min(1, Math.max(0, p - (i - 1)));
+            layers[i].style.clipPath = "inset(" + (1 - r) * 100 + "% 0 0 0)";
+          }
+          // active dot = the top-most fully/most-revealed layer
+          var act = Math.round(Math.min(REVEALS, Math.max(0, p)));
+          for (var d = 0; d < dots.length; d++) {
+            dots[d].classList.toggle("is-active", d === act);
+          }
+        }
+
+        var desktopMQ = window.matchMedia("(min-width: 768px)");
+        var st = null;
+        var autoTimer = null;
+        var active = 0;
+        var dir = 1;
+        var userStopped = false;
+
+        function teardown() {
+          if (st) {
+            st.kill();
+            st = null;
+          }
+          if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+          }
+          if (hasGsap) gsap.killTweensOf(state);
+        }
+
+        /* ---------- desktop: pin + scrub reveal ---------- */
+        // Scroll distance each backdrop gets, as a fraction of the viewport.
+        // The reveal used to scrub across "bottom bottom", i.e. the section's
+        // own length — which is set by the details column. A short details
+        // column meant the whole gallery raced past in a few hundred pixels.
+        // Now every image costs the same fixed scroll, whatever is beside it.
+        var SCROLL_PER_IMAGE = 0.65;
+        function revealDistance() {
+          return REVEALS * window.innerHeight * SCROLL_PER_IMAGE;
+        }
+
+        function setupDesktop() {
+          // undo anything the mobile carousel set inline
+          for (var i = 0; i < layers.length; i++) {
+            layers[i].style.opacity = "";
+            layers[i].style.transition = "";
+            layers[i].style.zIndex = i + 1; // restore base stack order
+          }
+          section.style.minHeight = ""; // pinSpacing supplies the scroll room
+          if (!hasGsap || !hasST || reduce) {
+            applyProgress(reduce ? REVEALS : 0);
+            return;
+          }
+          applyProgress(0);
+          // Pin the whole section — gallery AND details — for exactly the
+          // reveal budget, so the right column holds still until every
+          // backdrop has been stepped through. Past that the pin releases and
+          // the page scrolls normally: the details column moves on while the
+          // gallery keeps its place via CSS position:sticky.
+          st = ScrollTrigger.create({
+            trigger: section,
+            start: "top top",
+            end: function () {
+              return "+=" + revealDistance();
+            },
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            scrub: true,
+            invalidateOnRefresh: true,
+            onUpdate: function (self) {
+              applyProgress(self.progress * REVEALS);
+            },
+            onRefresh: function (self) {
+              applyProgress(self.progress * REVEALS);
+            },
+          });
+        }
+
+        /* ---------- mobile: per-slide clip-path WIPE + arrows ----------
+           Horizontal wipe (desktop's scrub stays vertical): the incoming
+           backdrop lifts on top and wipes across in the direction of travel —
+           next comes in from the right, prev from the left. Self-contained
+           per step, so nothing accumulates and looping/reversing never
+           "unwinds".
+           Clicks are QUEUED, not applied instantly: pressing an arrow while
+           a wipe is running just adds a step that plays when the current one
+           finishes, so mashing plays each wipe in order with no snap/jump. */
+        var busy = false;
+        var queued = 0;
+
+        // r = 0 fully hidden, r = 1 fully shown. Insetting the leading edge
+        // means the new image is uncovered from that side.
+        function wipeClip(dir, r) {
+          var v = (1 - r) * 100;
+          return dir > 0
+            ? "inset(0 0 0 " + v + "%)" // next: reveal from the right
+            : "inset(0 " + v + "% 0 0)"; // prev: reveal from the left
+        }
+
+        function renderWipe(cur, old, dir, done) {
+          // z-order (all below the bottle at z:10): incoming on top, the
+          // outgoing fully shown just beneath, the rest at base.
+          for (var i = 0; i < layers.length; i++) {
+            layers[i].style.zIndex = i === cur ? 8 : i === old ? 7 : 1;
+          }
+          layers[old].style.clipPath = "inset(0 0 0 0)"; // stays put behind
+          layers[cur].style.clipPath = wipeClip(dir, 0); // hidden → wipe across
+          for (var d = 0; d < dots.length; d++) {
+            dots[d].classList.toggle("is-active", d === cur);
+          }
+          if (hasGsap && !reduce) {
+            state.r = 0;
+            gsap.to(state, {
+              r: 1,
+              duration: 0.7,
+              ease: "power2.inOut",
+              overwrite: true,
+              onUpdate: function () {
+                layers[cur].style.clipPath = wipeClip(dir, state.r);
+              },
+              onComplete: done,
+            });
+          } else {
+            layers[cur].style.clipPath = "inset(0 0 0 0)";
+            done();
+          }
+        }
+
+        // play one queued step, then chain to the next when it settles
+        function pump() {
+          if (busy || queued === 0) return;
+          var dir = queued > 0 ? 1 : -1;
+          queued -= dir;
+          var old = active;
+          active = (active + dir + layers.length) % layers.length;
+          busy = true;
+          renderWipe(active, old, dir, function () {
+            busy = false;
+            pump();
+          });
+        }
+
+        function requestStep(dir) {
+          queued += dir;
+          var cap = layers.length - 1; // bound the backlog (no runaway loops)
+          if (queued > cap) queued = cap;
+          if (queued < -cap) queued = -cap;
+          pump();
+        }
+
+        function stopAuto() {
+          userStopped = true;
+          if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+          }
+        }
+        function setupMobile() {
+          active = 0;
+          busy = false;
+          queued = 0;
+          userStopped = false;
+          section.style.minHeight = ""; // desktop-only scroll budget
+          // base state: layer 0 shown on top, the rest hidden below it
+          for (var i = 0; i < layers.length; i++) {
+            layers[i].style.opacity = "";
+            layers[i].style.transition = ""; // gsap drives the wipe
+            layers[i].style.zIndex = i === 0 ? 8 : 1;
+            // parked off to the right, matching the default (next) direction
+            layers[i].style.clipPath =
+              i === 0 ? "inset(0 0 0 0)" : "inset(0 0 0 100%)";
+          }
+          for (var d = 0; d < dots.length; d++) {
+            dots[d].classList.toggle("is-active", d === 0);
+          }
+
+          var prev = section.querySelector(".mp-gallery__arrow--prev");
+          var next = section.querySelector(".mp-gallery__arrow--next");
+          if (prev)
+            prev.onclick = function () {
+              stopAuto();
+              requestStep(-1);
+            };
+          if (next)
+            next.onclick = function () {
+              stopAuto();
+              requestStep(1);
+            };
+
+          if (reduce) return;
+          autoTimer = setInterval(function () {
+            if (!userStopped) requestStep(1);
+          }, 3600);
+        }
+
+        function apply() {
+          teardown();
+          if (desktopMQ.matches) setupDesktop();
+          else setupMobile();
+          if (hasST) ScrollTrigger.refresh();
+        }
+
+        apply();
+        if (desktopMQ.addEventListener)
+          desktopMQ.addEventListener("change", apply);
+        else if (desktopMQ.addListener) desktopMQ.addListener(apply);
+
+        // Recompute pin distance after late layout shifts settle.
+        if (hasST) {
+          if (document.fonts && document.fonts.ready)
+            document.fonts.ready.then(function () {
+              ScrollTrigger.refresh();
+            });
+          window.addEventListener("load", function () {
+            ScrollTrigger.refresh();
+          });
+        }
+      })();
+    </script>
+
+    <!-- Product actions: variant selector, quantity, cart, wishlist, tabs -->
+    <script>
+      (function () {
+        "use strict";
+        var BASE_PRICE = 17;
+        // Prices are Saudi riyal in both languages; only the symbol differs.
+        function CURRENCY() {
+          return window.SelLang === "ar" ? "ر.س " : "SAR ";
+        }
+
+        // recommended grid: same staggered reveal as the collection page
+        var recGrid = document.getElementById("rec-grid");
+        if (recGrid) {
+          if (
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+            !("IntersectionObserver" in window)
+          ) {
+            recGrid.classList.add("is-in");
+          } else {
+            var recIO = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (e) {
+                  if (e.isIntersecting) {
+                    recGrid.classList.add("is-in");
+                    recIO.disconnect();
+                  }
+                });
+              },
+              { threshold: 0.15 }
+            );
+            recIO.observe(recGrid);
+          }
+        }
+        var priceEl = document.getElementById("mp-price");
+        var addPriceEl = document.getElementById("mp-add-price");
+        var qty = 1;
+        var unit = BASE_PRICE;
+
+        // "Pair it with" quick-add. Ticking a row expands its quantity
+        // stepper; the row's line total is added to the button's total only —
+        // the product's own price line stays the product's price.
+        var PAIR_MAX = 9;
+        var pairRows = Array.prototype.slice
+          .call(document.querySelectorAll("[data-pair]"))
+          .map(function (row) {
+            var p = {
+              row: row,
+              cb: row.querySelector(".mp-pair__cb"),
+              meta: row.querySelector("[data-pair-meta]"),
+              label: row.querySelector("[data-pair-price-label]"),
+              qval: row.querySelector("[data-pair-qval]"),
+              minus: row.querySelector("[data-pair-minus]"),
+              plus: row.querySelector("[data-pair-plus]"),
+              qty: 1,
+              unit: parseInt(row.getAttribute("data-price"), 10) || 0,
+            };
+            return p;
+          });
+
+        function paintPair(p) {
+          p.row.classList.toggle("is-on", !!(p.cb && p.cb.checked));
+          if (p.qval) p.qval.textContent = p.qty;
+          if (p.minus) p.minus.disabled = p.qty <= 1;
+          if (p.plus) p.plus.disabled = p.qty >= PAIR_MAX;
+          // the row label shows the line total for what's selected
+          if (p.label) p.label.textContent = CURRENCY() + p.unit * p.qty;
+        }
+
+        function pairTotal() {
+          return pairRows.reduce(function (sum, p) {
+            return sum + (p.cb && p.cb.checked ? p.unit * p.qty : 0);
+          }, 0);
+        }
+
+        function render() {
+          var base = unit * qty;
+          if (priceEl) priceEl.textContent = CURRENCY() + base;
+          if (addPriceEl) addPriceEl.textContent = CURRENCY() + (base + pairTotal());
+        }
+
+        // the shared toggle only swaps [data-ar] markup — these strings are
+        // generated here, so repaint them too
+        document.addEventListener("sel:lang", function () {
+          pairRows.forEach(paintPair);
+          render();
+        });
+
+        pairRows.forEach(function (p) {
+          if (p.cb)
+            p.cb.addEventListener("change", function () {
+              if (!p.cb.checked) p.qty = 1; // unticking resets the row
+              paintPair(p);
+              render();
+            });
+          if (p.minus)
+            p.minus.addEventListener("click", function () {
+              p.qty = Math.max(1, p.qty - 1);
+              paintPair(p);
+              render();
+            });
+          if (p.plus)
+            p.plus.addEventListener("click", function () {
+              p.qty = Math.min(PAIR_MAX, p.qty + 1);
+              paintPair(p);
+              render();
+            });
+          paintPair(p);
+        });
+
+
+        /* quantity: −/+ counter, clamped to 1..MAX */
+        var qtyRoot = document.querySelector("[data-qty]");
+        if (qtyRoot) {
+          var valueEl = qtyRoot.querySelector("[data-qty-value]");
+          var minus = qtyRoot.querySelector("[data-qty-minus]");
+          var plus = qtyRoot.querySelector("[data-qty-plus]");
+          var MIN = 1;
+          var MAX = 99;
+
+          var setQty = function (n) {
+            qty = Math.max(MIN, Math.min(MAX, n));
+            if (valueEl) valueEl.textContent = qty;
+            if (minus) minus.disabled = qty <= MIN;
+            if (plus) plus.disabled = qty >= MAX;
+            render();
+          };
+
+          if (minus)
+            minus.addEventListener("click", function () {
+              setQty(qty - 1);
+            });
+          if (plus)
+            plus.addEventListener("click", function () {
+              setQty(qty + 1);
+            });
+          setQty(1);
+        }
+
+        var add = document.getElementById("mp-add");
+        if (add)
+          add.addEventListener("click", function () {
+            add.classList.add("is-added");
+            var txt = add.querySelector(".mp-add__txt");
+            if (txt) {
+              txt.textContent = "Added ✓";
+              setTimeout(function () {
+                txt.textContent = "Add to Cart";
+                add.classList.remove("is-added");
+              }, 1600);
+            }
+          });
+
+        // tabs: Description / Notes / Ingredients
+        var tabLinks = Array.prototype.slice.call(
+          document.querySelectorAll(".mp-tab-link")
+        );
+        var panels = Array.prototype.slice.call(
+          document.querySelectorAll(".mp-tab")
+        );
+        tabLinks.forEach(function (link) {
+          link.addEventListener("click", function () {
+            var idx = link.getAttribute("data-tab");
+            tabLinks.forEach(function (l) {
+              var on = l === link;
+              l.classList.toggle("is-active", on);
+              l.setAttribute("aria-selected", on ? "true" : "false");
+            });
+            panels.forEach(function (p) {
+              p.classList.toggle(
+                "is-active",
+                p.getAttribute("data-panel") === idx
+              );
+            });
+          });
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>

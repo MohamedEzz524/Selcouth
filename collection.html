@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Collection — Selcouth</title>
+    <meta
+      name="description"
+      content="The Selcouth collection — three rare extraits, composed around the world's most precious raw materials."
+    />
+    <meta name="theme-color" content="#050505" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <style>
+      /* ============================================================
+         SELCOUTH — brand type + colour tokens (self-contained,
+         mirrors about-us.html so the two pages stay in step)
+         Headings: MB PH One · Body/UI: Inter (Google Fonts)
+         ============================================================ */
+      @font-face {
+        font-family: "MB PH One";
+        src: url("fonts/mb-ph-one-regular.ttf") format("truetype");
+        font-weight: 100 500;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "MB PH One";
+        src: url("fonts/mb-ph-one-bold.ttf") format("truetype");
+        font-weight: 501 900;
+        font-display: swap;
+      }
+      :root {
+        --sel-bg: #050505;
+        --sel-cream: #efe6d8;
+        --sel-text: #d9d5df;
+        --sel-muted: #9a95a3;
+        --sel-panel: #17151d;
+
+        --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+        --font-display: "MB PH One", "Helvetica Neue", Arial, sans-serif;
+        --font-mono: "forma-djr-mono", ui-monospace, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--sel-bg);
+        color: var(--sel-text);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        overflow-x: clip;
+      }
+      ::selection {
+        background: #ffffff;
+        color: #050505;
+      }
+
+      /* Lenis smooth scroll */
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+
+      /* ============================================================
+         HEAD — the site header is fixed, so the first band carries the
+         top clearance itself.
+         ============================================================ */
+      .col-head {
+        padding: clamp(7rem, 16vh, 11rem) clamp(1.25rem, 5vw, 4rem)
+          clamp(1.5rem, 3vw, 2.25rem);
+        text-align: center;
+      }
+      .col-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        /* a single name now, so it does not need display-poster scale */
+        font-size: clamp(2rem, 1.3rem + 2.6vw, 3.6rem);
+        line-height: 1.04;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        color: var(--sel-cream);
+      }
+
+      /* ============================================================
+         FILTER — Perfumes / Samples / All Products
+         ============================================================ */
+      .col-filter-wrap {
+        padding: 0 clamp(1.25rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem);
+        display: flex;
+        justify-content: center;
+      }
+      .col-filter {
+        display: inline-flex;
+        gap: 4px;
+        padding: 5px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
+        backdrop-filter: blur(12px) saturate(150%);
+        max-width: 100%;
+        flex-wrap: wrap;
+      }
+      .col-filter__btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 999px;
+        background: none;
+        color: var(--sel-muted);
+        font: inherit;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: pointer;
+        white-space: nowrap;
+        transition:
+          background 0.28s ease,
+          color 0.28s ease;
+      }
+      .col-filter__btn:hover {
+        color: #fff;
+      }
+      .col-filter__btn.is-active {
+        background: #fff;
+        color: var(--sel-ink, #141019);
+      }
+      .col-filter__btn:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.7);
+        outline-offset: 2px;
+      }
+      /* filtered-out cards leave the flow entirely so the grid reflows */
+      .col-grid li[hidden] {
+        display: none;
+      }
+
+      /* ============================================================
+         GRID
+         ============================================================ */
+      .col-grid-wrap {
+        padding: 0 clamp(1.25rem, 5vw, 4rem) clamp(4rem, 9vw, 7rem);
+      }
+      .col-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1.25rem, 2.5vw, 2.25rem);
+        max-width: 1440px;
+        margin: 0 auto;
+        list-style: none;
+        padding: 0;
+      }
+      @media (max-width: 1024px) {
+        .col-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 620px) {
+        .col-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .col-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.045),
+          rgba(255, 255, 255, 0.015)
+        );
+        text-decoration: none;
+        color: inherit;
+        overflow: hidden;
+        transition:
+          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.4s ease,
+          background 0.4s ease;
+      }
+      .col-card:hover,
+      .col-card:focus-visible {
+        transform: translateY(-6px);
+        border-color: rgba(255, 255, 255, 0.24);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.08),
+          rgba(255, 255, 255, 0.02)
+        );
+      }
+      .col-card:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.6);
+        outline-offset: 3px;
+      }
+
+      /* Same two-layer treatment as the homepage carousel: the glow still
+         sits behind on screen blend (its black drops out), the cut-out
+         bottle on top. Here the glow only resolves on hover. */
+      .col-media {
+        position: relative;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+      }
+      .col-media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        /* the art fills its canvas edge to edge, so hold it back a little
+           inside the card frame */
+        transform: scale(0.8);
+        pointer-events: none;
+        user-select: none;
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .col-card:hover .col-media img {
+        transform: scale(0.85);
+      }
+      .col-glow {
+        z-index: 1;
+        mix-blend-mode: screen;
+        opacity: 0.55;
+        transition: opacity 0.5s ease;
+      }
+      .col-card:hover .col-glow {
+        opacity: 1;
+      }
+      .col-bottle {
+        z-index: 2;
+      }
+
+      .col-body {
+        position: relative;
+        z-index: 3;
+        padding: 0 clamp(1.1rem, 2vw, 1.6rem) clamp(1.4rem, 2.4vw, 1.9rem);
+        text-align: center;
+      }
+      /* Mobile: the bottle art now fills its box edge-to-edge, so the card
+         needs breathing room between the image and the product name. */
+      @media (max-width: 767px) {
+        .col-body {
+          padding-top: clamp(1rem, 4.5vw, 1.6rem);
+        }
+      }
+
+      .col-name {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 15px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+      .col-desc {
+        margin: 0.7rem 0 0;
+        font-size: 0.95rem;
+        color: var(--sel-muted);
+      }
+      .col-price {
+        margin: 0.9rem 0 0;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        color: var(--sel-text);
+      }
+      .col-cta {
+        display: inline-block;
+        margin-top: 1.15rem;
+        padding: 11px 22px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
+        backdrop-filter: blur(12px) saturate(150%);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #fff;
+        transition:
+          background 0.3s ease,
+          border-color 0.3s ease;
+      }
+      .col-card:hover .col-cta {
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.65);
+      }
+
+      /* reveal on scroll */
+      .col-card {
+        opacity: 0;
+        transform: translateY(26px);
+      }
+      .col-grid.is-in .col-card {
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+          opacity 0.7s ease var(--d, 0s),
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
+          border-color 0.4s ease,
+          background 0.4s ease;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .col-card {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .col-card:hover,
+        .col-card:focus-visible {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <section class="col-head" aria-label="The Selcouth collection">
+        <h1 class="col-title">The Collection</h1>
+      </section>
+
+      <div class="col-filter-wrap">
+        <div class="col-filter" role="tablist" aria-label="Product type">
+          <button class="col-filter__btn is-active" type="button" role="tab" aria-selected="true" data-filter="perfumes" data-ar="العطور">Perfumes</button>
+          <button class="col-filter__btn" type="button" role="tab" aria-selected="false" data-filter="samples" data-ar="العينات">Samples</button>
+          <button class="col-filter__btn" type="button" role="tab" aria-selected="false" data-filter="all" data-ar="كل المنتجات">All Products</button>
+        </div>
+      </div>
+
+      <div class="col-grid-wrap">
+        <ul class="col-grid" id="col-grid">
+          <li data-kind="perfume">
+            <a class="col-card" href="/aurelinth" style="--d: 0s">
+              <div class="col-media">
+                <img
+                  class="col-bottle"
+                  src="images/perfumes/p1.webp"
+                  alt="Aurelinth"
+                  decoding="async"
+                />
+              </div>
+              <div class="col-body">
+                <h2 class="col-name" data-ar="أوريلينث">Aurelinth</h2>
+                <p class="col-desc" data-ar="دفء العنبر فوق أخشاب منتصف الليل">Amber warmth over midnight woods</p>
+                <p class="col-price" data-ar="391.30 ر.س · 50 مل إكستريه">SAR 391.30 · 50ml Extrait</p>
+                <span class="col-cta" data-ar="عرض المنتج">View product</span>
+              </div>
+            </a>
+          </li>
+
+          <li data-kind="perfume">
+            <a class="col-card" href="/oakbanum" style="--d: 0.09s">
+              <div class="col-media">
+                <img
+                  class="col-bottle"
+                  src="images/perfumes/p2.webp"
+                  alt="Oakbanum"
+                  decoding="async"
+                />
+              </div>
+              <div class="col-body">
+                <h2 class="col-name" data-ar="أوكبانوم">Oakbanum</h2>
+                <p class="col-desc" data-ar="راتنج البلوط المدخّن واللبدانوم الذهبي">Smoked oak resin and golden labdanum</p>
+                <p class="col-price" data-ar="268.70 ر.س · 50 مل إكستريه">SAR 268.70 · 50ml Extrait</p>
+                <span class="col-cta" data-ar="عرض المنتج">View product</span>
+              </div>
+            </a>
+          </li>
+
+          <li data-kind="perfume">
+            <a class="col-card" href="/veil-of-orris" style="--d: 0.18s">
+              <div class="col-media">
+                <img
+                  class="col-bottle"
+                  src="images/perfumes/p3.webp"
+                  alt="Veil of Orris"
+                  decoding="async"
+                />
+              </div>
+              <div class="col-body">
+                <h2 class="col-name" data-ar="فيل أوف أوريس">Veil of Orris</h2>
+                <p class="col-desc" data-ar="سوسن مُنعَّم تحت حجاب بنفسجي">Powdered iris beneath a violet veil</p>
+                <p class="col-price" data-ar="346.96 ر.س · 50 مل إكستريه">SAR 346.96 · 50ml Extrait</p>
+                <span class="col-cta" data-ar="عرض المنتج">View product</span>
+              </div>
+            </a>
+          </li>
+
+          <li data-kind="sample">
+            <a class="col-card" href="/aurelinth-sample" style="--d: 0s">
+              <div class="col-media">
+                <img
+                  class="col-bottle"
+                  src="images/perfumes/s1.webp"
+                  alt="Aurelinth sample"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="col-body">
+                <h2 class="col-name" data-ar="أوريلينث">Aurelinth</h2>
+                <p class="col-desc" data-ar="دفء العنبر فوق أخشاب منتصف الليل">Amber warmth over midnight woods</p>
+                <p class="col-price" data-ar="19 ر.س · عيّنة 3 مل">SAR 19 · 3ml Sample</p>
+                <span class="col-cta" data-ar="عرض المنتج">View product</span>
+              </div>
+            </a>
+          </li>
+
+          <li data-kind="sample">
+            <a class="col-card" href="/oakbanum-sample" style="--d: 0.09s">
+              <div class="col-media">
+                <img
+                  class="col-bottle"
+                  src="images/perfumes/s2.webp"
+                  alt="Oakbanum sample"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="col-body">
+                <h2 class="col-name" data-ar="أوكبانوم">Oakbanum</h2>
+                <p class="col-desc" data-ar="راتنج البلوط المدخّن واللبدانوم الذهبي">Smoked oak resin and golden labdanum</p>
+                <p class="col-price" data-ar="17 ر.س · عيّنة 3 مل">SAR 17 · 3ml Sample</p>
+                <span class="col-cta" data-ar="عرض المنتج">View product</span>
+              </div>
+            </a>
+          </li>
+
+          <li data-kind="sample">
+            <a class="col-card" href="/veil-of-orris-sample" style="--d: 0.18s">
+              <div class="col-media">
+                <img
+                  class="col-bottle"
+                  src="images/perfumes/s3.webp"
+                  alt="Veil of Orris sample"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="col-body">
+                <h2 class="col-name" data-ar="فيل أوف أوريس">Veil of Orris</h2>
+                <p class="col-desc" data-ar="سوسن مُنعَّم تحت حجاب بنفسجي">Powdered iris beneath a violet veil</p>
+                <p class="col-price" data-ar="18 ر.س · عيّنة 3 مل">SAR 18 · 3ml Sample</p>
+                <span class="col-cta" data-ar="عرض المنتج">View product</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <script src="vendor/lenis.min.js"></script>
+    <script>
+      (function () {
+        "use strict";
+        var reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        // Smooth scroll, matching about-us.html. No GSAP on this page, so
+        // Lenis drives its own rAF loop.
+        if (!reduce && window.Lenis) {
+          var lenis = new Lenis({
+            duration: 1.1,
+            easing: function (t) {
+              return Math.min(1, 1.001 - Math.pow(2, -10 * t));
+            },
+            smoothWheel: true,
+            touchMultiplier: 1.2,
+          });
+          var raf = function (time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+          };
+          requestAnimationFrame(raf);
+          window.__lenis = lenis;
+          window._lenis = lenis;
+        }
+
+        var grid = document.getElementById("col-grid");
+        if (!grid) return;
+
+        /* ---- Perfumes / Samples / All Products ----
+           The header links here with ?view=perfumes|samples, so the URL is
+           the source of truth on load and is kept in sync (replaceState, so
+           switching tabs doesn't pile up history entries). */
+        var items = Array.prototype.slice.call(grid.children);
+        var btns = Array.prototype.slice.call(
+          document.querySelectorAll(".col-filter__btn"),
+        );
+        // the heading is just the collection name, per view, per language
+        var HEAD_BY_LANG = {
+          en: {
+            perfumes: "The Collection",
+            samples: "Samples",
+            all: "All Products",
+          },
+          ar: { perfumes: "المجموعة", samples: "العينات", all: "كل المنتجات" },
+        };
+        var HEAD = HEAD_BY_LANG.en;
+        var titleEl = document.querySelector(".col-title");
+
+        var currentView = "perfumes";
+
+        function applyView(view, push) {
+          HEAD = HEAD_BY_LANG[window.SelLang === "ar" ? "ar" : "en"];
+          if (!HEAD[view]) view = "perfumes";
+          currentView = view;
+          items.forEach(function (li) {
+            var kind = li.getAttribute("data-kind");
+            li.hidden = view !== "all" && kind !== view.replace(/s$/, "");
+          });
+          btns.forEach(function (b) {
+            var on = b.getAttribute("data-filter") === view;
+            b.classList.toggle("is-active", on);
+            b.setAttribute("aria-selected", on ? "true" : "false");
+          });
+          if (titleEl) titleEl.textContent = HEAD[view];
+          if (push && window.history && history.replaceState) {
+            history.replaceState(null, "", "?view=" + view);
+          }
+        }
+
+        btns.forEach(function (b) {
+          b.addEventListener("click", function () {
+            applyView(b.getAttribute("data-filter"), true);
+          });
+        });
+        applyView(
+          new URLSearchParams(location.search).get("view") || "perfumes",
+          false,
+        );
+        // the heading is generated here, so it has to be re-rendered when the
+        // shared language toggle fires
+        document.addEventListener("sel:lang", function () {
+          applyView(currentView, false);
+        });
+
+        if (reduce || !("IntersectionObserver" in window)) {
+          grid.classList.add("is-in");
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                grid.classList.add("is-in");
+                io.disconnect();
+              }
+            });
+          },
+          { threshold: 0.15 },
+        );
+        io.observe(grid);
+      })();
+    </script>
+  </body>
+</html>

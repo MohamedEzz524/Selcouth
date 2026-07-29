@@ -1,0 +1,68 @@
+/*
+ * The Typekit service used to deliver this font or fonts for use on websites
+ * is provided by Adobe and is subject to these Terms of Use
+ * http://www.adobe.com/products/eulas/tou_typekit. For font license
+ * information, see the list below.
+ *
+ * forma-djr-mono:
+ *   - http://typekit.com/eulas/0000000000000000775aed83
+ *   - http://typekit.com/eulas/0000000000000000775aed79
+ *   - http://typekit.com/eulas/0000000000000000775aed77
+ *   - http://typekit.com/eulas/0000000000000000775aed78
+ *   - http://typekit.com/eulas/0000000000000000775aed73
+ * komet:
+ *   - http://typekit.com/eulas/00000000000000007735a90c
+ * lores-12:
+ *   - http://typekit.com/eulas/00000000000000007735bf82
+ *
+ * © 2009-2026 Adobe Systems Incorporated. All Rights Reserved.
+ */
+/*{"last_published":"2025-12-16 09:39:08 UTC"}*/
+
+@import url("https://p.typekit.net/p.css?s=1&k=upd0woi&ht=tk&f=28317.36497.55895.55896.55897.55906.55908&a=1494256&app=typekit&e=css");
+
+@font-face {
+font-family:"lores-12";
+src:url("https://use.typekit.net/af/22c3fd/00000000000000007735bf82/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/22c3fd/00000000000000007735bf82/31/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/22c3fd/00000000000000007735bf82/31/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;font-stretch:normal;
+}
+
+@font-face {
+font-family:"komet";
+src:url("https://use.typekit.net/af/dc1661/00000000000000007735a90c/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff2"),url("https://use.typekit.net/af/dc1661/00000000000000007735a90c/31/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff"),url("https://use.typekit.net/af/dc1661/00000000000000007735a90c/31/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
+}
+
+@font-face {
+font-family:"forma-djr-mono";
+src:url("https://use.typekit.net/af/c7479c/0000000000000000775aed83/31/l?subset_id=2&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/c7479c/0000000000000000775aed83/31/d?subset_id=2&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/c7479c/0000000000000000775aed83/31/a?subset_id=2&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;font-stretch:normal;
+}
+
+@font-face {
+font-family:"forma-djr-mono";
+src:url("https://use.typekit.net/af/30c6dc/0000000000000000775aed79/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff2"),url("https://use.typekit.net/af/30c6dc/0000000000000000775aed79/31/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff"),url("https://use.typekit.net/af/30c6dc/0000000000000000775aed79/31/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
+}
+
+@font-face {
+font-family:"forma-djr-mono";
+src:url("https://use.typekit.net/af/ea2dae/0000000000000000775aed77/31/l?subset_id=2&fvd=n8&v=3") format("woff2"),url("https://use.typekit.net/af/ea2dae/0000000000000000775aed77/31/d?subset_id=2&fvd=n8&v=3") format("woff"),url("https://use.typekit.net/af/ea2dae/0000000000000000775aed77/31/a?subset_id=2&fvd=n8&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:800;font-stretch:normal;
+}
+
+@font-face {
+font-family:"forma-djr-mono";
+src:url("https://use.typekit.net/af/415ce4/0000000000000000775aed78/31/l?subset_id=2&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/415ce4/0000000000000000775aed78/31/d?subset_id=2&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/415ce4/0000000000000000775aed78/31/a?subset_id=2&fvd=n7&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
+}
+
+@font-face {
+font-family:"forma-djr-mono";
+src:url("https://use.typekit.net/af/ed1573/0000000000000000775aed73/31/l?subset_id=2&fvd=n6&v=3") format("woff2"),url("https://use.typekit.net/af/ed1573/0000000000000000775aed73/31/d?subset_id=2&fvd=n6&v=3") format("woff"),url("https://use.typekit.net/af/ed1573/0000000000000000775aed73/31/a?subset_id=2&fvd=n6&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:600;font-stretch:normal;
+}
+
+.tk-lores-12 { font-family: "lores-12",sans-serif; }
+.tk-komet { font-family: "komet",sans-serif; }
+.tk-forma-djr-mono { font-family: "forma-djr-mono",sans-serif; }
