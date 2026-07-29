@@ -1,187 +1,63 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- ── 主要頁面 ── -->
   <url>
-    <loc>https://nudot.com.tw/</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://selcouthperfumes.com/</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-
   <url>
-    <loc>https://nudot.com.tw/work</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://selcouthperfumes.com/collection</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://nudot.com.tw/lab</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/about</loc>
-    <lastmod>2026-06-14</lastmod>
+    <loc>https://selcouthperfumes.com/aurelinth</loc>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
-    <loc>https://nudot.com.tw/contact</loc>
-    <lastmod>2026-06-14</lastmod>
+    <loc>https://selcouthperfumes.com/oakbanum</loc>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- ── 作品案例頁 ── -->
-  <url>
-    <loc>https://nudot.com.tw/work_co</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/work_food</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/work_oil</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/work_camp</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/work_nod</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/work_machine</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/work_cnc</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/work_sun</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/work_beauty</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/work_ourattan</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <!-- ── 部落格 ── -->
-  <url>
-    <loc>https://nudot.com.tw/blog</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  
-  <!-- ── 部落格文章 ── -->
   <url>
-    <loc>https://nudot.com.tw/blog/what-is-web-design-guide</loc>
-    <lastmod>2026-07-08</lastmod>
+    <loc>https://selcouthperfumes.com/veil-of-orris</loc>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nudot.com.tw/blog/5-common-web-design-mistakes</loc>
-    <lastmod>2026-07-08</lastmod>
+    <loc>https://selcouthperfumes.com/aurelinth-sample</loc>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nudot.com.tw/blog/ui-ux-difference</loc>
-    <lastmod>2026-07-06</lastmod>
+    <loc>https://selcouthperfumes.com/oakbanum-sample</loc>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nudot.com.tw/blog/how-to-choose-web-design-company</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://selcouthperfumes.com/veil-of-orris-sample</loc>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nudot.com.tw/blog/2026-b2b-web-design-trends-quiet-luxury</loc>
-    <lastmod>2026-07-06</lastmod>
+    <loc>https://selcouthperfumes.com/about-us</loc>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nudot.com.tw/blog/international-web-design-awards-inspiration</loc>
-    <lastmod>2026-07-05</lastmod>
+    <loc>https://selcouthperfumes.com/returns</loc>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.4</priority>
   </url>
-  <url>
-    <loc>https://nudot.com.tw/blog/web-design-pricing-factors</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://nudot.com.tw/blog/headless-architecture-web-design</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://nudot.com.tw/blog/corporate-website-redesign-checklist</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-   <url>
-    <loc>https://nudot.com.tw/blog/gsap-webgl-dynamic-web-design</loc>
-    <lastmod>2026-07-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
- 
-  
-   
-
 </urlset>

@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="zh-TW">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>核點 Nudot Studio｜台中網頁設計 × 品牌視覺升級 × 動態特效</title>
+    <title>Selcouth — The Art of Rare Perfumery</title>
 
     <script>
       (function () {
@@ -23,60 +23,29 @@
       })();
     </script>
 
-    <!-- Google Analytics 4 (GA4) -->
-
-    <!-- Google tag (gtag.js) -->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-N53QVZL8TL");
-    </script>
-
     <!-- SEO -->
-    <meta
-      name="description"
-      content="專注於台中網頁設計的頂尖團隊——核點設計 NUDOT。我們深耕高階網頁設計、動態特效設計與品牌視覺升級。結合流體極簡美學與高階前端技術，為企業打造具備國際大器格局的沉浸式互動網站，讓數位體驗成為您最強的商業資產。"
-    />
-    <meta
-      name="keywords"
-      content="台中網頁設計, 網頁設計, 動態特效設計, 品牌視覺升級, 高階網頁設計, 互動網站設計, UIUX設計, 品牌設計, 企業官網改版, GSAP動態網頁, NUDOT, 核點設計, 台中網站設計, 台中視覺設計"
-    />
+    <meta name="description" content="Selcouth — a Riyadh perfume house composing extrait-grade fragrances around the world's rarest raw materials." />
     <meta name="robots" content="index, follow" />
-    <meta name="author" content="核點設計 NUDOT" />
-    <meta name="theme-color" content="#030303" />
+    <meta name="author" content="Selcouth" />
+    <meta name="theme-color" content="#050505" />
     <meta name="format-detection" content="telephone=no" />
-    <link rel="canonical" href="https://nudot.com.tw/" />
+    <link rel="canonical" href="https://selcouthperfumes.com/" />
+    <link rel="alternate" hreflang="en" href="https://selcouthperfumes.com/" />
+    <link rel="alternate" hreflang="ar" href="https://selcouthperfumes.com/" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://nudot.com.tw/" />
-    <meta
-      property="og:title"
-      content="核點設計 NUDOT｜台中網頁設計 × 動態特效設計 × 品牌視覺升級"
-    />
-    <meta
-      property="og:description"
-      content="專注於台中網頁設計的頂尖團隊——核點設計 NUDOT。深耕高階網頁設計、動態特效設計與品牌視覺升級，為企業打造具備國際大器格局的沉浸式互動網站。"
-    />
-    <meta property="og:image" content="https://nudot.com.tw/images/og.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="zh_TW" />
-    <meta property="og:site_name" content="核點設計 NUDOT" />
+    <meta property="og:url" content="https://selcouthperfumes.com/" />
+    <meta property="og:title" content="Selcouth — The Art of Rare Perfumery" />
+    <meta property="og:description" content="Selcouth — a Riyadh perfume house composing extrait-grade fragrances around the world's rarest raw materials." />
+    <meta property="og:image" content="https://selcouthperfumes.com/media/about-us1.jpeg" />
+    <meta property="og:locale" content="en" />
+    <meta property="og:locale:alternate" content="ar_SA" />
+    <meta property="og:site_name" content="Selcouth" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="核點設計 NUDOT｜台中網頁設計 × 動態特效設計 × 品牌視覺升級"
-    />
-    <meta
-      name="twitter:description"
-      content="專注於台中網頁設計的頂尖團隊——核點設計 NUDOT。深耕高階網頁設計、動態特效設計與品牌視覺升級，為企業打造具備國際大器格局的沉浸式互動網站。"
-    />
-    <meta name="twitter:image" content="https://nudot.com.tw/images/og.jpg" />
+    <meta name="twitter:title" content="Selcouth — The Art of Rare Perfumery" />
+    <meta name="twitter:description" content="Selcouth — a Riyadh perfume house composing extrait-grade fragrances around the world's rarest raw materials." />
+    <meta name="twitter:image" content="https://selcouthperfumes.com/media/about-us1.jpeg" />
 
     <!-- Preconnects (only origins actually used at first paint) -->
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
@@ -415,7 +384,12 @@
        SCROLL CONTROL & STICKY CONTAINER
        ========================================================= */
       .scroll-track {
-        height: 250vh;
+        /* Pinned scroll budget for BOTH reveals: hero → products, then
+           products → samples. height - 100vh (the sticky viewport) = total
+           travel; 420vh → 320vh, split ~160vh each by p_Reveal / p_Samples*
+           below. The pin releases as the samples section lands, so there is
+           no dead fixed scrolling after it. Raise this to slow both reveals. */
+        height: 420vh;
         position: relative;
         /* 🎯 觸控裝置只允許垂直滑動,避免水平手勢誤觸發瀏覽器導航 */
         touch-action: pan-y;
@@ -1574,15 +1548,16 @@
         aspect-ratio: 1 / 1;
       }
 
-      /* The stills carry a lot of transparent padding, so zoom both layers by the
-       same factor: the bottle fills the frame and the glow stays registered. */
+      /* The current stills are tight crops — the artwork already touches every
+       edge — so they are shown at their natural fit. (The older art carried a
+       lot of transparent padding and needed a 1.5x zoom to fill the frame.) */
       .pf-media img {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
         object-fit: contain;
-        transform: scale(1.5);
+        transform: scale(1);
         pointer-events: none;
         user-select: none;
       }
@@ -1640,8 +1615,9 @@
       .pf-card:not(.is-active):hover .pf-name {
         opacity: 0.85;
       }
+      /* the centred bottle links through to its product page */
       .pf-card.is-active {
-        cursor: default;
+        cursor: pointer;
       }
 
       @media (max-width: 767px) {
@@ -4381,7 +4357,8 @@
 
         .hero-section {
           position: relative;
-          height: 90vh;
+          height: 100vh;   /* fallback for browsers without dvh */
+          height: 100dvh;  /* full viewport minus the mobile browser UI */
         }
 
         .overlay-top {
@@ -4939,6 +4916,12 @@
 
     <style>
       /* Loader CSS */
+      /* The mask/shield used to animate off bare `animation-delay`, i.e. from
+         first paint, while the dot intro was anchored to DOMContentLoaded.
+         On desktop those are ~300ms apart and it looked fine; on mobile DCL
+         lands seconds later, so the overlay opened (and the shield lifted)
+         long before — or right on top of — the dot animation. Both halves are
+         now started together by the .is-playing class. */
       #nudot-loader {
         position: fixed;
         inset: 0;
@@ -4948,7 +4931,6 @@
         pointer-events: auto;
         opacity: 1;
         visibility: visible;
-        animation: ndLoaderShieldOff 0.01s linear 3.15s forwards;
       }
 
       #nudot-loader .nd-mask {
@@ -4960,6 +4942,9 @@
         transform: translate(-50%, -50%);
         background: transparent;
         box-shadow: 0 0 0 150vmax #080808;
+      }
+
+      #nudot-loader.is-playing .nd-mask {
         animation: ndBoxOpen 1.2s cubic-bezier(0.76, 0, 0.24, 1) 2.6s forwards;
       }
 
@@ -5093,13 +5078,6 @@
         }
       }
 
-      @keyframes ndLoaderShieldOff {
-        to {
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-        }
-      }
     </style>
 
     <!-- Structured Data -->
@@ -5107,17 +5085,21 @@
       {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "NUDOT 核點創意",
-        "url": "https://nudot.com.tw/",
-        "logo": "https://nudot.com.tw/images/logo.svg",
-        "description": "台灣頂尖品牌策略設計工作室，專精品牌識別、數位互動、Gen-AI Visual 與網頁開發，打造 AWW／FWA 等級視覺體驗。",
+        "name": "Selcouth",
+        "url": "https://selcouthperfumes.com/",
+        "logo": "https://selcouthperfumes.com/images/logo.svg",
+        "description": "A Riyadh perfume house composing extrait-grade fragrances around the world's rarest raw materials.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Riyadh",
+          "addressCountry": "SA"
+        },
         "contactPoint": {
           "@type": "ContactPoint",
-          "telephone": "+886-983-750-522",
-          "email": "hello@nudot.com.tw",
+          "email": "care@selcouth.sa",
           "contactType": "customer service",
-          "areaServed": "TW",
-          "availableLanguage": ["Chinese", "English"]
+          "areaServed": "SA",
+          "availableLanguage": ["Arabic", "English"]
         }
       }
     </script>
@@ -5345,7 +5327,13 @@
       }
       @media (max-width: 767px) {
         .hero-title { bottom: 12vh; }
-        .bottom-ui-container { right: 12px !important; bottom: 4vh !important; }
+        .bottom-ui-container {
+          left: 0 !important;
+          right: 0 !important;
+          margin-inline: auto !important;
+          width: fit-content;
+          bottom: 4vh !important;
+        }
       }
 
       /* bolder nav text (maps to the PictureHouse bold face) */
@@ -5383,21 +5371,142 @@
         color: rgba(255, 255, 255, 0.66);
         max-width: 460px;
       }
-      .pf-price {
+      /* size / concentration — what's left of the old price line once the
+         amount moved into the CTA */
+      .pf-meta {
         font-family: "DM Sans", sans-serif;
         font-weight: 700;
         font-size: 12px;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.85);
+        color: rgba(255, 255, 255, 0.6);
+      }
+      /* the price now rides inside the Add to Cart button */
+      .pf-price {
+        font-family: "DM Sans", sans-serif;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #fff;
+        opacity: 0.72;
+      }
+      .pf-shop__txt {
+        white-space: nowrap;
+      }
+
+      /* Desktop: lift the bottles off the title block so the two don't crowd
+         each other (the cards are centred on the stage via top:50%). */
+      @media (min-width: 768px) {
+        .pf-card {
+          top: calc(50% - clamp(32px, 6vh, 88px));
+        }
+      }
+      /* ── SAMPLES: second carousel ──
+         On desktop this is a clip-path layer inside the pinned sticky
+         container, sitting over the products section exactly the way
+         .dark-wrapper-mask sits over the hero — so it wipes up into view on
+         scroll instead of arriving as an ordinary section. */
+      .sample-mask {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 12; /* above .dark-wrapper-mask (10) */
+        overflow: hidden;
+        clip-path: inset(100% 0 0 0);
+        -webkit-clip-path: inset(100% 0 0 0);
+        will-change: clip-path;
+        contain: layout paint style;
+      }
+      .sample-section {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #000;
+        z-index: 1;
+        overflow: hidden;
+        isolation: isolate;
+      }
+      .sample-section__stage {
+        position: absolute;
+        inset: 0;
+      }
+      /* Mobile keeps the old in-flow behaviour: no pin, no mask. */
+      @media (max-width: 767px) {
+        .sample-mask {
+          position: relative;
+          height: auto;
+          clip-path: none;
+          -webkit-clip-path: none;
+          contain: none;
+        }
+        .sample-section {
+          position: relative;
+          height: auto;
+          padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 4rem);
+        }
+        .sample-section__stage {
+          position: relative;
+          inset: auto;
+          height: clamp(420px, 68vh, 620px);
+        }
+      }
+
+      /* Mobile: drop the info block further below the bottles so the row of
+         bottles and the product title are not crowded together. */
+      @media (max-width: 767px) {
+        .pf-info {
+          top: calc(50% + clamp(120px, 34vw, 190px));
+        }
+      }
+
+      /* CTA row: primary button + the quiet link through to /collection */
+      .pf-actions {
+        margin-top: 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(14px, 1.6vw, 24px);
+        pointer-events: auto;
+      }
+      .pf-viewall {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 4px 2px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+        font-family: "DM Sans", sans-serif;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.72);
+        text-decoration: none;
+        transition:
+          color 0.3s ease,
+          border-color 0.3s ease;
+      }
+      .pf-viewall span {
+        transition: transform 0.3s ease;
+      }
+      .pf-viewall:hover {
+        color: #fff;
+        border-color: #fff;
+      }
+      .pf-viewall:hover span {
+        transform: translateX(4px);
       }
       .pf-shop {
-        margin-top: 4px;
         height: 44px;
-        padding: 0 26px;
+        padding: 0 24px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        gap: 14px;
         border: none;
         border-radius: 999px;
         color: #fff;
@@ -5420,7 +5529,7 @@
       }
 
       /* second-section carousel: glassy arrow follow-cursor (desktop) */
-      #pf-carousel.pf-cursor-on {
+      .pf-carousel.pf-cursor-on {
         cursor: none;
       }
       body.pf-cursor-active #cursor-dot,
@@ -5455,7 +5564,10 @@
         opacity: 0;
         transition:
           opacity 0.2s ease,
-          transform 0.2s ease;
+          transform 0.2s ease,
+          width 0.22s ease,
+          height 0.22s ease,
+          border-color 0.22s ease;
       }
       #pf-cursor.is-on {
         opacity: 1;
@@ -5468,6 +5580,43 @@
       }
       #pf-cursor[data-side="left"] svg {
         transform: rotate(180deg);
+      }
+
+      /* over the centred bottle the cursor stops offering prev/next and
+         announces the link to the product page instead */
+      #pf-cursor .pfc-view,
+      #pf-cursor .pfc-add {
+        display: none;
+        font-family: "forma-djr-mono", ui-monospace, monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      #pf-cursor.is-view,
+      #pf-cursor.is-add {
+        width: 76px;
+        height: 76px;
+        border-color: rgba(255, 255, 255, 0.6);
+        background: radial-gradient(
+          120% 120% at 30% 20%,
+          rgba(255, 255, 255, 0.3),
+          rgba(255, 255, 255, 0.1) 60%
+        );
+      }
+      #pf-cursor.is-view .pfc-arrow,
+      #pf-cursor.is-add .pfc-arrow {
+        display: none;
+      }
+      #pf-cursor.is-view .pfc-view,
+      #pf-cursor.is-add .pfc-add {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      #pf-cursor .pfc-add svg {
+        width: 13px;
+        height: 13px;
       }
 
       /* rings: centre video shows immediately (clip reveal removed) */
@@ -5633,7 +5782,7 @@
            too large for the smaller mobile bottles — pull it up toward the bottle.
            Tune the clamp's middle value to move it up/down. */
         .mobile-cube-section.has-perfume .pf-info {
-          top: calc(50% + clamp(70px, 22vw, 120px));
+          top: calc(50% + clamp(120px, 34vw, 190px));
         }
       }
     </style>
@@ -5651,7 +5800,7 @@
           [ <span class="js-page-transition-counter-num">00</span> ]
         </div>
         <div class="page-transition-panel js-page-transition-panel">
-          <div class="page-transition-meta is-top-left">NUDOT</div>
+          <div class="page-transition-meta is-top-left">SELCOUTH</div>
           <div
             class="page-transition-meta is-top-right js-page-transition-meta-to"
           >
@@ -5659,7 +5808,7 @@
           </div>
           <div class="page-transition-copy">
             <div class="page-transition-eyebrow js-page-transition-eyebrow">
-              NUDOT CREATIVE STUDIO
+              SELCOUTH
             </div>
             <div class="page-transition-title js-page-transition-title">
               HOME
@@ -5687,11 +5836,11 @@
             id="fixed-logo"
             href="#nav"
             data-cursor="HOME"
-            aria-label="NUDOT home"
+            aria-label="Selcouth home"
           >
             <img
               src="images/logo.svg"
-              alt="NUDOT 核點創意"
+              alt="Selcouth"
               width="45"
               height="35"
               fetchpriority="high"
@@ -5729,11 +5878,11 @@
               class="ns-logo"
               href="index"
               data-cursor="HOME"
-              aria-label="NUDOT home"
+              aria-label="Selcouth home"
             >
               <img
                 src="images/logo.svg"
-                alt="NUDOT 核點創意"
+                alt="Selcouth"
                 width="45"
                 height="35"
                 loading="lazy"
@@ -5759,7 +5908,7 @@
             <div class="ns-dropdown__inner" id="nav-scroll-dropdown-content">
               <div class="ns-menu-stage">
                 <!-- <div class="ns-menu-topline ns-dropdown__item">
-            <span class="ns-menu-topline__brand">NUDOT CREATIVE STUDIO</span>
+            <span class="ns-menu-topline__brand">SELCOUTH</span>
             <a class="ns-menu-topline__contact" href="#site-footer">CONTACT</a>
           </div> -->
 
@@ -5821,11 +5970,11 @@
                     class="ns-showcase-row ns-dropdown__item"
                     href="about"
                     data-transition-label="About"
-                    aria-label="核點創意"
+                    aria-label="Selcouth"
                   >
                     <span
                       class="ns-showcase-row__index"
-                      data-text="( 核點創意 )"
+                      data-text="( SELCOUTH )"
                     ></span>
                     <span
                       class="ns-showcase-row__thumb is-left"
@@ -5927,11 +6076,11 @@
                     class="ns-showcase-row ns-dropdown__item"
                     href="lab"
                     data-transition-label="Labs"
-                    aria-label="核點實驗室"
+                    aria-label="Selcouth"
                   >
                     <span
                       class="ns-showcase-row__index"
-                      data-text="( 核點實驗室 )"
+                      data-text="( SELCOUTH )"
                     ></span>
                     <span
                       class="ns-showcase-row__thumb is-left"
@@ -6046,10 +6195,14 @@
         </div>
 
         <script>
-          // Anchor hero reveal to page-load time using performance.now()
-          // DOMContentLoaded fires AFTER all defer scripts → _heroTl is guaranteed to exist
-          var _loaderTarget = 2700; // ms from navigation start
-          var _loaderDismissTarget = 3200; // release click shield shortly after loader exit
+          // Every stage of the intro is measured from the moment the loader
+          // starts playing (DOMContentLoaded), NOT from navigation start —
+          // otherwise a slow mobile parse eats the whole budget and the
+          // loader dismisses itself before the dot animation has run.
+          // DOMContentLoaded fires AFTER all defer scripts → _heroTl exists.
+          var _loaderTarget = 2700; // ms after the intro starts: hero begins
+          var _loaderDismissTarget = 3200; // ms after: release the click shield
+          var _loaderFailsafe = 5500; // ms after: give up and show the page
 
           function dismissNudotLoader() {
             var el = document.getElementById("nudot-loader");
@@ -6126,16 +6279,25 @@
           }
 
           document.addEventListener("DOMContentLoaded", function () {
-            var remaining = Math.max(0, _loaderTarget - performance.now());
-            var dismissRemaining = Math.max(
-              0,
-              _loaderDismissTarget - performance.now(),
-            );
+            // starts the CSS mask/shield on the same clock as the dot intro
+            var el = document.getElementById("nudot-loader");
+            if (el) el.classList.add("is-playing");
             runNudotDotIntro();
             setTimeout(function () {
               if (window._heroTl) window._heroTl.play();
-            }, remaining);
-            setTimeout(dismissNudotLoader, dismissRemaining);
+            }, _loaderTarget);
+            setTimeout(dismissNudotLoader, _loaderDismissTarget);
+            // Hard fallback: if GSAP never loaded (CDN fail, network block),
+            // make everything visible. Also relative to the intro start.
+            setTimeout(function () {
+              dismissNudotLoader();
+              if (!window._heroTl) {
+                var style = document.createElement("style");
+                style.textContent =
+                  "*{visibility:visible!important;opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important}";
+                document.head.appendChild(style);
+              }
+            }, _loaderFailsafe);
           });
           // bfcache restore: pageshow with persisted=true doesn't re-run scripts
           window.addEventListener("pageshow", function (e) {
@@ -6144,17 +6306,6 @@
               window.location.reload();
             }
           });
-          // Hard fallback: if GSAP never loaded (CDN fail, network block), make everything visible
-          setTimeout(function () {
-            dismissNudotLoader();
-            if (!window._heroTl) {
-              // GSAP didn't load — remove all inline visibility overrides
-              var style = document.createElement("style");
-              style.textContent =
-                "*{visibility:visible!important;opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important}";
-              document.head.appendChild(style);
-            }
-          }, 5500);
         </script>
         <script>
           (function () {
@@ -6487,14 +6638,9 @@
                       and sensibly priced.
                     </div>
                     <div class="footer-col">
-                      <a
-                        href="/cdn-cgi/l/email-protection"
-                        class="__cf_email__"
-                        data-cfemail="036b666f6f6c436d76676c772d606c6e2d7774"
-                        >[email&#160;protected]</a
-                      ><br />
-                      0983-750 522<br />
-                      核點 Nudot Studio 2026©
+                      <a href="mailto:care@selcouth.sa">care@selcouth.sa</a><br />
+                      
+                      Selcouth 2026©
                     </div>
                     <div class="footer-col col-right footer-links">
                       <!-- <a href="https://www.behance.net/dotnu" target="_blank">Behance</a>
@@ -6542,6 +6688,7 @@
                   <div
                     class="slide__img"
                     data-video="images/home/slide2.mp4"
+                    data-mobile-video="images/home/slide2mobile.mp4"
                     data-thumb="images/home/slide2.webp"
                     data-title="Visual Direction"
                   ></div>
@@ -6576,6 +6723,25 @@
                     transition: opacity 0.05s;
                   "
                 ></div>
+                <!-- Film grain, scoped to section 2. Same pre-baked-frames
+                     technique as js/noise.js, but parented to .dark-wrapper so
+                     it is clipped by the reveal mask and only ever grains this
+                     section — the hero above it stays clean. -->
+                <canvas
+                  id="dw-grain-canvas"
+                  aria-hidden="true"
+                  style="
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 500;
+                    pointer-events: none;
+                    mix-blend-mode: screen;
+                    opacity: 0;
+                    display: none;
+                  "
+                ></canvas>
                 <!-- bg.mp4 在 dark-wrapper(首屏下方),不該跟 hero 影片搶頻寬;
                    改用 IntersectionObserver 路徑(移除 data-lazy-priority="high") -->
                 <video
@@ -6619,20 +6785,21 @@
                   <div class="pf-carousel" id="pf-carousel">
                   <div class="pf-info" id="pf-info">
                     <div class="pf-title" id="pf-title">AURELINTH</div>
-                    <p class="pf-desc" id="pf-desc">Amber warmth over midnight woods</p>
-                    <div class="pf-price" id="pf-price">SAR 620 · 50ml Extrait</div>
-                    <button class="pf-shop" type="button">Shop Now</button>
+                    <p class="pf-desc" id="pf-desc">Honeyed linden, rum and smoke</p>
+                    <div class="pf-meta" id="pf-meta">50ml Extrait</div>
+                    <div class="pf-actions">
+                      <button class="pf-shop" type="button">
+                        <span class="pf-shop__txt" data-ar="أضف إلى السلة">Add to Cart</span>
+                        <span class="pf-price" id="pf-price">SAR 391.30</span>
+                      </button>
+                      <a class="pf-viewall" href="/collection"
+                         data-ar="عرض الكل &lt;span aria-hidden=&quot;true&quot;&gt;←&lt;/span&gt;">View all <span aria-hidden="true">→</span></a
+                      >
+                    </div>
                   </div>
                     <div class="pf-stage" id="pf-stage">
-                      <div class="pf-card" data-i="0" data-desc="Amber warmth over midnight woods" data-price="SAR 620 · 50ml Extrait">
+                      <div class="pf-card" data-i="0" data-href="/aurelinth" data-desc="Honeyed linden, rum and smoke" data-price="SAR 391.30 · 50ml Extrait" data-name-ar="أوريلينث" data-desc-ar="زيزفون معسول، روم ودخان" data-price-ar="391.30 ر.س · 50 مل إكستريه">
                         <div class="pf-media">
-                          <img
-                            class="pf-glow"
-                            src="images/perfumes/p1-glow.webp"
-                            alt=""
-                            aria-hidden="true"
-                            decoding="async"
-                          />
                           <img
                             class="pf-bottle"
                             src="images/perfumes/p1.webp"
@@ -6642,15 +6809,8 @@
                         </div>
                         <div class="pf-name">AURELINTH</div>
                       </div>
-                      <div class="pf-card" data-i="1" data-desc="Smoked oak resin and golden labdanum" data-price="SAR 580 · 50ml Extrait">
+                      <div class="pf-card" data-i="1" data-href="/oakbanum" data-desc="Cognac, coffee and oak" data-price="SAR 268.70 · 50ml Extrait" data-name-ar="أوكبانوم" data-desc-ar="كونياك وقهوة وخشب البلوط" data-price-ar="268.70 ر.س · 50 مل إكستريه">
                         <div class="pf-media">
-                          <img
-                            class="pf-glow"
-                            src="images/perfumes/p2-glow.webp"
-                            alt=""
-                            aria-hidden="true"
-                            decoding="async"
-                          />
                           <img
                             class="pf-bottle"
                             src="images/perfumes/p2.webp"
@@ -6660,15 +6820,8 @@
                         </div>
                         <div class="pf-name">OAKBANUM</div>
                       </div>
-                      <div class="pf-card" data-i="2" data-desc="Powdered iris beneath a violet veil" data-price="SAR 640 · 50ml Extrait">
+                      <div class="pf-card" data-i="2" data-href="/veil-of-orris" data-desc="Orris butter beneath powder and plum" data-price="SAR 346.96 · 50ml Extrait" data-name-ar="فيل أوف أوريس" data-desc-ar="زبدة السوسن تحت البودرة والبرقوق" data-price-ar="346.96 ر.س · 50 مل إكستريه">
                         <div class="pf-media">
-                          <img
-                            class="pf-glow"
-                            src="images/perfumes/p3-glow.webp"
-                            alt=""
-                            aria-hidden="true"
-                            decoding="async"
-                          />
                           <img
                             class="pf-bottle"
                             src="images/perfumes/p3.webp"
@@ -6939,7 +7092,7 @@
           <div class="stm-logo" id="stmLogo">
             <img
               src="images/logo.svg"
-              alt="NUDOT"
+              alt="Selcouth"
               width="387"
               height="68"
               loading="lazy"
@@ -7267,6 +7420,67 @@
               </div>
             </div>
           </section>
+            <div class="sample-mask" id="sample-mask">
+  <section class="sample-section" aria-label="Samples">
+            <div class="sample-section__stage">
+              <div class="pf-carousel" id="sp-carousel">
+                <div class="pf-info">
+                  <div class="pf-title">AURELINTH</div>
+                  <p class="pf-desc">Honeyed linden, rum and smoke</p>
+                  <div class="pf-meta">3ml Sample</div>
+                  <div class="pf-actions">
+                    <button class="pf-shop" type="button">
+                      <span class="pf-shop__txt" data-ar="أضف إلى السلة">Add to Cart</span>
+                      <span class="pf-price">SAR 19</span>
+                    </button>
+                    <a class="pf-viewall" href="/collection"
+                       data-ar="عرض الكل &lt;span aria-hidden=&quot;true&quot;&gt;←&lt;/span&gt;">View all <span aria-hidden="true">→</span></a
+                    >
+                  </div>
+                </div>
+                <div class="pf-stage">
+                  <div class="pf-card" data-i="0" data-href="/aurelinth-sample" data-desc="Honeyed linden, rum and smoke" data-price="SAR 19 · 3ml Sample" data-name-ar="أوريلينث" data-desc-ar="زيزفون معسول، روم ودخان" data-price-ar="19 ر.س · عيّنة 3 مل">
+                    <div class="pf-media">
+                      <img
+                        class="pf-bottle"
+                        src="images/perfumes/s1.webp"
+                        alt="AURELINTH sample"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div class="pf-name">AURELINTH</div>
+                  </div>
+                  <div class="pf-card" data-i="1" data-href="/oakbanum-sample" data-desc="Cognac, coffee and oak" data-price="SAR 17 · 3ml Sample" data-name-ar="أوكبانوم" data-desc-ar="كونياك وقهوة وخشب البلوط" data-price-ar="17 ر.س · عيّنة 3 مل">
+                    <div class="pf-media">
+                      <img
+                        class="pf-bottle"
+                        src="images/perfumes/s2.webp"
+                        alt="OAKBANUM sample"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div class="pf-name">OAKBANUM</div>
+                  </div>
+                  <div class="pf-card" data-i="2" data-href="/veil-of-orris-sample" data-desc="Orris butter beneath powder and plum" data-price="SAR 18 · 3ml Sample" data-name-ar="فيل أوف أوريس" data-desc-ar="زبدة السوسن تحت البودرة والبرقوق" data-price-ar="18 ر.س · عيّنة 3 مل">
+                    <div class="pf-media">
+                      <img
+                        class="pf-bottle"
+                        src="images/perfumes/s3.webp"
+                        alt="Veil Of Orris sample"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div class="pf-name">Veil Of Orris</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+            </div>
+
         </div>
 
         <section class="mobile-cube-section" aria-label="Mobile cube showcase">
@@ -7365,13 +7579,10 @@
             </div>
           </div>
           <div class="mcube-copy">
-            <p class="mcube-copy__desc">
-              任何強大的數位體驗，都源自一個精準的「核點」。NUDOT
-              核點創意專注台中網頁設計、高階商業視覺圖像生成與 AI
-              動態影像製作，以最精準的數位工藝，讓每一個像素都發揮最大的品牌商業價值。
-            </p>
+            <p class="mcube-copy__desc"></p>
           </div>
         </section>
+
 
         <!-- =========================================================
        DRAFT.X & MUSEUM — WebGL Marquee + Stacked Cards Section
@@ -7626,7 +7837,7 @@
             <div class="gallery-header-title">
               <span class="gh-line" data-reveal="word">ARCHIVE OF</span>
               <span class="gh-line" data-reveal="word">THE SELECTED WORKS</span>
-              <span class="gh-line" data-reveal="word">BY NUDOT</span>
+              <span class="gh-line" data-reveal="word">BY SELCOUTH</span>
             </div>
             <p class="text1vw" data-reveal="fade" data-reveal-delay="0.3">
               數位視覺能量釋放點
@@ -7751,26 +7962,15 @@
             <div class="footer-info-bar">
               <span>Web Design Studio</span>
               <span>Commercial Visual · AI Motion</span>
-              <span>Est. 2026 · Taichung</span>
+              <span>Est. 2026 · Riyadh</span>
             </div>
 
             <div class="footer-main-content">
               <div>
-                <p class="footer-description">
-                  NUDOT 核點創意｜台中網頁設計・高階商業視覺生成・AI
-                  動態影像。整合品牌識別、互動體驗設計與 Gen-AI
-                  視覺技術，為品牌打造具備國際競爭力的數位視覺敘事。
-                </p>
+                <p class="footer-description">Selcouth — the art of rare perfumery. Riyadh, Saudi Arabia.</p>
                 <div class="footer-contact-info">
-                  <a
-                    href="/cdn-cgi/l/email-protection#462e232a2a290628332229326825292b683231"
-                    ><span
-                      class="__cf_email__"
-                      data-cfemail="82eae7eeeeedc2ecf7e6edf6ace1edefacf6f5"
-                      >[email&#160;protected]</span
-                    ></a
-                  >
-                  <span>+8869 83 750 522 </span>
+                  <a href="mailto:care@selcouth.sa">care@selcouth.sa</a>
+                  
                 </div>
                 <div style="color: #444; font-size: 14px; margin-top: 8px">
                   臺中市北屯區文心路三段447號
@@ -7832,8 +8032,8 @@
               data-bg="images/footer.webp"
             ></div>
             <div class="footer-parallax-copy">
-              <div>核點創意有限公司</div>
-              <div>&#169; 2026 NUDOT STUDIO. ALL RIGHTS RESERVED.</div>
+              <div>Selcouth</div>
+              <div>&#169; 2026 SELCOUTH. ALL RIGHTS RESERVED.</div>
             </div>
           </div>
         </div>
@@ -7841,10 +8041,6 @@
       </div>
     </div>
 
-    <script
-      data-cfasync="false"
-      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-    ></script>
     <script>
       // =========================================================
       // SLIDESHOW LOGIC (Variables)
@@ -8763,7 +8959,11 @@
           { passive: true },
         );
 
-        const HERO_RENDER_SLEEP_VH = 1.1;
+        // Must stay past the end of the PRODUCTS reveal — p_Reveal × the
+        // track's travel, i.e. 0.46 × 320vh ≈ 1.47. The hero is hidden and its
+        // WebGL paused at this scroll depth, so sleeping while that mask is
+        // still opening would show black behind it.
+        const HERO_RENDER_SLEEP_VH = 1.75;
         function getPerformanceScrollY() {
           return window._lenis && typeof window._lenis.scroll === "number"
             ? window._lenis.scroll
@@ -8867,7 +9067,9 @@
             linesContainer.className = "lines-container";
             dragIndicator.appendChild(linesContainer);
             dragLinesCache = [];
-            for (let i = 0; i < 60; i++) {
+            // half the previous density (was 60) — the wave maths derives its
+            // spacing from lines.length, so it re-fits automatically
+            for (let i = 0; i < 30; i++) {
               const line = document.createElement("div");
               line.className = "drag-line";
               linesContainer.appendChild(line);
@@ -9504,6 +9706,23 @@
           return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
         }
 
+        const sampleMask = document.getElementById("sample-mask");
+        function setSampleReveal(hiddenPercent) {
+          if (!sampleMask) return;
+          if (winW <= 768) {
+            // mobile keeps the section in normal flow — no clipping
+            sampleMask.style.clipPath = "";
+            sampleMask.style.webkitClipPath = "";
+            return;
+          }
+          const safe = Math.max(0, Math.min(hiddenPercent, 100));
+          const next = `inset(${safe}% 0 0 0)`;
+          if (sampleMask.style.clipPath !== next) {
+            sampleMask.style.clipPath = next;
+            sampleMask.style.webkitClipPath = next;
+          }
+        }
+
         function setDarkWrapperReveal(hiddenPercent) {
           if (winW <= 768) {
             if (darkWrapperMask) darkWrapperMask.style.height = "";
@@ -9776,7 +9995,13 @@
           if (progress > 0.035 || targetScrollProgress > 0.035)
             activateScrollMediaOnce();
 
-          const p_Reveal = 0.18;
+          // The products reveal owns the first half of the pinned track; the
+          // samples reveal takes the second half (see p_SampleIn/Out below),
+          // landing at 95% so the smoothing lerp settles before the sticky
+          // container releases. Tune the pace via .scroll-track's height.
+          const p_Reveal = 0.46;
+          const p_SampleIn = 0.54;
+          const p_SampleOut = 0.95;
           const p_TextIn = 0.24;
           const p_TextOut = 1.01;
           const p_Tumble = 0.6;
@@ -9825,6 +10050,16 @@
           let currentSceneSize = baseSceneSize;
 
           setDarkWrapperReveal((1 - easeReveal) * 100);
+
+          // Samples wipe up over the products section on the same clip-path
+          // mechanism, once the products reveal has landed.
+          {
+            const sr = Math.max(
+              0,
+              Math.min((progress - p_SampleIn) / (p_SampleOut - p_SampleIn), 1),
+            );
+            setSampleReveal((1 - easeInOutCubic(sr)) * 100);
+          }
 
           const uiEntrance = Math.max(0, Math.min((pr_Reveal - 0.6) / 0.4, 1));
           const uiEase = easeInOutCubic(uiEntrance);
@@ -13489,142 +13724,274 @@
     </script>
 
     <script>
-      /* Perfume carousel: active centred, one hint each side, infinite.
-       Side cards keep their glow layer at opacity 0 and resolve it to 1
-       while they travel into the active slot. */
+      /* Perfume carousel — infinite swiper.
+         Cards sit side by side on one continuous track (slot spacing derived
+         from the card box, so bottles never cross over each other) and the
+         track wraps modulo N: as a card leaves one edge it reappears on the
+         other while faded out, so the loop has no seam and no restacking.
+         Position is a single float `pos` in slot units; drag moves it 1:1 with
+         the pointer, release snaps to the nearest slot with momentum. */
       (function () {
-        function init() {
-          var stage = document.getElementById("pf-stage");
+        // One carousel per .pf-carousel root — everything is scoped to that
+        // root so the products and samples instances never see each other.
+        function initOne(root) {
+          var stage = root.querySelector(".pf-stage");
           if (!stage || typeof gsap === "undefined") return;
-          var cards = Array.prototype.slice.call(
+          var uniques = Array.prototype.slice.call(
             stage.querySelectorAll(".pf-card"),
           );
-          if (!cards.length) return;
+          if (!uniques.length) return;
 
-          // Seamless infinite loop: the card that wraps first↔last must do so
-          // while it is an opacity:0 side buffer (|offset| > 1). With only a
-          // few uniques every card is visible, so the wrap slides across the
-          // screen. Clone the set to add hidden buffers on both sides.
-          // Desktop only — the carousel is display:none on mobile, so cloning
-          // there would just load duplicate images for nothing.
-          var pfDesktop =
-            !window.matchMedia || window.matchMedia("(min-width: 768px)").matches;
-          if (pfDesktop && cards.length > 1 && cards.length < 5) {
-            cards.slice().forEach(function (c) {
-              stage.appendChild(c.cloneNode(true));
-            });
-            cards = Array.prototype.slice.call(
-              stage.querySelectorAll(".pf-card"),
-            );
-          }
-
+          var cards = uniques.slice();
           var N = cards.length;
-          var DUR = 1.8; // slower, Lenis-like ease-out
-          var EASE = "expo.out"; // match Lenis default easing
-          var active = 0;
+          var SLOT = 0; // px between neighbouring slots
+          var FADE = 0; // |offset| at which a card is fully hidden
+          var pos = 0; // continuous track position, in slots
+          var activeIdx = -1;
+          var tween = null;
 
-          // shortest signed distance to `active`, so the ends wrap into -1 / +1
-          function offsetOf(i) {
-            var d = (((i - active) % N) + N) % N;
-            return d > N / 2 ? d - N : d;
+          var infoEl = root.querySelector(".pf-info");
+          var titleEl = root.querySelector(".pf-title");
+          var descEl = root.querySelector(".pf-desc");
+          var priceEl = root.querySelector(".pf-price");
+          var metaEl = root.querySelector(".pf-meta");
+
+          // Enough cards to cover the viewport plus off-screen buffers on both
+          // sides; clone the unique set whole so the sequence stays in order.
+          function ensureCount(needed) {
+            while (cards.length < needed) {
+              uniques.forEach(function (c) {
+                var clone = c.cloneNode(true);
+                stage.appendChild(clone);
+                cards.push(clone);
+              });
+            }
+            N = cards.length;
           }
 
-          function layout(animate) {
-            // all slides identical; hints sit half outside the viewport
-            var spread = window.innerWidth / 2;
-            var d = animate ? DUR : 0;
+          function measure() {
+            var w =
+              (uniques[0].getBoundingClientRect().width || 0) ||
+              uniques[0].offsetWidth ||
+              300;
+            // The media box is square but the art is object-fit:contain, so
+            // a portrait bottle only paints part of that width. Space slots by
+            // what is actually painted, or tall art leaves huge dead gaps.
+            var img = uniques[0].querySelector("img");
+            var ratio =
+              img && img.naturalWidth && img.naturalHeight
+                ? img.naturalWidth / img.naturalHeight
+                : 1;
+            var art = w * Math.min(1, ratio);
+            SLOT = art * 1.55; // gap between bottles, as a share of art width
+            var visible = Math.ceil(window.innerWidth / SLOT);
+            FADE = visible / 2 + 1;
+            ensureCount(visible + 4);
+            gsap.set(cards, { xPercent: -50, yPercent: -50 });
+          }
+
+          // natural size is unknown until the art decodes — re-measure then
+          uniques.forEach(function (c) {
+            var im = c.querySelector("img");
+            if (im && !im.complete) {
+              im.addEventListener(
+                "load",
+                function () {
+                  measure();
+                  render(false);
+                },
+                { once: true },
+              );
+            }
+          });
+
+          // shortest signed distance, so the track wraps at ±N/2
+          function wrapSigned(v) {
+            var m = (((v % N) + N) % N);
+            return m > N / 2 ? m - N : m;
+          }
+
+          function setInfo(card, animate) {
+            if (!infoEl || !card) return;
+            var nameEl = card.querySelector(".pf-name");
+            var next = nameEl ? nameEl.textContent.trim() : "";
+            // data-price carries "SAR 620 · 50ml Extrait": the amount rides in
+            // the CTA, the size/concentration keeps its own line above it.
+            // Arabic copy lives alongside in data-*-ar.
+            var ar = window.SelLang === "ar";
+            var d = card.dataset;
+            var name = (ar && d.nameAr) || next;
+            var apply = function () {
+              var desc = (ar && d.descAr) || d.desc || "";
+              var bits = ((ar && d.priceAr) || d.price || "").split("·");
+              if (titleEl) titleEl.textContent = name;
+              if (descEl) descEl.textContent = desc;
+              if (priceEl) priceEl.textContent = bits[0].trim();
+              if (metaEl) metaEl.textContent = (bits[1] || "").trim();
+            };
+            // compare against the resolved name so a language switch always
+            // repaints, but scrolling to the same card still no-ops
+            if (titleEl && titleEl.textContent === name) return;
+            if (!animate) return apply();
+            gsap
+              .timeline()
+              .to(infoEl, { opacity: 0, y: 12, duration: 0.3, ease: "power2.in" })
+              .add(apply)
+              .to(infoEl, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" });
+          }
+
+          function render(animateInfo) {
             cards.forEach(function (card, i) {
-              var o = offsetOf(i);
-              var isActive = o === 0;
-              gsap.to(card, {
-                x: o * spread,
-                scale: 1,
-                opacity: Math.abs(o) > 1 ? 0 : 1,
-                duration: d,
-                ease: EASE,
-                overwrite: "auto",
+              var o = wrapSigned(i - pos);
+              var a = Math.abs(o);
+              // fade the buffers out before they wrap around the ends
+              var op = a >= FADE ? 0 : a <= FADE - 1 ? 1 : FADE - a;
+              // yPercent/y are re-asserted every frame, not just once in
+              // measure(): a card cloned after that pass inherits the source's
+              // inline transform, and any card that missed it would sit at a
+              // different height from the rest of the row.
+              gsap.set(card, {
+                x: o * SLOT,
+                y: 0,
+                xPercent: -50,
+                yPercent: -50,
+                opacity: op,
               });
-              card.style.zIndex = isActive ? 3 : 2 - Math.abs(o);
-              card.classList.toggle("is-active", isActive);
+              card.style.zIndex = String(100 - Math.round(a * 10));
+              card.classList.toggle("is-active", a < 0.5);
             });
-            var infoEl = document.getElementById("pf-info");
-            if (infoEl) {
-              var card = cards[active];
-              var nameEl = card.querySelector(".pf-name");
-              var next = nameEl ? nameEl.textContent.trim() : "";
-              var titleEl = document.getElementById("pf-title");
-              var descEl = document.getElementById("pf-desc");
-              var priceEl = document.getElementById("pf-price");
-              var apply = function () {
-                if (titleEl) titleEl.textContent = next;
-                if (descEl) descEl.textContent = card.dataset.desc || "";
-                if (priceEl) priceEl.textContent = card.dataset.price || "";
-              };
-              if (titleEl && titleEl.textContent !== next) {
-                if (animate) {
-                  gsap
-                    .timeline()
-                    .to(infoEl, { opacity: 0, y: 12, duration: 0.3, ease: "power2.in" })
-                    .add(apply)
-                    .to(infoEl, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" });
-                } else {
-                  apply();
-                }
-              }
+            var idx = ((Math.round(pos) % N) + N) % N;
+            if (idx !== activeIdx) {
+              activeIdx = idx;
+              setInfo(cards[idx], animateInfo !== false);
             }
           }
 
-          function go(dir) {
-            active = (((active + dir) % N) + N) % N;
-            layout(true);
+          // set by the follow-cursor block below; re-checks what is under the
+          // pointer once a glide settles, so the badge is right even if the
+          // mouse hasn't moved since the cards did
+          var refreshCursor = null;
+
+          function glideTo(target, dur) {
+            if (tween) tween.kill();
+            tween = gsap.to(
+              { v: pos },
+              {
+                v: target,
+                duration: dur || 0.9,
+                ease: "expo.out",
+                onUpdate: function () {
+                  pos = this.targets()[0].v;
+                  render();
+                },
+                onComplete: function () {
+                  if (refreshCursor) refreshCursor();
+                },
+              },
+            );
           }
 
-          gsap.set(cards, { xPercent: -50, yPercent: -50 });
-          layout(false);
-
-          var lock = false;
           function step(dir) {
-            if (lock) return;
-            lock = true;
-            go(dir);
-            setTimeout(function () {
-              lock = false;
-            }, 420);
+            glideTo(Math.round(pos) + dir);
           }
-          cards.forEach(function (card, i) {
-            card.addEventListener("click", function (e) {
-              e.stopPropagation(); // don't double-fire the zone side-click
-              if (Date.now() - (window._pfDragged || 0) < 400) return;
-              var o = offsetOf(i);
-              if (o !== 0) go(o);
-            });
+
+          measure();
+          render(false);
+
+          // the info block is generated from data-* attributes, so it has to
+          // be repainted when the shared language toggle fires
+          document.addEventListener("sel:lang", function () {
+            var idx = ((Math.round(pos) % N) + N) % N;
+            setInfo(cards[idx], false);
           });
-          var stageEl = document.getElementById("pf-carousel");
+
+          // side card → bring it to the centre; centred card → open its product
+          stage.addEventListener("click", function (e) {
+            var card = e.target.closest && e.target.closest(".pf-card");
+            if (!card) return;
+            e.stopPropagation(); // don't double-fire the zone side-click
+            if (Date.now() - (window._pfDragged || 0) < 400) return;
+            var o = wrapSigned(cards.indexOf(card) - pos);
+            if (Math.abs(o) >= 0.5) {
+              glideTo(pos + o);
+              return;
+            }
+            var href = card.dataset.href;
+            if (!href) return;
+            var nameEl = card.querySelector(".pf-name");
+            var label = nameEl ? nameEl.textContent.trim() : "";
+            // route through the shared page transition when it's available
+            if (typeof window._nudotNavigate === "function") {
+              window._nudotNavigate(new URL(href, location.href).href, label);
+            } else {
+              window.location.href = href;
+            }
+          });
+
+          var stageEl = root;
           if (stageEl) {
-            var dx = 0,
-              down = false,
-              sx = 0;
-            var sy = 0;
+            var down = false, // pointer is held
+              dragging = false, // horizontal intent confirmed
+              sx = 0,
+              sy = 0,
+              startPos = 0,
+              lastX = 0,
+              lastT = 0,
+              vel = 0; // slots per second
+
             stageEl.addEventListener("pointerdown", function (e) {
+              if (e.button != null && e.button !== 0) return;
               down = true;
-              sx = e.clientX;
+              dragging = false;
+              sx = lastX = e.clientX;
               sy = e.clientY;
-              dx = 0;
+              startPos = pos;
+              lastT = e.timeStamp;
+              vel = 0;
+              if (tween) tween.kill();
             });
+
             stageEl.addEventListener("pointermove", function (e) {
               if (!down) return;
-              dx = e.clientX - sx;
+              var dx = e.clientX - sx;
               var dy = e.clientY - sy;
-              // horizontal intent only — vertical gestures belong to Lenis
-              if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.2) {
-                down = false;
+              if (!dragging) {
+                // vertical gestures belong to Lenis — bail out of those
+                if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) {
+                  down = false;
+                  return;
+                }
+                if (Math.abs(dx) < 8) return;
+                dragging = true;
                 window._pfDragged = Date.now();
-                step(dx < 0 ? 1 : -1);
+                if (stageEl.setPointerCapture) {
+                  try {
+                    stageEl.setPointerCapture(e.pointerId);
+                  } catch (_) {}
+                }
               }
+              e.preventDefault();
+              var dt = Math.max(1, e.timeStamp - lastT);
+              vel = (-(e.clientX - lastX) / SLOT / dt) * 1000;
+              lastX = e.clientX;
+              lastT = e.timeStamp;
+              pos = startPos - dx / SLOT; // 1:1 with the finger
+              window._pfDragged = Date.now();
+              render();
             });
-            window.addEventListener("pointerup", function () {
+
+            var release = function () {
+              if (!down) return;
               down = false;
-            });
+              if (!dragging) return;
+              dragging = false;
+              window._pfDragged = Date.now();
+              // project momentum, then settle on the nearest slot
+              var projected = pos + Math.max(-2, Math.min(2, vel * 0.28));
+              glideTo(Math.round(projected), 1.1);
+            };
+            window.addEventListener("pointerup", release);
+            window.addEventListener("pointercancel", release);
           }
 
           // Desktop-only glassy arrow cursor over the carousel; click a side
@@ -13633,22 +14000,59 @@
             window.matchMedia &&
             window.matchMedia("(hover: hover) and (pointer: fine)").matches
           ) {
-            var zone = document.getElementById("pf-carousel");
+            var zone = root;
             if (zone) {
-              var cur = document.createElement("div");
+              var cur = document.getElementById("pf-cursor");
+              var curIsNew = !cur;
+              if (!cur) cur = document.createElement("div");
               cur.id = "pf-cursor";
               cur.setAttribute("aria-hidden", "true");
-              cur.innerHTML =
-                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-              document.body.appendChild(cur);
+              if (curIsNew) cur.innerHTML =
+                '<span class="pfc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>' +
+                '<span class="pfc-view">View</span>' +
+                '<span class="pfc-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add</span>';
+              if (curIsNew) document.body.appendChild(cur);
               var curSide = "right";
+              var curOverCard = false;
+              var lastX = -1,
+                lastY = -1;
+
+              // three states: the CTA ("Add"), the centred bottle ("View"),
+              // anything else (the prev/next arrow)
+              function setModeFrom(el) {
+                var cta = el && el.closest ? el.closest("button, a") : null;
+                var card = el && el.closest ? el.closest(".pf-card") : null;
+                curOverCard = !!(
+                  !cta &&
+                  card &&
+                  card.classList.contains("is-active") &&
+                  card.dataset.href
+                );
+                // buttons add, links (View all) navigate
+                cur.classList.toggle("is-add", !!cta && cta.tagName === "BUTTON");
+                cur.classList.toggle(
+                  "is-view",
+                  curOverCard || !!(cta && cta.tagName === "A"),
+                );
+              }
+
               var moveCur = function (e) {
+                lastX = e.clientX;
+                lastY = e.clientY;
                 cur.style.left = e.clientX + "px";
                 cur.style.top = e.clientY + "px";
                 var r = zone.getBoundingClientRect();
                 curSide =
                   (e.clientX - r.left) / r.width < 0.5 ? "left" : "right";
                 cur.setAttribute("data-side", curSide);
+                // over the centred bottle the click opens the product page,
+                // so swap the prev/next arrow for a "View" badge
+                setModeFrom(e.target);
+              };
+
+              refreshCursor = function () {
+                if (!cur.classList.contains("is-on") || lastX < 0) return;
+                setModeFrom(document.elementFromPoint(lastX, lastY));
               };
               zone.addEventListener("mouseenter", function (e) {
                 cur.classList.add("is-on");
@@ -13658,22 +14062,51 @@
               });
               zone.addEventListener("mousemove", moveCur);
               zone.addEventListener("mouseleave", function () {
-                cur.classList.remove("is-on");
+                cur.classList.remove("is-on", "is-view", "is-add");
+                curOverCard = false;
+                lastX = lastY = -1;
                 zone.classList.remove("pf-cursor-on");
                 document.body.classList.remove("pf-cursor-active");
               });
               zone.addEventListener("click", function (e) {
                 // don't hijack clicks on the Shop button / any link
                 if (e.target.closest && e.target.closest("button, a")) return;
+                // the centred bottle owns its own click (opens the product)
+                if (curOverCard) return;
                 if (Date.now() - (window._pfDragged || 0) < 400) return;
                 step(curSide === "left" ? -1 : 1);
               });
             }
           }
 
+          // trackpad / horizontal wheel — vertical deltas stay with Lenis
+          var wheelLock = 0;
+          (stageEl || stage).addEventListener(
+            "wheel",
+            function (e) {
+              if (Math.abs(e.deltaX) < 12 || Math.abs(e.deltaX) < Math.abs(e.deltaY))
+                return;
+              e.preventDefault();
+              var now = e.timeStamp;
+              if (now - wheelLock < 380) return;
+              wheelLock = now;
+              step(e.deltaX > 0 ? 1 : -1);
+            },
+            { passive: false },
+          );
+
+          // re-measure on resize and after the mobile relocation's synthetic
+          // resize (the panel is moved into .mobile-cube-section at runtime)
           window.addEventListener("resize", function () {
-            layout(false);
+            measure();
+            render(false);
           });
+        }
+
+        function init() {
+          Array.prototype.slice
+            .call(document.querySelectorAll(".pf-carousel"))
+            .forEach(initOne);
         }
 
         if (document.readyState === "loading") {
@@ -13681,6 +14114,307 @@
         } else {
           init();
         }
+      })();
+    </script>
+    <script>
+      /* Film grain over section 2 (dark-wrapper / perfume carousel).
+         Port of js/noise.js — same pre-baked frame cycling — but scoped to the
+         section instead of the viewport: the canvas is a child of .dark-wrapper,
+         so the reveal mask clips it and the hero above never gets grained.
+         Desktop only, and skipped under prefers-reduced-motion, matching the
+         reference site's behaviour. */
+      (function () {
+        function init() {
+          var canvas = document.getElementById("dw-grain-canvas");
+          var host = document.getElementById("dark-wrapper");
+          if (!canvas || !host || !canvas.getContext) return;
+          if (
+            window.innerWidth <= 768 ||
+            (window.matchMedia &&
+              window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          ) {
+            canvas.style.display = "none";
+            return;
+          }
+          var ctx = canvas.getContext("2d");
+          if (!ctx) return;
+
+          // ── tuneable constants (mirrors js/noise.js) ───────────────────────
+          var GRAIN_OPACITY = 0.06;
+          var GRAIN_DENSITY = 0.7; // 0–1 fraction of pixels lit
+          var FRAMES = 10; // pre-baked frames
+          var FPS = 25; // normal playback
+          var FPS_HOLD = 12; // playback while scroll is cooling
+          var SCROLL_HOLD_MS = 180;
+          var RESIZE_DEBOUNCE = 160;
+          // ──────────────────────────────────────────────────────────────────
+
+          canvas.style.display = "block";
+          canvas.style.opacity = String(GRAIN_OPACITY);
+
+          var w = 0,
+            h = 0,
+            frames = [],
+            frameIdx = 0;
+          var rafId = 0,
+            timerId = 0,
+            resizeTimer = 0;
+          var scrollHoldUntil = 0,
+            running = false;
+
+          function bakeFrames() {
+            frames = [];
+            for (var i = 0; i < FRAMES; i++) {
+              var idata = ctx.createImageData(w, h);
+              var buf = new Uint32Array(idata.data.buffer);
+              for (var p = 0; p < buf.length; p++) {
+                if (Math.random() < GRAIN_DENSITY) buf[p] = 0xffffffff;
+              }
+              frames.push(idata);
+            }
+          }
+
+          function tick() {
+            if (!running) return;
+            rafId = 0;
+            var cooling = performance.now() < scrollHoldUntil;
+            if (!cooling && document.visibilityState !== "hidden") {
+              frameIdx = (frameIdx + 1) % FRAMES;
+              ctx.putImageData(frames[frameIdx], 0, 0);
+            }
+            timerId = window.setTimeout(
+              function () {
+                rafId = window.requestAnimationFrame(tick);
+              },
+              1000 / (cooling ? FPS_HOLD : FPS),
+            );
+          }
+
+          function stop() {
+            running = false;
+            window.clearTimeout(timerId);
+            if (rafId) {
+              window.cancelAnimationFrame(rafId);
+              rafId = 0;
+            }
+          }
+
+          function start() {
+            if (running) return;
+            running = true;
+            rafId = window.requestAnimationFrame(tick);
+          }
+
+          function setup() {
+            stop();
+            var r = host.getBoundingClientRect();
+            w = canvas.width = Math.max(1, Math.round(r.width) || window.innerWidth);
+            h = canvas.height = Math.max(
+              1,
+              Math.round(r.height) || window.innerHeight,
+            );
+            ctx.clearRect(0, 0, w, h);
+            bakeFrames();
+            start();
+          }
+
+          function holdGrain() {
+            scrollHoldUntil = performance.now() + SCROLL_HOLD_MS;
+          }
+
+          window.addEventListener(
+            "resize",
+            function () {
+              window.clearTimeout(resizeTimer);
+              resizeTimer = window.setTimeout(setup, RESIZE_DEBOUNCE);
+            },
+            { passive: true },
+          );
+          window.addEventListener("scroll", holdGrain, { passive: true });
+          window.setTimeout(function () {
+            if (window._lenis) window._lenis.on("scroll", holdGrain);
+          }, 300);
+          document.addEventListener("visibilitychange", function () {
+            document.hidden ? stop() : start();
+          });
+
+          // Baking 10 full-size frames is a one-off main-thread burst; hold it
+          // until the page has loaded so it never competes with the hero video
+          // / WebGL warm-up. Section 2 isn't revealed until you scroll anyway.
+          var kick = function () {
+            if (window.requestIdleCallback) {
+              window.requestIdleCallback(setup, { timeout: 2000 });
+            } else {
+              window.setTimeout(setup, 400);
+            }
+          };
+          if (document.readyState === "complete") kick();
+          else window.addEventListener("load", kick, { once: true });
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+    <script>
+      /* SELCOUTH · mobile section transitions.
+
+         Desktop reveals each section as a clip-path layer OVER the previous
+         one, inside the pinned sticky container. Under 768px that rig is off.
+
+         Reproduced here in two parts:
+           1. Overlay — during its reveal the section is position:fixed and
+              fills the viewport, so it clips up over whatever is behind it.
+           2. Timing — a spacer sits immediately before the section, carries
+              the reveal distance, and never leaves normal flow. Progress is
+              read from that spacer's LIVE rect each frame, so nothing can
+              drift: not the runtime relocation of the carousel, not lazy
+              media, not the address bar changing the viewport height.
+
+         When progress hits 1 the spacer has been fully consumed, which puts
+         the section's own flow position exactly at the top of the viewport —
+         so handing back from fixed to flow lands on the same pixel. */
+      (function () {
+        var SELECTORS = [".mobile-cube-section", ".sample-section"];
+        var REVEAL_VH = 0.7; // share of a screen height the wipe spans
+        var items = [];
+        var running = false;
+        var rafId = 0;
+
+        function ease(x) {
+          return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+        }
+
+        function clip(it, hidden) {
+          var v = hidden <= 0.01 ? "" : "inset(" + hidden.toFixed(2) + "% 0 0 0)";
+          if (it.clipNow === v) return;
+          it.clipNow = v;
+          it.el.style.clipPath = v;
+          it.el.style.webkitClipPath = v;
+        }
+
+        function setMode(it, mode) {
+          if (it.mode === mode) return;
+          it.mode = mode;
+          var st = it.el.style;
+          if (mode === "fixed") {
+            st.position = "fixed";
+            st.top = "0";
+            st.left = "0";
+            st.right = "0";
+            st.width = "100%";
+            st.height = "100vh";
+            st.zIndex = "50";
+            st.willChange = "clip-path";
+          } else {
+            st.position = "";
+            st.top = "";
+            st.left = "";
+            st.right = "";
+            st.width = "";
+            st.height = "";
+            st.zIndex = "";
+            st.willChange = "";
+          }
+        }
+
+        function frame() {
+          rafId = 0;
+          if (!running) return;
+          var vh = window.innerHeight || 1;
+          var dist = Math.max(240, Math.round(vh * REVEAL_VH));
+
+          for (var i = 0; i < items.length; i++) {
+            var it = items[i];
+            if (!it.el.isConnected) continue;
+
+            // keep the spacer sized to the current viewport
+            if (it.h !== dist) {
+              it.h = dist;
+              it.spacer.style.height = dist + "px";
+            }
+
+            // the ONLY input: how far the spacer has passed the viewport top.
+            // spacer.top === 0  -> reveal starts
+            // spacer.top === -dist -> reveal complete, section's flow top is
+            //                         now exactly at the viewport top
+            var top = it.spacer.getBoundingClientRect().top;
+            var p = -top / dist;
+            p = p < 0 ? 0 : p > 1 ? 1 : p;
+
+            if (p <= 0) {
+              setMode(it, "flow");
+              clip(it, 100); // waiting below the fold, held out of sight
+            } else if (p >= 1) {
+              setMode(it, "flow");
+              clip(it, 0); // arrived, in flow, unclipped
+            } else {
+              setMode(it, "fixed"); // layer over the section behind
+              clip(it, (1 - ease(p)) * 100);
+            }
+          }
+          rafId = window.requestAnimationFrame(frame);
+        }
+
+        function build() {
+          items = [];
+          SELECTORS.forEach(function (sel) {
+            var el = document.querySelector(sel);
+            if (!el || !el.parentNode) return;
+            var spacer = document.createElement("div");
+            spacer.className = "nd-fx-spacer";
+            spacer.setAttribute("aria-hidden", "true");
+            spacer.style.cssText = "pointer-events:none;width:100%;height:0";
+            el.parentNode.insertBefore(spacer, el);
+            items.push({ el: el, spacer: spacer, h: -1, mode: null, clipNow: null });
+          });
+        }
+
+        function teardown() {
+          items.forEach(function (it) {
+            setMode(it, "flow");
+            it.el.style.clipPath = "";
+            it.el.style.webkitClipPath = "";
+            it.clipNow = null;
+            if (it.spacer && it.spacer.parentNode)
+              it.spacer.parentNode.removeChild(it.spacer);
+          });
+          items = [];
+        }
+
+        function apply() {
+          var mobile = window.matchMedia("(max-width: 767px)").matches;
+          var reduce = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+          if (mobile && !reduce) {
+            if (running) return;
+            build();
+            if (!items.length) return;
+            running = true;
+            rafId = window.requestAnimationFrame(frame);
+          } else if (running || items.length) {
+            running = false;
+            if (rafId) {
+              window.cancelAnimationFrame(rafId);
+              rafId = 0;
+            }
+            teardown();
+          }
+        }
+
+        function init() {
+          apply();
+          window.addEventListener("resize", apply, { passive: true });
+          window.addEventListener("orientationchange", apply, { passive: true });
+        }
+
+        if (document.readyState === "loading")
+          document.addEventListener("DOMContentLoaded", init);
+        else init();
       })();
     </script>
     <script>
@@ -13700,13 +14434,24 @@
           homeParent,
           homeNext,
           moved = false;
+        // the samples layer lives inside the pinned container on desktop; on
+        // mobile it has to follow the relocated products carousel instead of
+        // preceding it
+        var smp = null,
+          smpParent,
+          smpNext;
 
         function refs() {
           if (!intro) intro = document.getElementById("intro-panel");
           if (!cube) cube = document.querySelector(".mobile-cube-section");
+          if (!smp) smp = document.getElementById("sample-mask");
           if (intro && homeParent === undefined) {
             homeParent = intro.parentNode;
             homeNext = intro.nextSibling;
+          }
+          if (smp && smpParent === undefined) {
+            smpParent = smp.parentNode;
+            smpNext = smp.nextSibling;
           }
         }
         function relayout() {
@@ -13719,6 +14464,7 @@
           if (!intro || !cube || moved) return;
           cube.classList.add("has-perfume");
           cube.appendChild(intro);
+          if (smp && cube.parentNode) cube.parentNode.insertBefore(smp, cube.nextSibling);
           moved = true;
           relayout();
         }
@@ -13726,6 +14472,7 @@
           refs();
           if (!intro || !moved) return;
           if (homeParent) homeParent.insertBefore(intro, homeNext || null);
+          if (smp && smpParent) smpParent.insertBefore(smp, smpNext || null);
           if (cube) cube.classList.remove("has-perfume");
           moved = false;
           relayout();

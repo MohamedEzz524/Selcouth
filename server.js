@@ -1,9 +1,9 @@
-// Minimal static server that mirrors nudot.com.tw's clean-URL routing:
+// Minimal static server for the Selcouth site: clean-URL routing,
 //   /              -> index.html
-//   /about         -> about.html
-//   /work_camp     -> work_camp.html
-//   /blog          -> blog.html            (listing page; file wins over blog/ dir)
-//   /blog/<slug>   -> blog/<slug>.html
+//   /collection    -> collection.html
+//   /aurelinth     -> aurelinth.html
+//   /returns       -> returns.html
+
 //   /images/...    -> served as-is (exact file match)
 // Serves correct MIME types incl. video (mp4/webm) with Range support so
 // the WebGL video textures / <video> elements stream like on the live site.
@@ -92,7 +92,15 @@ http.createServer((req, res) => {
     html = injectSiteHeader(html, file);
     html = injectSiteFooter(html, file);
     const buf = Buffer.from(html, 'utf8');
-    res.writeHead(200, { 'Content-Type': type, 'Content-Length': buf.length });
+    // Dev server: never let a phone or tablet serve a stale document from its
+    // heuristic cache — edits must show up on the next pull-to-refresh.
+    res.writeHead(200, {
+      'Content-Type': type,
+      'Content-Length': buf.length,
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
+    });
     res.end(buf);
     return;
   }
@@ -112,4 +120,4 @@ http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': type, 'Content-Length': stat.size, 'Accept-Ranges': 'bytes' });
     fs.createReadStream(file).pipe(res);
   }
-}).listen(PORT, () => console.log(`Nudot clone serving at http://localhost:${PORT}`));
+}).listen(PORT, () => console.log(`Selcouth serving at http://localhost:${PORT}`));
