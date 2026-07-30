@@ -5773,9 +5773,31 @@
           > *:not(#intro-panel):not(.mobile-cube-bg) {
           display: none !important;
         }
-        /* drop the cube's bottom fade so it doesn't dim the carousel */
+        /* Bottom-edge fade so the video-backed perfume section melts into the
+           black rings section below (kills the hard seam / "clip"). Layer order
+           in the section: video (z1) → grain ::before (z2) → this fade ::after
+           (z3) → carousel content #intro-panel (z4). Sitting ABOVE the grain is
+           what makes it work — the grain's mix-blend-mode:screen was lightening
+           a lower fade back off #000; now the fade paints over the grain and
+           reaches true black. Content is above the fade, so bottles/title are
+           never dimmed. */
         .mobile-cube-section.has-perfume::after {
-          display: none !important;
+          content: "";
+          display: block !important;
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: clamp(150px, 30vh, 320px);
+          z-index: 3;
+          opacity: 1;
+          pointer-events: none;
+          background: linear-gradient(
+            to top,
+            #000 0%,
+            #000 18%,
+            rgba(0, 0, 0, 0) 100%
+          );
         }
         .mobile-cube-section.has-perfume .mobile-cube-bg {
           z-index: 1;
@@ -5788,7 +5810,9 @@
           inset: 0;
           opacity: 1 !important;
           pointer-events: auto !important;
-          z-index: 2;
+          /* content on top: above the grain (z2) and the bottom fade (z3), so
+             the fade darkens only the video/grain behind the bottles + title. */
+          z-index: 4;
         }
         /* the desktop title/price/CTA offset (up to 260px below centre) is far
            too large for the smaller mobile bottles — pull it up toward the bottle.
@@ -5843,6 +5867,15 @@
           height: 100svh !important;
           min-height: 0 !important;
         }
+        /* Match the WebGL canvas to the visible section height (100svh), not
+           the 100vh it inherits from desktop. #sketch is centred on its own
+           height, so at 100vh the rings' centre lands at 50% of 100vh — BELOW
+           the centre video, which (via .hero-dom/main) is centred on 100svh.
+           That mismatch is why the video read as "shifted up". 100svh here
+           puts rings + video on the same centre. */
+        #sketch {
+          height: 100svh !important;
+        }
         /* rings are shrunk on mobile by pulling the WebGL camera back in
            _resize() (keeps the canvas full-width) — NOT by CSS scale, which
            shrank the whole box and clipped it. */
@@ -5892,7 +5925,9 @@
              which tripped the body ResizeObserver → re-layout → infinite
              grow/shrink loop. Kept fully inside the box now. */
           inset: 0;
-          z-index: 5;
+          /* lowest overlay: video (z1) < grain (z2) < bottom fade (z3) <
+             content (z4). Being under the fade lets the fade reach true #000. */
+          z-index: 2;
           pointer-events: none;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
           background-size: 160px 160px;
@@ -13498,8 +13533,6 @@
       });
     </script>
 
-    <canvas id="film-grain-canvas" aria-hidden="true"></canvas>
-
     <!-- =========================================================
        SECTION 3: CORE CAPABILITIES (3D Ring Gallery JS)
        ========================================================= -->
@@ -14438,7 +14471,7 @@
             var art = w * Math.min(1, ratio);
             // Tighter gap on mobile so the neighbouring bottles peek in at the
             // screen edges (a wide card + wide gap pushed them fully off-screen).
-            var slotMult = window.innerWidth <= 767 ? 1.12 : 1.55;
+            var slotMult = window.innerWidth <= 767 ? 1.4 : 1.55;
             SLOT = art * slotMult; // gap between bottles, as a share of art width
             var visible = Math.ceil(window.innerWidth / SLOT);
             FADE = visible / 2 + 1;
