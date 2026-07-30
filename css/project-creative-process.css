@@ -940,7 +940,7 @@ body.page-work-pattern::-webkit-scrollbar-thumb {
   height: auto;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #050505;
+  background: #000000;
   opacity: 0;
   transform: translate3d(-50%, -46%, 0) scale(0.94);
   transition:

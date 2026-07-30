@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- no-site-header -->
+    <!-- no-site-footer -->
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -11,7 +13,7 @@
       name="description"
       content="Veil of Orris by Selcouth — orris butter beneath powder and plum. Extrait de parfum, 32% concentration."
     />
-    <meta name="theme-color" content="#050505" />
+    <meta name="theme-color" content="#000000" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,7 +40,7 @@
         font-display: swap;
       }
       :root {
-        --sel-bg: #050505;
+        --sel-bg: #000000;
         --sel-cream: #efe6d8;
         --sel-text: #d9d5df;
         --sel-muted: #9a95a3;
@@ -67,7 +69,7 @@
       }
       ::selection {
         background: #ffffff;
-        color: #050505;
+        color: #000000;
       }
 
       /* Lenis smooth scroll */
@@ -995,6 +997,7 @@
   </head>
 
   <body>
+<!-- BEGIN build-pages:header — generated, edit partials/header.html -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
@@ -1303,7 +1306,7 @@
     </div>
   </div>
 
-  <a class="sh-logo" id="brand-logo" href="./" aria-label="Selcouth home">
+  <a class="sh-logo" id="brand-logo" href="index.html" aria-label="Selcouth home">
     <img src="images/logo.svg" alt="Selcouth" />
   </a>
 
@@ -1514,6 +1517,8 @@
   }
 </style>
 
+<!-- END build-pages:header — generated, edit partials/header.html -->
+
     <!-- ============================================================
          MAIN-PRODUCT
          ============================================================ -->
@@ -1523,27 +1528,21 @@
         <div class="mp-gallery" aria-label="Product gallery">
           <div
             class="mp-gallery__layer"
-            style="z-index: 1; background-image: url('images/product/gallery-1.webp')"
+            style="z-index: 1; background-image: url('images/product/veil-of-orris-1.webp')"
             role="img"
-            aria-label="Aurelinth among fresh roses"
+            aria-label="Veil of Orris ingredient study I"
           ></div>
           <div
             class="mp-gallery__layer"
-            style="z-index: 2; background-image: url('images/product/gallery-2.webp')"
+            style="z-index: 2; background-image: url('images/product/veil-of-orris-2.webp')"
             role="img"
-            aria-label="Aurelinth macro texture"
+            aria-label="Veil of Orris ingredient study II"
           ></div>
           <div
             class="mp-gallery__layer"
-            style="z-index: 3; background-image: url('images/product/gallery-3.webp')"
+            style="z-index: 3; background-image: url('images/product/veil-of-orris-3.webp')"
             role="img"
-            aria-label="Aurelinth bottle blueprint"
-          ></div>
-          <div
-            class="mp-gallery__layer"
-            style="z-index: 4; background-image: url('images/product/gallery-4.webp')"
-            role="img"
-            aria-label="Aurelinth ingredient study"
+            aria-label="Veil of Orris ingredient study III"
           ></div>
 
           <img
@@ -1573,7 +1572,6 @@
 
           <div class="mp-gallery__dots" aria-hidden="true">
             <span class="mp-gallery__dot is-active"></span>
-            <span class="mp-gallery__dot"></span>
             <span class="mp-gallery__dot"></span>
             <span class="mp-gallery__dot"></span>
           </div>
@@ -2266,7 +2264,9 @@
         render();
       })();
     </script>
-  <!-- ============================================================
+  
+<!-- BEGIN build-pages:footer — generated, edit partials/footer.html -->
+<!-- ============================================================
      SITE FOOTER — single source, injected near the end of the page by
      server.js on any page that doesn't already have its own footer.
      Namespaced .site-foot / .sf-* · white + panel palette only.
@@ -2281,7 +2281,7 @@
   }
 
   .site-foot {
-    background: #050505;
+    background: #000000;
     color: #d9d5df;
     border-top: 1px solid #17151d; /* shared panel colour */
     font-family: "Inter", "DM Sans", "Helvetica Neue", Arial, sans-serif;
@@ -2392,7 +2392,7 @@
 
   /* row 1 — badges */
   .sf-pre__badges {
-    background: #050505;
+    background: #000000;
     color: #ffffff;
     border-bottom: 1px solid #17151d;
     display: grid;
@@ -2407,10 +2407,14 @@
     gap: 0.85rem;
     text-align: center;
   }
-  .sf-badge svg {
-    width: 30px;
-    height: 30px;
-    color: #ffffff;
+  /* Source icons are black artwork on transparent; invert them to white so
+     they read against the #000000 strip. */
+  .sf-badge img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1);
   }
   .sf-badge span {
     font-size: 0.85rem;
@@ -2423,7 +2427,7 @@
   .sf-pre__news {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: #050505;
+    background: #000000;
   }
   .sf-pre__media {
     position: relative;
@@ -2438,19 +2442,6 @@
     object-fit: cover;
     display: block;
     filter: grayscale(1); /* B&W, matching the hero media */
-  }
-  .sf-pre__invite {
-    position: absolute;
-    top: clamp(1.4rem, 3vw, 2.4rem);
-    left: clamp(1.4rem, 3vw, 2.4rem);
-    z-index: 2;
-    font-family: "MB PH One", "Helvetica Neue", Arial, sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.1rem, 0.9rem + 1vw, 1.6rem);
-    letter-spacing:  0;
-    text-transform: uppercase;
-    color: #fff;
-    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
   }
   .sf-pre__form {
     display: flex;
@@ -2611,19 +2602,19 @@
   <!-- row 1: badges -->
   <div class="sf-pre__badges">
     <div class="sf-badge reveal">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="9" cy="9" r="5" /><circle cx="15" cy="15" r="5" /></svg>
+      <img src="images/badge-1.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
       <span data-ar="عطور للجنسين">Genderless Fragrances</span>
     </div>
     <div class="sf-badge reveal">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6" /></svg>
+      <img src="images/badge-2.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
       <span data-ar="نباتي وخالٍ من القسوة">Vegan &amp; Cruelty-Free</span>
     </div>
     <div class="sf-badge reveal">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6" /><path d="M10 3v6l-5.4 9.4A1.5 1.5 0 0 0 6 21h12a1.5 1.5 0 0 0 1.3-2.3L14 9V3" /></svg>
+      <img src="images/badge-3.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
       <span data-ar="مصنوعة بكميات صغيرة">Crafted in Small Batches</span>
     </div>
     <div class="sf-badge reveal">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" /></svg>
+      <img src="images/badge-4.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
       <span data-ar="مكوّنات استثنائية">Exceptional Ingredients</span>
     </div>
   </div>
@@ -2631,8 +2622,7 @@
   <!-- row 2: newsletter -->
   <div class="sf-pre__news">
     <div class="sf-pre__media reveal">
-      <span class="sf-pre__invite" data-ar="دعوة">An Invitation</span>
-      <img src="images/newsletter.png" alt="Selcouth extrait de parfum among roses" loading="lazy" decoding="async" />
+      <img src="images/newsletter-invite.webp" alt="Selcouth pendant seal against a dark backdrop" loading="lazy" decoding="async" />
     </div>
     <div class="sf-pre__form reveal">
       <p class="sf-pre__eyebrow" data-ar="النشرة البريدية">Newsletter</p>
@@ -2735,7 +2725,7 @@
   <div class="sf-inner">
     <!-- row 1: logo -->
     <div class="sf-top">
-      <a class="sf-logo" href="./" aria-label="Selcouth home">
+      <a class="sf-logo" href="index.html" aria-label="Selcouth home">
         <img src="images/logo.svg" alt="Selcouth" />
       </a>
     </div>
@@ -2789,5 +2779,6 @@
   </div>
 </footer>
 
+<!-- END build-pages:footer — generated, edit partials/footer.html -->
 </body>
 </html>
