@@ -683,7 +683,7 @@ body {
   font-family: "DM Sans", sans-serif;
   font-size: 14px;
   font-weight: 400;
-  letter-spacing: 0.06em;
+  letter-spacing:  0;
   color: #fff;
   text-align: center;
 }
@@ -1127,7 +1127,7 @@ body.page-work-pattern::-webkit-scrollbar-thumb {
   .work-hero__desc,
   .work-meta {
     font-size: 0.68rem;
-    letter-spacing: 0.13em;
+    letter-spacing:  0;
   }
 
   .work-pattern {
@@ -1196,7 +1196,7 @@ body.page-work-pattern::-webkit-scrollbar-thumb {
     font-family: var(--work-font-body);
     font-size: 0.65rem;
     font-weight: 400;
-    letter-spacing: 0.16em;
+    letter-spacing:  0;
     color: var(--work-color-muted);
     text-transform: uppercase;
   }
@@ -1215,7 +1215,7 @@ body.page-work-pattern::-webkit-scrollbar-thumb {
     font-family: var(--work-font-body);
     font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.04em;
+    letter-spacing:  0;
     color: var(--work-color-soft);
     text-transform: none;
     line-height: 1.5;
