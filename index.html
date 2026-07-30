@@ -4996,10 +4996,6 @@
         will-change: transform;
         opacity: 0;
       }
-      /* Selcouth: intro dot is white, not the old NUDOT purple (#694A96) */
-      #nudot-loader .nd-dot path {
-        fill: #fff;
-      }
 
       #nudot-loader .nd-orb {
         position: absolute;
@@ -6935,10 +6931,7 @@
               }
             }
             var DOT_D = path.getAttribute("d");
-            // Selcouth: drop the old NUDOT-moth morph — the intro stays a clean
-            // white dot that flies to the wordmark. (Recolour from #694A96.)
-            path.setAttribute("fill", "#ffffff");
-            var LOGO_D = null;
+            var LOGO_D = path.getAttribute("data-logo-d");
             var tl = gsap.timeline();
             tl.fromTo(
               svg,
