@@ -182,13 +182,13 @@
         .hero-col-tag {
             font-family: "DM Sans", sans-serif;
             font-size: 12px;
-            letter-spacing: 0.06em;
+            letter-spacing:  0;
             color: rgba(255,255,255,0.8);
         }
         .hero-col-sub {
             font-family: "DM Sans", sans-serif;
             font-size: 12px;
-            letter-spacing: 0.06em;
+            letter-spacing:  0;
             color: rgba(255,255,255,0.9);
         }
 
@@ -249,7 +249,7 @@
             gap: 0.25rem;
             font-family: "DM Sans", sans-serif;
             font-size: 11px;
-            letter-spacing: 0.02em;
+            letter-spacing:  0;
             color: rgba(255,255,255,0.8);
         }
 
@@ -268,14 +268,14 @@
         .hero-scroll-hint {
             font-family: "DM Sans", sans-serif;
             font-size: 10px;
-            letter-spacing: 0.1em;
+            letter-spacing:  0;
             text-transform: uppercase;
             color: rgba(255,255,255,0.6);
         }
         .hero-back-link {
             font-family: "DM Sans", sans-serif;
             font-size: 10px;
-            letter-spacing: 0.1em;
+            letter-spacing:  0;
             text-transform: uppercase;
             color: rgba(255,255,255,0.6);
             text-decoration: none;
@@ -312,7 +312,7 @@
             font-weight: 400;
             color: #fff;
             margin: 0 0 1rem 0;
-            letter-spacing: 0.02em;
+            letter-spacing:  0;
         }
 
         .ph-meta-list {
@@ -322,7 +322,7 @@
             font-family: "DM Sans", "Noto Sans KR", sans-serif;
             font-size: 14px;
             color: #fff;
-            letter-spacing: 0.06em;
+            letter-spacing:  0;
             text-transform: uppercase;
             font-weight: 400;
         }
@@ -542,7 +542,7 @@
             margin: 0 0 0.8rem;
             font-family: "DM Sans", "Noto Sans KR", sans-serif;
             font-size: 13px;
-            letter-spacing: 0.18em;
+            letter-spacing:  0;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.58);
         }
@@ -600,7 +600,7 @@
             padding: 1rem 0 0;
             font-family: "DM Sans", "Noto Sans KR", sans-serif;
             font-size: 13px;
-            letter-spacing: 0.04em;
+            letter-spacing:  0;
             color: rgba(255, 255, 255, 0.8);
         }
         .cg-grid__caption h3 {
@@ -663,7 +663,7 @@
         .overview-label {
             font-family: "DM Sans", sans-serif;
             font-size: 10px;
-            letter-spacing: 0.18em;
+            letter-spacing:  0;
             text-transform: lowercase;
             color: rgba(255,255,255,0.32);
             padding-top: 0.2em;
@@ -754,7 +754,7 @@
         .next-project-label {
             font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing:  0;
             margin-bottom: 2rem;
             color: var(--text-muted);
         }
@@ -785,7 +785,7 @@
         /* Dynamic Words Switcher */
         .dynamic-words-wrap {
             font-size: 1.5rem;
-            letter-spacing: 0.05em;
+            letter-spacing:  0;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -976,7 +976,7 @@
           margin: 0;
           color: rgba(255,255,255,0.6);
           font-family: "DM Sans", sans-serif;
-          letter-spacing: 0.06em;
+          letter-spacing:  0;
           text-transform: uppercase;
       }
       .grid__item-caption span {
@@ -1009,7 +1009,7 @@
           font-family: 'DM Sans', sans-serif;
           font-size: clamp(22px, 3.5vw, 48px);
           font-weight: 500;
-          letter-spacing: 0.15em;
+          letter-spacing:  0;
           text-transform: uppercase;
           color: #fff;
           margin-bottom: 18px;
@@ -1020,7 +1020,7 @@
           align-items: flex-end;
           gap: 35px;
           font-size: 13px;
-          letter-spacing: 0.18em;
+          letter-spacing:  0;
           text-transform: uppercase;
           color: #888;
       }
@@ -1066,7 +1066,7 @@
           margin-bottom: 40px;
           font-size: 13px;
           text-transform: uppercase;
-          letter-spacing: 2px;
+          letter-spacing:  0;
           color: #fff;
       }
       .footer-info-bar a {
@@ -1083,7 +1083,7 @@
           color: #fff;
           text-decoration: none;
           font-size: 11px;
-          letter-spacing: 0.12em;
+          letter-spacing:  0;
           text-transform: uppercase;
           transition: opacity 0.2s ease;
       }
@@ -1128,7 +1128,7 @@
           color: #444;
           font-size: 13px;
           margin-top: 16px;
-          letter-spacing: 0.04em;
+          letter-spacing:  0;
       }
       .footer-nav-links {
           display: flex;
@@ -1141,7 +1141,7 @@
           text-decoration: none;
           font-size: 13px;
           text-transform: uppercase;
-          letter-spacing: 1.5px;
+          letter-spacing:  0;
           transition: opacity 0.2s;
       }
       .footer-nav-links a:hover { opacity: 0.5; }
@@ -1197,7 +1197,7 @@
           }
           .footer-info-bar {
             font-size: 12px;
-            letter-spacing: 1px;
+            letter-spacing:  0;
           }
           .ph-two-cols-wrap {
             gap: 1.5vw;
@@ -1316,7 +1316,7 @@
           /* — Footer info bar — */
           .footer-info-bar {
             font-size: 11px;
-            letter-spacing: 1px;
+            letter-spacing:  0;
             padding-top: 14px;
             gap: 0.5rem;
           }

@@ -5,6 +5,12 @@
      ============================================================ -->
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+  @font-face {
+    font-family: "MB PH One";
+    src: url("/fonts/mb-ph-one-bold.ttf") format("truetype");
+    font-weight: 501 900;
+    font-display: swap;
+  }
 
   .site-foot {
     background: #050505;
@@ -47,7 +53,7 @@
     margin: 0 0 0.5rem;
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.22em;
+    letter-spacing:  0;
     text-transform: uppercase;
     color: #ffffff;
   }
@@ -95,7 +101,7 @@
   .sf-copy p {
     margin: 0;
     font-size: 0.8rem;
-    letter-spacing: 0.14em;
+    letter-spacing:  0;
     text-transform: uppercase;
     color: rgba(217, 213, 223, 0.5);
   }
@@ -107,7 +113,355 @@
       row-gap: 2.2rem;
     }
   }
+
+  /* ============================================================
+     PRE-FOOTER — row 1 badges (white strip) + row 2 newsletter
+     (dark panel: brand image | signup). Prefixes the footer.
+     ============================================================ */
+  .sf-pre {
+    font-family: "Inter", "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* row 1 — badges */
+  .sf-pre__badges {
+    background: #050505;
+    color: #ffffff;
+    border-bottom: 1px solid #17151d;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 5vw, 4rem);
+  }
+  .sf-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    text-align: center;
+  }
+  .sf-badge svg {
+    width: 30px;
+    height: 30px;
+    color: #ffffff;
+  }
+  .sf-badge span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: #ffffff;
+  }
+
+  /* row 2 — newsletter */
+  .sf-pre__news {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #050505;
+  }
+  .sf-pre__media {
+    position: relative;
+    min-height: 440px;
+    overflow: hidden;
+  }
+  .sf-pre__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(1); /* B&W, matching the hero media */
+  }
+  .sf-pre__invite {
+    position: absolute;
+    top: clamp(1.4rem, 3vw, 2.4rem);
+    left: clamp(1.4rem, 3vw, 2.4rem);
+    z-index: 2;
+    font-family: "MB PH One", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.1rem, 0.9rem + 1vw, 1.6rem);
+    letter-spacing:  0;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+  }
+  .sf-pre__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+  }
+  .sf-pre__eyebrow {
+    margin: 0 0 1.1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing:  0;
+    color: rgba(217, 213, 223, 0.6);
+  }
+  .sf-pre__title {
+    margin: 0 0 1rem;
+    font-family: "MB PH One", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+  .sf-pre__sub {
+    margin: 0 0 2rem;
+    max-width: 46ch;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(217, 213, 223, 0.75);
+  }
+  .sf-nl__field {
+    margin-bottom: 1.5rem;
+  }
+  .sf-nl__field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(217, 213, 223, 0.6);
+  }
+  .sf-nl__field input {
+    width: 100%;
+    padding: 0.5rem 0;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.25s ease;
+  }
+  .sf-nl__field input:focus {
+    border-bottom-color: #ffffff;
+  }
+  .sf-nl__btn {
+    width: 100%;
+    height: 54px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 999px; /* match the site's pill buttons (.pf-shop / .mp-add) */
+    background: #ffffff;
+    color: #141019;
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing:  0;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .sf-nl__btn:hover {
+    opacity: 0.9;
+  }
+  .sf-nl__btn:hover {
+    opacity: 0.85;
+  }
+  .sf-nl__note {
+    margin: 1rem 0 0;
+    font-size: 0.72rem;
+    color: rgba(217, 213, 223, 0.4);
+  }
+  .sf-nl__done {
+    margin: 0;
+    font-size: 1rem;
+    color: #efe6d8;
+  }
+
+  @media (max-width: 760px) {
+    .sf-pre__badges {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 2rem;
+    }
+    .sf-pre__news {
+      grid-template-columns: 1fr;
+    }
+    .sf-pre__media {
+      min-height: 320px;
+    }
+  }
+
+  /* ============================================================
+     SCROLL REVEAL — reusable, IntersectionObserver-driven. Elements only
+     start hidden once JS marks the doc ready (html.sel-reveal-ready), so
+     content is never stuck invisible if JS fails. .reveal = all viewports;
+     .reveal-m = mobile only (desktop home sections have their own reveal).
+     ============================================================ */
+  html.sel-reveal-ready .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+  }
+  html.sel-reveal-ready .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  /* badge stagger */
+  .sf-pre__badges .reveal:nth-child(1) { --reveal-delay: 0s; }
+  .sf-pre__badges .reveal:nth-child(2) { --reveal-delay: 0.09s; }
+  .sf-pre__badges .reveal:nth-child(3) { --reveal-delay: 0.18s; }
+  .sf-pre__badges .reveal:nth-child(4) { --reveal-delay: 0.27s; }
+  /* newsletter: form slides in just after the image */
+  .sf-pre__form.reveal { --reveal-delay: 0.12s; }
+
+  @media (max-width: 767px) {
+    html.sel-reveal-ready .reveal-m {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--reveal-delay, 0s);
+      will-change: opacity, transform;
+    }
+    html.sel-reveal-ready .reveal-m.is-in {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.sel-reveal-ready .reveal,
+    html.sel-reveal-ready .reveal-m {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
 </style>
+
+<!-- ============================================================
+     PRE-FOOTER — badges + newsletter (prefixes the footer sitewide)
+     ============================================================ -->
+<section class="sf-pre" aria-label="Newsletter and brand highlights">
+  <!-- row 1: badges -->
+  <div class="sf-pre__badges">
+    <div class="sf-badge reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="9" cy="9" r="5" /><circle cx="15" cy="15" r="5" /></svg>
+      <span data-ar="عطور للجنسين">Genderless Fragrances</span>
+    </div>
+    <div class="sf-badge reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6" /></svg>
+      <span data-ar="نباتي وخالٍ من القسوة">Vegan &amp; Cruelty-Free</span>
+    </div>
+    <div class="sf-badge reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6" /><path d="M10 3v6l-5.4 9.4A1.5 1.5 0 0 0 6 21h12a1.5 1.5 0 0 0 1.3-2.3L14 9V3" /></svg>
+      <span data-ar="مصنوعة بكميات صغيرة">Crafted in Small Batches</span>
+    </div>
+    <div class="sf-badge reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" /></svg>
+      <span data-ar="مكوّنات استثنائية">Exceptional Ingredients</span>
+    </div>
+  </div>
+
+  <!-- row 2: newsletter -->
+  <div class="sf-pre__news">
+    <div class="sf-pre__media reveal">
+      <span class="sf-pre__invite" data-ar="دعوة">An Invitation</span>
+      <img src="/images/newsletter.png" alt="Selcouth extrait de parfum among roses" loading="lazy" decoding="async" />
+    </div>
+    <div class="sf-pre__form reveal">
+      <p class="sf-pre__eyebrow" data-ar="النشرة البريدية">Newsletter</p>
+      <h2 class="sf-pre__title" data-ar="ادخل عالم سِلكوث">Enter the world of Selcouth</h2>
+      <p class="sf-pre__sub" data-ar="عطور جديدة، وتجارب حصرية، وتعاونات هادفة، وقصص فريدة. دائمًا بقصد، ولا إفراط أبدًا.">
+        New fragrances, exclusive experiences, meaningful collaborations, and
+        unique stories. Always intentional. Never excessive.
+      </p>
+      <form class="sf-nl" novalidate>
+        <div class="sf-nl__field">
+          <label for="sf-nl-name" data-ar="الاسم">Name</label>
+          <input id="sf-nl-name" type="text" name="name" autocomplete="name" />
+        </div>
+        <div class="sf-nl__field">
+          <label for="sf-nl-email" data-ar="البريد الإلكتروني">Email</label>
+          <input id="sf-nl-email" type="email" name="email" autocomplete="email" required />
+        </div>
+        <button class="sf-nl__btn" type="submit" data-ar="اشترك">Join</button>
+        <p class="sf-nl__note" data-ar="نلتزم بالقصد — يمكنك إلغاء الاشتراك في أي وقت.">We keep it intentional — unsubscribe anytime.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var form = document.querySelector(".sf-nl");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = form.querySelector('input[type="email"]');
+      if (email && !email.value) {
+        email.focus();
+        return;
+      }
+      var ar = document.documentElement.lang === "ar";
+      form.innerHTML =
+        '<p class="sf-nl__done">' +
+        (ar
+          ? "شكرًا لك — مرحبًا بك في سِلكوث."
+          : "Thank you — welcome to Selcouth.") +
+        "</p>";
+    });
+  })();
+</script>
+
+<script>
+  /* ── Scroll reveal ──────────────────────────────────────────────
+     Injected sitewide with the footer, so it drives .reveal / .reveal-m
+     on every page (home second/third sections, badges, newsletter…).
+     html.sel-reveal-ready is added FIRST so the hidden initial state only
+     applies when JS is running — content is never stranded invisible. */
+  (function () {
+    var docEl = document.documentElement;
+    var reduce =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    docEl.classList.add("sel-reveal-ready");
+
+    function collect() {
+      return Array.prototype.slice.call(
+        document.querySelectorAll(".reveal, .reveal-m")
+      );
+    }
+
+    if (reduce || !("IntersectionObserver" in window)) {
+      collect().forEach(function (el) {
+        el.classList.add("is-in");
+      });
+      return;
+    }
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) {
+            en.target.classList.add("is-in");
+            io.unobserve(en.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
+    );
+
+    function observeAll() {
+      collect().forEach(function (el) {
+        if (!el.classList.contains("is-in")) io.observe(el);
+      });
+    }
+
+    observeAll();
+    // Re-scan after load in case other scripts relocate/insert reveal nodes
+    // (e.g. the perfume panel that gets moved into the mobile section).
+    window.addEventListener("load", observeAll, { once: true });
+  })();
+</script>
 
 <footer class="site-foot" aria-label="Site footer">
   <div class="sf-inner">
@@ -121,28 +475,28 @@
     <!-- row 2: 4 columns (3 menu + 1 social) -->
     <div class="sf-cols">
       <nav class="sf-col" aria-label="Shop">
-        <h4 class="sf-col__label">Shop</h4>
-        <a href="#">Perfumes</a>
-        <a href="#">Discovery Sets</a>
-        <a href="#">Gifting</a>
-        <a href="#">New Arrivals</a>
+        <h4 class="sf-col__label" data-ar="التسوق">Shop</h4>
+        <a href="/collection?view=perfumes" data-ar="العطور">Perfumes</a>
+        <a href="/collection?view=samples" data-ar="أطقم الاكتشاف">Discovery Sets</a>
+        <a href="#" data-ar="الهدايا">Gifting</a>
+        <a href="#" data-ar="وصل حديثًا">New Arrivals</a>
       </nav>
       <nav class="sf-col" aria-label="Discover">
-        <h4 class="sf-col__label">Discover</h4>
-        <a href="/about-us">Our Story</a>
-        <a href="#">The Craft</a>
-        <a href="#">Ingredients</a>
-        <a href="#">Journal</a>
+        <h4 class="sf-col__label" data-ar="اكتشف">Discover</h4>
+        <a href="/about-us" data-ar="قصتنا">Our Story</a>
+        <a href="#" data-ar="الحرفة">The Craft</a>
+        <a href="#" data-ar="المكوّنات">Ingredients</a>
+        <a href="#" data-ar="المدوّنة">Journal</a>
       </nav>
       <nav class="sf-col" aria-label="Support">
-        <h4 class="sf-col__label">Support</h4>
-        <a href="#">Contact</a>
-        <a href="#">Shipping</a>
-        <a href="#">Returns</a>
-        <a href="#">FAQ</a>
+        <h4 class="sf-col__label" data-ar="الدعم">Support</h4>
+        <a href="#" data-ar="تواصل معنا">Contact</a>
+        <a href="#" data-ar="الشحن">Shipping</a>
+        <a href="/returns" data-ar="الإرجاع">Returns</a>
+        <a href="#" data-ar="الأسئلة الشائعة">FAQ</a>
       </nav>
       <nav class="sf-col" aria-label="Social">
-        <h4 class="sf-col__label">Follow</h4>
+        <h4 class="sf-col__label" data-ar="تابعنا">Follow</h4>
         <div class="sf-social">
           <a href="#" aria-label="Instagram">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>

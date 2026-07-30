@@ -1,3 +1,10 @@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
+  rel="stylesheet"
+/>
+
 <!-- ============================================================
      SITE HEADER — single source, injected on every page by server.js.
      Namespaced .site-header / .sh-* so it never collides with any page's
@@ -6,6 +13,7 @@
      ============================================================ -->
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
 
   .site-header {
     position: fixed;
@@ -42,7 +50,7 @@
     font: inherit;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.2em;
+    letter-spacing:  0;
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
@@ -114,18 +122,86 @@
     height: 20px;
   }
 
-  /* ---- burger (mobile only) ---- */
+  /* ---- language toggle ---- */
+  .sh-lang {
+    height: 46px;
+    min-width: 46px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 999px;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing:  0;
+    text-transform: uppercase;
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.05) 60%
+    );
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 8px 24px rgba(0, 0, 0, 0.25);
+    transition:
+      background 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .sh-lang:hover {
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.09) 60%
+    );
+  }
+  /* Arabic sits better a touch larger and without the wide tracking */
+  html[lang="ar"] .sh-lang {
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+
+  /* ---- burger (mobile only) — same glass treatment as .sh-icon ---- */
   .sh-burger {
     display: none;
     width: 46px;
     height: 46px;
+    padding: 0;
     align-items: center;
     justify-content: center;
     border: none;
     border-radius: 50%;
-    background: none;
     color: #fff;
     cursor: pointer;
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.05) 60%
+    );
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 8px 24px rgba(0, 0, 0, 0.25);
+    transition:
+      background 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .sh-burger:hover,
+  .sh-burger[aria-expanded="true"] {
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.09) 60%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 10px 30px rgba(0, 0, 0, 0.35);
   }
   .sh-burger svg {
     width: 22px;
@@ -166,7 +242,7 @@
     color: rgba(255, 255, 255, 0.78);
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing:  0;
     text-transform: uppercase;
     text-decoration: none;
   }
@@ -189,6 +265,16 @@
     .sh-right .sh-label {
       display: none;
     }
+    /* the toggle is relocated next to the burger — trim it to icon scale */
+    .sh-lang {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 12px;
+      font-size: 10px;
+    }
+    html[lang="ar"] .sh-lang {
+      font-size: 12px;
+    }
   }
 </style>
 
@@ -198,6 +284,7 @@
       class="sh-burger"
       type="button"
       aria-label="Menu"
+      data-ar-label="القائمة"
       aria-expanded="false"
       aria-controls="sh-mobile"
     >
@@ -206,14 +293,16 @@
       </svg>
     </button>
     <nav class="sh-nav" aria-label="Primary navigation">
-      <a class="sh-link" href="/">Home</a>
-      <a class="sh-link" href="/product">Products</a>
-      <a class="sh-link" href="/about-us">About Us</a>
+      <a class="sh-link" href="/collection?view=perfumes" data-ar="العطور">Perfumes</a>
+      <a class="sh-link" href="/collection?view=samples" data-ar="العينات">Samples</a>
+      <a class="sh-link" href="/about-us" data-ar="قصتنا">Our Story</a>
+      <a class="sh-link" href="/returns" data-ar="سياسة الإرجاع والاسترداد">Return &amp; Refund Policy</a>
     </nav>
     <div class="sh-mobile" id="sh-mobile">
-      <a href="/">Home</a>
-      <a href="/product">Products</a>
-      <a href="/about-us">About Us</a>
+      <a href="/collection?view=perfumes" data-ar="العطور">Perfumes</a>
+      <a href="/collection?view=samples" data-ar="العينات">Samples</a>
+      <a href="/about-us" data-ar="قصتنا">Our Story</a>
+      <a href="/returns" data-ar="سياسة الإرجاع والاسترداد">Return &amp; Refund Policy</a>
     </div>
   </div>
 
@@ -222,13 +311,14 @@
   </a>
 
   <div class="sh-right">
-    <button class="sh-icon" type="button" aria-label="Account">
+    <button class="sh-lang" type="button" id="sh-lang" aria-label="Switch language">عربي</button>
+    <button class="sh-icon" type="button" aria-label="Account" data-ar-label="الحساب">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="8" r="3.4" />
         <path d="M5.5 19.2c1.2-3 3.6-4.6 6.5-4.6s5.3 1.6 6.5 4.6" />
       </svg>
     </button>
-    <button class="sh-icon" type="button" aria-label="Cart">
+    <button class="sh-icon" type="button" aria-label="Cart" data-ar-label="السلة">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M6.5 8.5h11l-.9 10a1.8 1.8 0 0 1-1.8 1.6H9.2a1.8 1.8 0 0 1-1.8-1.6z" />
         <path d="M9 8.5V7a3 3 0 0 1 6 0v1.5" />
@@ -260,15 +350,169 @@
       });
     }
 
-    // Active-link highlighting based on current path.
+    // The language toggle lives with the account/cart icons on desktop, but
+    // on mobile it sits beside the burger on the left. CSS can't reparent, so
+    // the button is moved between the two clusters at the breakpoint.
+    (function () {
+      var lang = document.getElementById("sh-lang");
+      var left = document.querySelector(".site-header .sh-left");
+      var right = document.querySelector(".site-header .sh-right");
+      if (!lang || !left || !right) return;
+      var mq = window.matchMedia("(max-width: 767px)");
+
+      function place() {
+        if (mq.matches) {
+          // after the burger, before the nav
+          if (lang.parentNode !== left) left.insertBefore(lang, left.children[1] || null);
+        } else if (lang.parentNode !== right) {
+          right.insertBefore(lang, right.firstChild);
+        }
+      }
+      place();
+      if (mq.addEventListener) mq.addEventListener("change", place);
+      else if (mq.addListener) mq.addListener(place);
+    })();
+
+    // Active-link highlighting based on the current path. Links may carry a
+    // ?view= (the collection page's Perfumes / Samples tabs), so compare the
+    // path first and only then disambiguate on that parameter.
     var path = location.pathname.replace(/\/+$/, "") || "/";
+    var view = new URLSearchParams(location.search).get("view") || "";
     document
       .querySelectorAll(".site-header .sh-link, .site-header .sh-mobile a")
       .forEach(function (a) {
         var href = a.getAttribute("href");
         if (!href || href === "#") return;
-        var norm = href.replace(/\/+$/, "") || "/";
-        if (norm === path) a.setAttribute("aria-current", "page");
+        var url = new URL(href, location.origin);
+        var norm = url.pathname.replace(/\/+$/, "") || "/";
+        if (norm !== path) return;
+        var linkView = url.searchParams.get("view") || "";
+        if (linkView && linkView !== view) return;
+        a.setAttribute("aria-current", "page");
       });
   })();
 </script>
+
+<script>
+  /* ============================================================
+     LANGUAGE — English / Saudi Arabic, site-wide.
+
+     Any element carrying data-ar has its markup swapped for that
+     Arabic copy; the English original is captured into data-en on the
+     first switch so it can be restored. data-ar-label does the same
+     for aria-label. Page scripts that generate text at runtime (the
+     carousels, the collection filter) listen for the `sel:lang` event
+     and read window.SelLang.
+     ============================================================ */
+  (function () {
+    var KEY = "sel-lang";
+    var btn = document.getElementById("sh-lang");
+
+    function apply(lang, persist) {
+      var ar = lang === "ar";
+      var root = document.documentElement;
+      root.lang = ar ? "ar" : "en";
+      root.dir = ar ? "rtl" : "ltr";
+
+      document.querySelectorAll("[data-ar]").forEach(function (el) {
+        if (el.dataset.en === undefined) el.dataset.en = el.innerHTML;
+        el.innerHTML = ar ? el.dataset.ar : el.dataset.en;
+      });
+      document.querySelectorAll("[data-ar-label]").forEach(function (el) {
+        if (el.dataset.enLabel === undefined)
+          el.dataset.enLabel = el.getAttribute("aria-label") || "";
+        el.setAttribute(
+          "aria-label",
+          ar ? el.dataset.arLabel : el.dataset.enLabel,
+        );
+      });
+
+      // the toggle always offers the OTHER language
+      if (btn) btn.textContent = ar ? "EN" : "عربي";
+      window.SelLang = lang;
+      if (persist) {
+        try {
+          localStorage.setItem(KEY, lang);
+        } catch (_) {}
+      }
+      document.dispatchEvent(
+        new CustomEvent("sel:lang", { detail: { lang: lang } }),
+      );
+    }
+
+    var saved = "en";
+    try {
+      saved = localStorage.getItem(KEY) || "en";
+    } catch (_) {}
+    window.SelLang = saved;
+    window.SelApplyLang = apply;
+
+    if (btn)
+      btn.addEventListener("click", function () {
+        apply(window.SelLang === "ar" ? "en" : "ar", true);
+      });
+
+    // run once the page's own markup exists, then again on full load in
+    // case a page injects more translatable copy late
+    function boot() {
+      apply(saved, false);
+    }
+    if (document.readyState === "loading")
+      document.addEventListener("DOMContentLoaded", boot);
+    else boot();
+  })();
+</script>
+
+<style>
+  /* Arabic: a face with proper Arabic coverage, and a little more line
+     height for the taller glyphs. */
+  html[lang="ar"] body {
+    font-family: "Cairo", "Segoe UI", "Tahoma", sans-serif;
+    /* Arabic glyphs are taller and carry diacritics — the Latin leading
+       makes lines collide */
+    line-height: 1.95;
+  }
+  html[lang="ar"] p,
+  html[lang="ar"] li,
+  html[lang="ar"] [data-ar] {
+    line-height: 1.95;
+  }
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[lang="ar"] h3,
+  html[lang="ar"] h4 {
+    line-height: 1.5;
+  }
+  /* The display/mono faces (MB PH One, forma-djr-mono) have no Arabic
+     coverage, and pages set font-family per-element — so force Cairo onto
+     translated copy and onto the blocks the carousels write at runtime. */
+  html[lang="ar"] [data-ar],
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[lang="ar"] h3,
+  html[lang="ar"] h4,
+  html[lang="ar"] button,
+  html[lang="ar"] .pf-info,
+  html[lang="ar"] .pf-info *,
+  html[lang="ar"] .col-title,
+  html[lang="ar"] .col-eyebrow {
+    font-family: "Cairo", "Segoe UI", "Tahoma", sans-serif !important;
+  }
+  html[lang="ar"] .sh-link,
+  html[lang="ar"] .sh-mobile a {
+    letter-spacing: 0;
+    font-size: 12px;
+  }
+  /* the wide Latin tracking looks broken on Arabic text */
+  html[lang="ar"] [data-ar] {
+    letter-spacing: 0 !important;
+  }
+  /* The navbar keeps its Latin left-to-right arrangement in Arabic — burger
+     and links left, logo centred, language/account/cart right — so the header
+     never reshuffles when the language changes. Arabic text inside still
+     shapes right-to-left on its own. */
+  html[dir="rtl"] .site-header,
+  html[dir="rtl"] .sh-mobile {
+    direction: ltr;
+  }
+</style>
