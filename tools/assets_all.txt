@@ -51,7 +51,6 @@ images/cube/t4.webp
 images/cube/t5.webp
 images/cube/t6.webp
 images/down.svg
-images/fav.png
 images/footer.mp4
 images/footer.webp
 images/fotd.png
@@ -173,9 +172,7 @@ images/nav/9.webp
 images/next.svg
 images/og.jpg
 images/oglab.jpg
-images/pc_logo.svg
 images/prev.svg
-images/textlogo.svg
 images/wavebg.mp4
 images/work/cont/arrow.svg
 images/work/cont/beauty/1.webp

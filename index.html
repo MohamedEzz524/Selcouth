@@ -133,7 +133,8 @@
     <!-- Non-blocking: Google Fonts (combined into one request) -->
     <noscript> </noscript>
 
-    <link rel="icon" href="images/fav.png" type="image/png" />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="mask-icon" href="images/favicon.svg" color="#17151d" />
     <!-- Critical inline: page-transitions (formerly page-transitions.css) -->
     <style>
       :root {
@@ -490,6 +491,14 @@
         pointer-events: none;
         color: #fff;
         mix-blend-mode: difference;
+      }
+
+      /* Selcouth rebrand: retire the leftover NUDOT studio hero overlay
+         (STUDIO/DIGITAL, service lists, Work/Lab/Blog links, FWA award badge,
+         studio socials) — none of it belongs to a perfume house. */
+      .overlay-ui,
+      .fwa-badge {
+        display: none !important;
       }
 
       .overlay-ui a {
@@ -4987,6 +4996,10 @@
         will-change: transform;
         opacity: 0;
       }
+      /* Selcouth: intro dot is white, not the old NUDOT purple (#694A96) */
+      #nudot-loader .nd-dot path {
+        fill: #fff;
+      }
 
       #nudot-loader .nd-orb {
         position: absolute;
@@ -6922,7 +6935,10 @@
               }
             }
             var DOT_D = path.getAttribute("d");
-            var LOGO_D = path.getAttribute("data-logo-d");
+            // Selcouth: drop the old NUDOT-moth morph — the intro stays a clean
+            // white dot that flies to the wordmark. (Recolour from #694A96.)
+            path.setAttribute("fill", "#ffffff");
+            var LOGO_D = null;
             var tl = gsap.timeline();
             tl.fromTo(
               svg,
@@ -7362,7 +7378,7 @@
                     data-video="images/home/slide1.mp4"
                     data-mobile-video="images/home/slide1mobile.mp4"
                     data-thumb="images/home/slide1.webp"
-                    data-title="Nudot Creative Studio"
+                    data-title="Selcouth"
                   ></div>
                 </div>
 
