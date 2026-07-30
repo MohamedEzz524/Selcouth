@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- no-site-header -->
+    <!-- no-site-footer -->
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -11,7 +13,7 @@
       name="description"
       content="The Selcouth collection — three rare extraits, composed around the world's most precious raw materials."
     />
-    <meta name="theme-color" content="#050505" />
+    <meta name="theme-color" content="#000000" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,7 +41,7 @@
         font-display: swap;
       }
       :root {
-        --sel-bg: #050505;
+        --sel-bg: #000000;
         --sel-cream: #efe6d8;
         --sel-text: #d9d5df;
         --sel-muted: #9a95a3;
@@ -68,7 +70,7 @@
       }
       ::selection {
         background: #ffffff;
-        color: #050505;
+        color: #000000;
       }
 
       /* Lenis smooth scroll */
@@ -343,6 +345,528 @@
   </head>
 
   <body>
+<!-- BEGIN build-pages:header — generated, edit partials/header.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- ============================================================
+     SITE HEADER — single source, injected on every page by server.js.
+     Namespaced .site-header / .sh-* so it never collides with any page's
+     own styles. Keeps the brand-logo id so the home preloader morph still
+     has its target. Edit here once; it updates everywhere.
+     ============================================================ -->
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
+
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 9000;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 22px clamp(20px, 4vw, 56px);
+    pointer-events: none;
+    font-family: "Inter", "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+  .site-header > * {
+    pointer-events: auto;
+  }
+
+  /* ---- left: desktop links + mobile burger ---- */
+  .sh-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sh-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sh-link {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px;
+    background: none;
+    color: #fff;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing:  0;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .sh-link:hover,
+  .sh-link[aria-current="page"] {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+  }
+
+  /* ---- centre logo ---- */
+  .sh-logo {
+    display: block;
+    justify-self: center;
+    line-height: 0;
+  }
+  .sh-logo img {
+    width: 46px;
+    height: auto;
+    display: block;
+  }
+
+  /* ---- right: glassy circular icon buttons ---- */
+  .sh-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+  }
+  .sh-icon {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.05) 60%
+    );
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 8px 24px rgba(0, 0, 0, 0.25);
+    transition:
+      background 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .sh-icon:hover {
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.09) 60%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+  .sh-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ---- language toggle ---- */
+  .sh-lang {
+    height: 46px;
+    min-width: 46px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 999px;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing:  0;
+    text-transform: uppercase;
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.05) 60%
+    );
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 8px 24px rgba(0, 0, 0, 0.25);
+    transition:
+      background 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .sh-lang:hover {
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.09) 60%
+    );
+  }
+  /* Arabic sits better a touch larger and without the wide tracking */
+  html[lang="ar"] .sh-lang {
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+
+  /* ---- burger (mobile only) — same glass treatment as .sh-icon ---- */
+  .sh-burger {
+    display: none;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.05) 60%
+    );
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 8px 24px rgba(0, 0, 0, 0.25);
+    transition:
+      background 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .sh-burger:hover,
+  .sh-burger[aria-expanded="true"] {
+    background: radial-gradient(
+      120% 120% at 30% 20%,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.09) 60%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+  .sh-burger svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ---- mobile dropdown ---- */
+  .sh-mobile {
+    position: fixed;
+    top: 72px;
+    left: 16px;
+    z-index: 8999;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 172px;
+    padding: 12px;
+    border-radius: 16px;
+    background: rgba(22, 18, 32, 0.6);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0.3s;
+  }
+  .sh-mobile.open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .sh-mobile a {
+    padding: 10px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing:  0;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .sh-mobile a:hover,
+  .sh-mobile a[aria-current="page"] {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  @media (max-width: 767px) {
+    .site-header {
+      padding: 14px 16px;
+    }
+    .sh-nav {
+      display: none;
+    }
+    .sh-burger {
+      display: inline-flex;
+    }
+    .sh-right .sh-label {
+      display: none;
+    }
+    /* the toggle is relocated next to the burger — trim it to icon scale */
+    .sh-lang {
+      height: 40px;
+      min-width: 40px;
+      padding: 0 12px;
+      font-size: 10px;
+    }
+    html[lang="ar"] .sh-lang {
+      font-size: 12px;
+    }
+  }
+</style>
+
+<header class="site-header" aria-label="Primary">
+  <div class="sh-left">
+    <button
+      class="sh-burger"
+      type="button"
+      aria-label="Menu"
+      data-ar-label="القائمة"
+      aria-expanded="false"
+      aria-controls="sh-mobile"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </button>
+    <nav class="sh-nav" aria-label="Primary navigation">
+      <a class="sh-link" href="collection.html?view=perfumes" data-ar="العطور">Perfumes</a>
+      <a class="sh-link" href="collection.html?view=samples" data-ar="العينات">Samples</a>
+      <a class="sh-link" href="about-us.html" data-ar="قصتنا">Our Story</a>
+      <a class="sh-link" href="returns.html" data-ar="سياسة الإرجاع والاسترداد">Return &amp; Refund Policy</a>
+    </nav>
+    <div class="sh-mobile" id="sh-mobile">
+      <a href="collection.html?view=perfumes" data-ar="العطور">Perfumes</a>
+      <a href="collection.html?view=samples" data-ar="العينات">Samples</a>
+      <a href="about-us.html" data-ar="قصتنا">Our Story</a>
+      <a href="returns.html" data-ar="سياسة الإرجاع والاسترداد">Return &amp; Refund Policy</a>
+    </div>
+  </div>
+
+  <a class="sh-logo" id="brand-logo" href="index.html" aria-label="Selcouth home">
+    <img src="images/logo.svg" alt="Selcouth" />
+  </a>
+
+  <div class="sh-right">
+    <button class="sh-lang" type="button" id="sh-lang" aria-label="Switch language">عربي</button>
+    <button class="sh-icon" type="button" aria-label="Account" data-ar-label="الحساب">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="8" r="3.4" />
+        <path d="M5.5 19.2c1.2-3 3.6-4.6 6.5-4.6s5.3 1.6 6.5 4.6" />
+      </svg>
+    </button>
+    <button class="sh-icon" type="button" aria-label="Cart" data-ar-label="السلة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6.5 8.5h11l-.9 10a1.8 1.8 0 0 1-1.8 1.6H9.2a1.8 1.8 0 0 1-1.8-1.6z" />
+        <path d="M9 8.5V7a3 3 0 0 1 6 0v1.5" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<script>
+  (function () {
+    var header = document.currentScript
+      ? document.currentScript.previousElementSibling
+      : null;
+    // Fall back to querying if currentScript chain isn't the header.
+    var burger = document.querySelector(".site-header .sh-burger");
+    var mobile = document.getElementById("sh-mobile");
+
+    if (burger && mobile) {
+      burger.addEventListener("click", function () {
+        var open = mobile.classList.toggle("open");
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      document.addEventListener("click", function (e) {
+        if (!mobile.classList.contains("open")) return;
+        if (!mobile.contains(e.target) && !burger.contains(e.target)) {
+          mobile.classList.remove("open");
+          burger.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+
+    // The language toggle lives with the account/cart icons on desktop, but
+    // on mobile it sits beside the burger on the left. CSS can't reparent, so
+    // the button is moved between the two clusters at the breakpoint.
+    (function () {
+      var lang = document.getElementById("sh-lang");
+      var left = document.querySelector(".site-header .sh-left");
+      var right = document.querySelector(".site-header .sh-right");
+      if (!lang || !left || !right) return;
+      var mq = window.matchMedia("(max-width: 767px)");
+
+      function place() {
+        if (mq.matches) {
+          // after the burger, before the nav
+          if (lang.parentNode !== left) left.insertBefore(lang, left.children[1] || null);
+        } else if (lang.parentNode !== right) {
+          right.insertBefore(lang, right.firstChild);
+        }
+      }
+      place();
+      if (mq.addEventListener) mq.addEventListener("change", place);
+      else if (mq.addListener) mq.addListener(place);
+    })();
+
+    // Active-link highlighting based on the current path. Links may carry a
+    // ?view= (the collection page's Perfumes / Samples tabs), so compare the
+    // path first and only then disambiguate on that parameter.
+    var path = location.pathname.replace(/\/+$/, "") || "/";
+    var view = new URLSearchParams(location.search).get("view") || "";
+    document
+      .querySelectorAll(".site-header .sh-link, .site-header .sh-mobile a")
+      .forEach(function (a) {
+        var href = a.getAttribute("href");
+        if (!href || href === "#") return;
+        var url = new URL(href, location.origin);
+        var norm = url.pathname.replace(/\/+$/, "") || "/";
+        if (norm !== path) return;
+        var linkView = url.searchParams.get("view") || "";
+        if (linkView && linkView !== view) return;
+        a.setAttribute("aria-current", "page");
+      });
+  })();
+</script>
+
+<script>
+  /* ============================================================
+     LANGUAGE — English / Saudi Arabic, site-wide.
+
+     Any element carrying data-ar has its markup swapped for that
+     Arabic copy; the English original is captured into data-en on the
+     first switch so it can be restored. data-ar-label does the same
+     for aria-label. Page scripts that generate text at runtime (the
+     carousels, the collection filter) listen for the `sel:lang` event
+     and read window.SelLang.
+     ============================================================ */
+  (function () {
+    var KEY = "sel-lang";
+    var btn = document.getElementById("sh-lang");
+
+    function apply(lang, persist) {
+      var ar = lang === "ar";
+      var root = document.documentElement;
+      root.lang = ar ? "ar" : "en";
+      root.dir = ar ? "rtl" : "ltr";
+
+      document.querySelectorAll("[data-ar]").forEach(function (el) {
+        if (el.dataset.en === undefined) el.dataset.en = el.innerHTML;
+        el.innerHTML = ar ? el.dataset.ar : el.dataset.en;
+      });
+      document.querySelectorAll("[data-ar-label]").forEach(function (el) {
+        if (el.dataset.enLabel === undefined)
+          el.dataset.enLabel = el.getAttribute("aria-label") || "";
+        el.setAttribute(
+          "aria-label",
+          ar ? el.dataset.arLabel : el.dataset.enLabel,
+        );
+      });
+
+      // the toggle always offers the OTHER language
+      if (btn) btn.textContent = ar ? "EN" : "عربي";
+      window.SelLang = lang;
+      if (persist) {
+        try {
+          localStorage.setItem(KEY, lang);
+        } catch (_) {}
+      }
+      document.dispatchEvent(
+        new CustomEvent("sel:lang", { detail: { lang: lang } }),
+      );
+    }
+
+    var saved = "en";
+    try {
+      saved = localStorage.getItem(KEY) || "en";
+    } catch (_) {}
+    window.SelLang = saved;
+    window.SelApplyLang = apply;
+
+    if (btn)
+      btn.addEventListener("click", function () {
+        apply(window.SelLang === "ar" ? "en" : "ar", true);
+      });
+
+    // run once the page's own markup exists, then again on full load in
+    // case a page injects more translatable copy late
+    function boot() {
+      apply(saved, false);
+    }
+    if (document.readyState === "loading")
+      document.addEventListener("DOMContentLoaded", boot);
+    else boot();
+  })();
+</script>
+
+<style>
+  /* Arabic: a face with proper Arabic coverage, and a little more line
+     height for the taller glyphs. */
+  html[lang="ar"] body {
+    font-family: "Cairo", "Segoe UI", "Tahoma", sans-serif;
+    /* Arabic glyphs are taller and carry diacritics — the Latin leading
+       makes lines collide */
+    line-height: 1.95;
+  }
+  html[lang="ar"] p,
+  html[lang="ar"] li,
+  html[lang="ar"] [data-ar] {
+    line-height: 1.95;
+  }
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[lang="ar"] h3,
+  html[lang="ar"] h4 {
+    line-height: 1.5;
+  }
+  /* The display/mono faces (MB PH One, forma-djr-mono) have no Arabic
+     coverage, and pages set font-family per-element — so force Cairo onto
+     translated copy and onto the blocks the carousels write at runtime. */
+  html[lang="ar"] [data-ar],
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[lang="ar"] h3,
+  html[lang="ar"] h4,
+  html[lang="ar"] button,
+  html[lang="ar"] .pf-info,
+  html[lang="ar"] .pf-info *,
+  html[lang="ar"] .col-title,
+  html[lang="ar"] .col-eyebrow {
+    font-family: "Cairo", "Segoe UI", "Tahoma", sans-serif !important;
+  }
+  html[lang="ar"] .sh-link,
+  html[lang="ar"] .sh-mobile a {
+    letter-spacing: 0;
+    font-size: 12px;
+  }
+  /* the wide Latin tracking looks broken on Arabic text */
+  html[lang="ar"] [data-ar] {
+    letter-spacing: 0 !important;
+  }
+  /* The navbar keeps its Latin left-to-right arrangement in Arabic — burger
+     and links left, logo centred, language/account/cart right — so the header
+     never reshuffles when the language changes. Arabic text inside still
+     shapes right-to-left on its own. */
+  html[dir="rtl"] .site-header,
+  html[dir="rtl"] .sh-mobile {
+    direction: ltr;
+  }
+</style>
+
+<!-- END build-pages:header — generated, edit partials/header.html -->
+
     <main>
       <section class="col-head" aria-label="The Selcouth collection">
         <h1 class="col-title">The Collection</h1>
@@ -359,7 +883,7 @@
       <div class="col-grid-wrap">
         <ul class="col-grid" id="col-grid">
           <li data-kind="perfume">
-            <a class="col-card" href="/aurelinth" style="--d: 0s">
+            <a class="col-card" href="aurelinth.html" style="--d: 0s">
               <div class="col-media">
                 <img
                   class="col-bottle"
@@ -378,7 +902,7 @@
           </li>
 
           <li data-kind="perfume">
-            <a class="col-card" href="/oakbanum" style="--d: 0.09s">
+            <a class="col-card" href="oakbanum.html" style="--d: 0.09s">
               <div class="col-media">
                 <img
                   class="col-bottle"
@@ -397,7 +921,7 @@
           </li>
 
           <li data-kind="perfume">
-            <a class="col-card" href="/veil-of-orris" style="--d: 0.18s">
+            <a class="col-card" href="veil-of-orris.html" style="--d: 0.18s">
               <div class="col-media">
                 <img
                   class="col-bottle"
@@ -416,7 +940,7 @@
           </li>
 
           <li data-kind="sample">
-            <a class="col-card" href="/aurelinth-sample" style="--d: 0s">
+            <a class="col-card" href="aurelinth-sample.html" style="--d: 0s">
               <div class="col-media">
                 <img
                   class="col-bottle"
@@ -436,7 +960,7 @@
           </li>
 
           <li data-kind="sample">
-            <a class="col-card" href="/oakbanum-sample" style="--d: 0.09s">
+            <a class="col-card" href="oakbanum-sample.html" style="--d: 0.09s">
               <div class="col-media">
                 <img
                   class="col-bottle"
@@ -456,7 +980,7 @@
           </li>
 
           <li data-kind="sample">
-            <a class="col-card" href="/veil-of-orris-sample" style="--d: 0.18s">
+            <a class="col-card" href="veil-of-orris-sample.html" style="--d: 0.18s">
               <div class="col-media">
                 <img
                   class="col-bottle"
@@ -583,5 +1107,521 @@
         io.observe(grid);
       })();
     </script>
-  </body>
+  
+<!-- BEGIN build-pages:footer — generated, edit partials/footer.html -->
+<!-- ============================================================
+     SITE FOOTER — single source, injected near the end of the page by
+     server.js on any page that doesn't already have its own footer.
+     Namespaced .site-foot / .sf-* · white + panel palette only.
+     ============================================================ -->
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+  @font-face {
+    font-family: "MB PH One";
+    src: url("/fonts/mb-ph-one-bold.ttf") format("truetype");
+    font-weight: 501 900;
+    font-display: swap;
+  }
+
+  .site-foot {
+    background: #000000;
+    color: #d9d5df;
+    border-top: 1px solid #17151d; /* shared panel colour */
+    font-family: "Inter", "DM Sans", "Helvetica Neue", Arial, sans-serif;
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem) 2rem;
+  }
+  .sf-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  /* row 1 — logo left */
+  .sf-top {
+    margin-bottom: clamp(2.2rem, 5vw, 3.6rem);
+  }
+  .sf-logo {
+    display: inline-block;
+    line-height: 0;
+  }
+  .sf-logo img {
+    width: 54px;
+    height: auto;
+    display: block;
+  }
+
+  /* row 2 — 4 columns */
+  .sf-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .sf-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .sf-col__label {
+    margin: 0 0 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing:  0;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+  .sf-col a {
+    font-size: 0.92rem;
+    color: rgba(217, 213, 223, 0.68);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+  .sf-col a:hover {
+    color: #ffffff;
+  }
+
+  /* social column: a horizontal row of icons rather than stacked text links */
+  .sf-social {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.1rem;
+    margin-top: 0.15rem;
+  }
+  .sf-social a {
+    display: inline-flex;
+    color: rgba(217, 213, 223, 0.68);
+    transition: color 0.25s ease, transform 0.25s ease;
+  }
+  .sf-social a:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+  .sf-social svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    fill: currentColor;
+  }
+
+  /* row 3 — centred copyright */
+  .sf-copy {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+  }
+  .sf-copy p {
+    margin: 0;
+    font-size: 0.8rem;
+    letter-spacing:  0;
+    text-transform: uppercase;
+    color: rgba(217, 213, 223, 0.5);
+  }
+
+  /* mobile — links become 2 columns */
+  @media (max-width: 760px) {
+    .sf-cols {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 2.2rem;
+    }
+  }
+
+  /* ============================================================
+     PRE-FOOTER — row 1 badges (white strip) + row 2 newsletter
+     (dark panel: brand image | signup). Prefixes the footer.
+     ============================================================ */
+  .sf-pre {
+    font-family: "Inter", "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* row 1 — badges */
+  .sf-pre__badges {
+    background: #000000;
+    color: #ffffff;
+    border-bottom: 1px solid #17151d;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 5vw, 4rem);
+  }
+  .sf-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    text-align: center;
+  }
+  /* Source icons are black artwork on transparent; invert them to white so
+     they read against the #000000 strip. */
+  .sf-badge img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+  .sf-badge span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: #ffffff;
+  }
+
+  /* row 2 — newsletter */
+  .sf-pre__news {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #000000;
+  }
+  .sf-pre__media {
+    position: relative;
+    min-height: 440px;
+    overflow: hidden;
+  }
+  .sf-pre__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(1); /* B&W, matching the hero media */
+  }
+  .sf-pre__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+  }
+  .sf-pre__eyebrow {
+    margin: 0 0 1.1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing:  0;
+    color: rgba(217, 213, 223, 0.6);
+  }
+  .sf-pre__title {
+    margin: 0 0 1rem;
+    font-family: "MB PH One", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+  .sf-pre__sub {
+    margin: 0 0 2rem;
+    max-width: 46ch;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(217, 213, 223, 0.75);
+  }
+  .sf-nl__field {
+    margin-bottom: 1.5rem;
+  }
+  .sf-nl__field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(217, 213, 223, 0.6);
+  }
+  .sf-nl__field input {
+    width: 100%;
+    padding: 0.5rem 0;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.25s ease;
+  }
+  .sf-nl__field input:focus {
+    border-bottom-color: #ffffff;
+  }
+  .sf-nl__btn {
+    width: 100%;
+    height: 54px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 999px; /* match the site's pill buttons (.pf-shop / .mp-add) */
+    background: #ffffff;
+    color: #141019;
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing:  0;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .sf-nl__btn:hover {
+    opacity: 0.9;
+  }
+  .sf-nl__btn:hover {
+    opacity: 0.85;
+  }
+  .sf-nl__note {
+    margin: 1rem 0 0;
+    font-size: 0.72rem;
+    color: rgba(217, 213, 223, 0.4);
+  }
+  .sf-nl__done {
+    margin: 0;
+    font-size: 1rem;
+    color: #efe6d8;
+  }
+
+  @media (max-width: 760px) {
+    .sf-pre__badges {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 2rem;
+    }
+    .sf-pre__news {
+      grid-template-columns: 1fr;
+    }
+    .sf-pre__media {
+      min-height: 320px;
+    }
+  }
+
+  /* ============================================================
+     SCROLL REVEAL — reusable, IntersectionObserver-driven. Elements only
+     start hidden once JS marks the doc ready (html.sel-reveal-ready), so
+     content is never stuck invisible if JS fails. .reveal = all viewports;
+     .reveal-m = mobile only (desktop home sections have their own reveal).
+     ============================================================ */
+  html.sel-reveal-ready .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+  }
+  html.sel-reveal-ready .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  /* badge stagger */
+  .sf-pre__badges .reveal:nth-child(1) { --reveal-delay: 0s; }
+  .sf-pre__badges .reveal:nth-child(2) { --reveal-delay: 0.09s; }
+  .sf-pre__badges .reveal:nth-child(3) { --reveal-delay: 0.18s; }
+  .sf-pre__badges .reveal:nth-child(4) { --reveal-delay: 0.27s; }
+  /* newsletter: form slides in just after the image */
+  .sf-pre__form.reveal { --reveal-delay: 0.12s; }
+
+  @media (max-width: 767px) {
+    html.sel-reveal-ready .reveal-m {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--reveal-delay, 0s);
+      will-change: opacity, transform;
+    }
+    html.sel-reveal-ready .reveal-m.is-in {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.sel-reveal-ready .reveal,
+    html.sel-reveal-ready .reveal-m {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<!-- ============================================================
+     PRE-FOOTER — badges + newsletter (prefixes the footer sitewide)
+     ============================================================ -->
+<section class="sf-pre" aria-label="Newsletter and brand highlights">
+  <!-- row 1: badges -->
+  <div class="sf-pre__badges">
+    <div class="sf-badge reveal">
+      <img src="images/badge-1.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      <span data-ar="عطور للجنسين">Genderless Fragrances</span>
+    </div>
+    <div class="sf-badge reveal">
+      <img src="images/badge-2.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      <span data-ar="نباتي وخالٍ من القسوة">Vegan &amp; Cruelty-Free</span>
+    </div>
+    <div class="sf-badge reveal">
+      <img src="images/badge-3.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      <span data-ar="مصنوعة بكميات صغيرة">Crafted in Small Batches</span>
+    </div>
+    <div class="sf-badge reveal">
+      <img src="images/badge-4.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      <span data-ar="مكوّنات استثنائية">Exceptional Ingredients</span>
+    </div>
+  </div>
+
+  <!-- row 2: newsletter -->
+  <div class="sf-pre__news">
+    <div class="sf-pre__media reveal">
+      <img src="images/newsletter-invite.webp" alt="Selcouth pendant seal against a dark backdrop" loading="lazy" decoding="async" />
+    </div>
+    <div class="sf-pre__form reveal">
+      <p class="sf-pre__eyebrow" data-ar="النشرة البريدية">Newsletter</p>
+      <h2 class="sf-pre__title" data-ar="ادخل عالم سِلكوث">Enter the world of Selcouth</h2>
+      <p class="sf-pre__sub" data-ar="عطور جديدة، وتجارب حصرية، وتعاونات هادفة، وقصص فريدة. دائمًا بقصد، ولا إفراط أبدًا.">
+        New fragrances, exclusive experiences, meaningful collaborations, and
+        unique stories. Always intentional. Never excessive.
+      </p>
+      <form class="sf-nl" novalidate>
+        <div class="sf-nl__field">
+          <label for="sf-nl-name" data-ar="الاسم">Name</label>
+          <input id="sf-nl-name" type="text" name="name" autocomplete="name" />
+        </div>
+        <div class="sf-nl__field">
+          <label for="sf-nl-email" data-ar="البريد الإلكتروني">Email</label>
+          <input id="sf-nl-email" type="email" name="email" autocomplete="email" required />
+        </div>
+        <button class="sf-nl__btn" type="submit" data-ar="اشترك">Join</button>
+        <p class="sf-nl__note" data-ar="نلتزم بالقصد — يمكنك إلغاء الاشتراك في أي وقت.">We keep it intentional — unsubscribe anytime.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var form = document.querySelector(".sf-nl");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = form.querySelector('input[type="email"]');
+      if (email && !email.value) {
+        email.focus();
+        return;
+      }
+      var ar = document.documentElement.lang === "ar";
+      form.innerHTML =
+        '<p class="sf-nl__done">' +
+        (ar
+          ? "شكرًا لك — مرحبًا بك في سِلكوث."
+          : "Thank you — welcome to Selcouth.") +
+        "</p>";
+    });
+  })();
+</script>
+
+<script>
+  /* ── Scroll reveal ──────────────────────────────────────────────
+     Injected sitewide with the footer, so it drives .reveal / .reveal-m
+     on every page (home second/third sections, badges, newsletter…).
+     html.sel-reveal-ready is added FIRST so the hidden initial state only
+     applies when JS is running — content is never stranded invisible. */
+  (function () {
+    var docEl = document.documentElement;
+    var reduce =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    docEl.classList.add("sel-reveal-ready");
+
+    function collect() {
+      return Array.prototype.slice.call(
+        document.querySelectorAll(".reveal, .reveal-m")
+      );
+    }
+
+    if (reduce || !("IntersectionObserver" in window)) {
+      collect().forEach(function (el) {
+        el.classList.add("is-in");
+      });
+      return;
+    }
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) {
+            en.target.classList.add("is-in");
+            io.unobserve(en.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
+    );
+
+    function observeAll() {
+      collect().forEach(function (el) {
+        if (!el.classList.contains("is-in")) io.observe(el);
+      });
+    }
+
+    observeAll();
+    // Re-scan after load in case other scripts relocate/insert reveal nodes
+    // (e.g. the perfume panel that gets moved into the mobile section).
+    window.addEventListener("load", observeAll, { once: true });
+  })();
+</script>
+
+<footer class="site-foot" aria-label="Site footer">
+  <div class="sf-inner">
+    <!-- row 1: logo -->
+    <div class="sf-top">
+      <a class="sf-logo" href="index.html" aria-label="Selcouth home">
+        <img src="images/logo.svg" alt="Selcouth" />
+      </a>
+    </div>
+
+    <!-- row 2: 4 columns (3 menu + 1 social) -->
+    <div class="sf-cols">
+      <nav class="sf-col" aria-label="Shop">
+        <h4 class="sf-col__label" data-ar="التسوق">Shop</h4>
+        <a href="collection.html?view=perfumes" data-ar="العطور">Perfumes</a>
+        <a href="collection.html?view=samples" data-ar="أطقم الاكتشاف">Discovery Sets</a>
+        <a href="#" data-ar="الهدايا">Gifting</a>
+        <a href="#" data-ar="وصل حديثًا">New Arrivals</a>
+      </nav>
+      <nav class="sf-col" aria-label="Discover">
+        <h4 class="sf-col__label" data-ar="اكتشف">Discover</h4>
+        <a href="about-us.html" data-ar="قصتنا">Our Story</a>
+        <a href="#" data-ar="الحرفة">The Craft</a>
+        <a href="#" data-ar="المكوّنات">Ingredients</a>
+        <a href="#" data-ar="المدوّنة">Journal</a>
+      </nav>
+      <nav class="sf-col" aria-label="Support">
+        <h4 class="sf-col__label" data-ar="الدعم">Support</h4>
+        <a href="#" data-ar="تواصل معنا">Contact</a>
+        <a href="#" data-ar="الشحن">Shipping</a>
+        <a href="returns.html" data-ar="الإرجاع">Returns</a>
+        <a href="#" data-ar="الأسئلة الشائعة">FAQ</a>
+      </nav>
+      <nav class="sf-col" aria-label="Social">
+        <h4 class="sf-col__label" data-ar="تابعنا">Follow</h4>
+        <div class="sf-social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/></svg>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- row 3: centred copyright -->
+    <div class="sf-copy">
+      <p>&copy; Selcouth</p>
+    </div>
+  </div>
+</footer>
+
+<!-- END build-pages:footer — generated, edit partials/footer.html -->
+</body>
 </html>

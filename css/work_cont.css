@@ -522,7 +522,7 @@
             left: 50%;
             transform: translateX(-50%);
             padding: clamp(72px, 10vw, 140px) 0 clamp(96px, 12vw, 180px);
-            background: linear-gradient(180deg, #000000 0%, #050505 100%);
+            background: linear-gradient(180deg, #000000 0%, #000000 100%);
             overflow: hidden;
         }
         .connected-grid-shell {
@@ -683,7 +683,7 @@
             position: relative;
             left: 50%;
             transform: translateX(-50%);
-            background: #050505;
+            background: #000000;
             padding: 0 2vw var(--spacing-lg);
         }
 
