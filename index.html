@@ -5459,14 +5459,12 @@
       @media (max-width: 767px) {
         .sample-mask {
           position: relative;
-          height: auto;
           clip-path: none;
           -webkit-clip-path: none;
           contain: none;
         }
         .sample-section {
           position: relative;
-          height: auto;
           padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 4rem);
         }
         .sample-section__stage {
@@ -5856,12 +5854,12 @@
         .stm-logo {
           display: none !important;
         }
-        /* sample / perfume carousels: container hugs its stage, no void */
+        /* sample / perfume carousels: full-height so the third section rides
+           up over the pinned hero like its siblings (was height:auto "no void") */
         .sample-mask,
         .sample-section {
           position: relative !important;
-          height: auto !important;
-          min-height: 0 !important;
+          height: 100vh !important;
         }
         /* core-capabilities ring: one tidy band instead of a multi-screen budget */
         /* FIXED 100svh — matches .hero-dom main (100vh) so the centre video
